@@ -1,0 +1,57 @@
+@import helper._
+
+@(title: String, isLoggedIn: Boolean, userInfo: UserInfo, permissionsForm : Form[views.formdata.PermissionsForm])
+
+@main(title, isLoggedIn, userInfo) { 
+    @menu_navigate(title,userInfo){
+        <script>
+            $(document).ready(function() {            
+                current_tab("h3_Usuarios");
+            });
+        </script>
+        <div id="divAddPermission" class="list_item">
+            @helper.form(routes.Permissions.savePermission()) {
+                <fieldset>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td><div class="titleParam">Administraci&oacute;n de permisos.</div></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="descriptionParam">
+                                    <div class="paddingDescription">
+                                        Estas configuraciones pueden afectar la visualizaci&oacute;n del m&oacute;dulo de administraci&oacute;n... 
+                                        <br>
+                                        <b>Recuerde que el ID que configure en el nuevo permiso debe coincidir con el id del tag o item en el Men&uacute; de navegaci&oacute;n</b>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 40%;">
+                                <div style="margin-top: 20px;" class="form-group @if(permissionsForm("idPermission").hasErrors) {has-error}">
+                                    <div class="descrptionMessageTable">Ingrese el ID del nuevo permiso</div>
+                                    <input type="text" style="width: 50%;" class="form-control" name="@permissionsForm("idPermission").name" id="@permissionsForm("idPermission").id" value="@permissionsForm("idPermission").value"/>
+                                    <span class="help-block" id="spanpermission">@{permissionsForm("idPermission").error.map {error => error.message }}</span>                                                
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 40%;">
+                                <div style="width: 50%;margin-top: 20px;" class="form-group @if(permissionsForm("permission").hasErrors) {has-error}">
+                                    <div class="descrptionMessageTable">Ingrese la descripci&oacute;n del nuevo permiso</div>
+                                    <input type="text" class="form-control" name="@permissionsForm("permission").name" id="@permissionsForm("permission").id" value="@permissionsForm("permission").value"/>
+                                    <span class="help-block" id="spanpermission">@{permissionsForm("permission").error.map {error => error.message }}</span>                                                
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><div style="margin-top: 15px;"><input class="btn btn-success" type="submit" value="Guardar"></div></td>
+                        </tr>
+                    </table>
+                </fieldset>
+            }
+        </div>
+    }
+    @footer(title)
+}

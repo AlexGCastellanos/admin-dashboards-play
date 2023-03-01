@@ -1,0 +1,38 @@
+@import helper._
+
+@(title: String, isLoggedIn: Boolean, userInfo: UserInfo)
+
+@main(title, isLoggedIn, userInfo) { 
+    @menu_navigate(title,userInfo){
+    <div class="list_item">
+        @helper.form(routes.UploadOtherFiles.saveAddScriptOthersFiles(),'enctype -> "multipart/form-data") {
+        <fieldset>
+            <table style="width: 40%;">
+                <tr>
+                    <td><div style="border-bottom: solid; width: 91%;margin-bottom: 20px;" class="descrptionMessage"><b>Agregar nuevo archivo de limpieza</b></div></td>
+                </tr>
+                <tr>
+                    <td><div class="descrptionMessage">Seleccione el archivo </div></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="width: 45%;float: left;margin-right: 10px;">
+                            <input type="file" accept=".py" name="pathFileClean" id="pathFileClean" value=""/>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><div style="margin-top: 15px;"><input class="btn btn-success" type="submit" value="Guardar"></div></td>
+                </tr>
+            </table>
+        </fieldset>
+        }
+        <script>
+            $(document).ready(function () {
+                current_tab("h3_OtrosArchivos");
+            });
+        </script>
+    </div>
+    }
+    @footer(title)
+}

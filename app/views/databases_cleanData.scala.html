@@ -1,0 +1,46 @@
+@import helper._
+
+@(title: String, isLoggedIn: Boolean, userInfo: UserInfo)
+
+@main(title, isLoggedIn, userInfo) { 
+    <div class="dvContainerCleanData">
+        <table style="width: 100%;">
+            <tr>
+                <td><div class="titleParam">Servicio de Limpieza de datos para Bases de datos</div></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="descriptionParam"><div class="paddingDescription">En esta opci&oacute;n puede ejecutar las modificaciones necesarias a los archivos de salida configurados en pasos anteriores.</div></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style="width: 15%"><div style="margin: 10px"><input class="btn btn-success" style="width: 100%;" type="button" id="btnGenerateScriptDB" value="Generar Script" ></div></td>
+                            <td style="width: 15%"><div style="margin: 10px"><input class="btn btn-success" style="width: 100%;" type="button" id="btnRunScriptDB" value="Ejecutar Script" disabled="true"></div></td>
+                            <td style="width: 15%"><div style="margin: 10px"><input class="btn btn-success" style="width: 100%;" type="button" id="btnIndexerDB" value="Indexar" disabled="true"></div></td>
+                            <td style="width: 30%">
+                                <div style="margin-top: 15px;"><select id="nameConfiguration" class="form-group custom-select-crg" onchange="checkPythonDB()"></select></div>
+                            </td>
+                            <td><div style="margin: 10px;float: right;"><input class="btn btn-success" type="button" id="btnVolverProfile" value="Volver"></div></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <div id="dvIframeCleanDataDB" class="list_item">
+            <iframe src="" class="iframeCleanDataServiceDB" id="iframeCleanDataServiceDB"></iframe>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            current_tab("h3_BaseDatos");
+            loadConfigurationsDB(); 
+            fillIframeCleanDataDB();
+        });
+
+    </script>
+    
+    @footer(title)
+}

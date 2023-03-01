@@ -1,0 +1,51 @@
+@import helper._
+
+@(title: String, isLoggedIn: Boolean, userInfo: UserInfo, profilesForm : Form[views.formdata.ProfilesForm])
+
+@main(title, isLoggedIn, userInfo) { 
+    @menu_navigate(title,userInfo){
+        <div id="divAddProfile" class="list_item">
+            <table style="width: 100%;">
+                <tr>
+                    <td><div class="titleParam">Administraci&oacute;n de perfiles.</div></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="descriptionParam"><div class="paddingDescription">Estas configuraciones pueden afectar la visualizaci&oacute;n del m&oacute;dulo de administraci&oacute;n.</div></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 40%;">
+                        <div style="width: 50%;margin-top: 20px;" class="form-group @if(profilesForm("nomPerfil").hasErrors) {has-error}">
+                            <div class="descrptionMessageTable">Ingrese el nombre del perfil</div>
+                            <input type="text" class="form-control" name="@profilesForm("nomPerfil").name" id="@profilesForm("nomPerfil").id" value="@profilesForm("nomPerfil").value"/>
+                            <span class="help-block" id="spannomPerfil">@{profilesForm("nomPerfil").error.map {error => error.message }}</span>                                                
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 40%;" colspan="3">
+                        <div class="descrptionMessageTable">Seleccione los permisos que desea incluir en el perfil</div>
+                        <div id="selPerfiles" style="width: 65%;float: left;">
+                            <table id="tablePermissions" style="width: 100%;"></table>
+                            <input type="hidden" name="@profilesForm("hiddenPermissions").name" id="@profilesForm("hiddenPermissions").id" value="@profilesForm("hiddenPermissions").value"/> 
+                        </div>
+                        <div style="padding-top: 5px;text-align: center;width: 85%;height: 35px;">
+                            Permitir todos <input type="checkbox" id="chPermitirTodosProfile"/>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><div style="margin-top: 15px;margin-bottom: 50px;"><input class="btn btn-success" type="submit" value="Guardar" onclick="saveProfile()"></div></td>
+                </tr>
+            </table>
+            <script>
+                $(document).ready(function() {
+                    fillPermissions();
+                    current_tab("h3_Usuarios");
+                });
+            </script>
+        </div>
+    }
+    @footer(title)
+}

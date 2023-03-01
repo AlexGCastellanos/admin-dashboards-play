@@ -1,0 +1,167 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# An example controller showing a sample home page
+# Home page
+GET     /                               controllers.Application.index()
+GET     /profile                        controllers.Application.profile()
+
+# Login
+GET     /login                          controllers.Application.login()
+POST    /login                          controllers.Application.postLogin()
+GET     /logout                         controllers.Application.logout()
+
+#Load configurations
+POST    /loadPermission                 controllers.Permissions.loadPermission()
+POST    /loadPermissionsProfiles        controllers.Profiles.loadPermissionsProfiles()
+POST    /loadProfiles                   controllers.Profiles.loadProfiles()
+POST    /loadProfilesGroups             controllers.Groups.loadProfilesGroups()
+POST    /loadGroups                     controllers.Groups.loadGroups()
+POST    /loadUsers                      controllers.Users.loadUsers()
+
+#MODULE
+GET     /loadConfigModule               controllers.Application.loadConfigModule()
+GET     /loadAdminUsers                 controllers.Application.loadAdminUsers()
+
+#DATABASES
+POST    /loadConnections                controllers.Databases.loadConnections()   
+POST    /loadProgTaskBD                 controllers.Databases.loadProgTaskBD()
+GET     /loadConfigurationsDB           controllers.Databases.loadConfigurationsDB()
+GET     /loadConfigsDBReady             controllers.Databases.loadConfigsDBReady()
+
+#JUPYTER
+GET     /loadCleanDataService           controllers.ServiceJupyter.loadCleanDataService()
+GET     /loadPathCleanDataService       controllers.ServiceJupyter.loadPathCleanDataService()
+POST    /checkPython                    controllers.ServiceJupyter.checkPython()
+POST    /checkOutput                    controllers.ServiceJupyter.checkOutput()
+
+#FILESERVERS
+POST    /loadConnectionsFS              controllers.FileServers.loadConnections() 
+POST    /loadProgTaskFS                 controllers.FileServers.loadProgTaskFS()
+GET     /loadConfigurationsFS           controllers.FileServers.loadConfigurationsFS()
+
+#UPFILES
+POST    /upLoadOtherFile                controllers.UploadOtherFiles.upLoadOtherFile()
+POST    /loadConexionesOthersFiles      controllers.UploadOtherFiles.loadConexionesOthersFiles() 
+POST    /loadProgTareaOthersFiles       controllers.UploadOtherFiles.loadProgTareaOthersFiles()
+
+# Show templates
+GET     /showAddPermission              controllers.Application.showAddPermission()
+GET     /showEditPermission             controllers.Application.showEditPermission()
+GET     /showAddProfiles                controllers.Application.showAddProfiles()
+GET     /showEditProfiles               controllers.Application.showEditProfiles()
+GET     /showAddGroups                  controllers.Application.showAddGroups()
+GET     /showEditGroups                 controllers.Application.showEditGroups()
+GET     /showAddUsers                   controllers.Application.showAddUsers()
+GET     /showEditUsers                  controllers.Application.showEditUsers()
+GET     /showAdminUsers                 controllers.Application.showAdminUsers()
+
+#MODULE
+GET     /showConfigurationModule        controllers.Application.showConfigurationModule()
+
+#DATABASES
+GET     /showAddDatabaseConfig          controllers.Application.showAddDatabaseConfig()
+GET     /showEditDatabaseConfig         controllers.Application.showEditDatabaseConfig()
+GET     /showProgTaskDatabase           controllers.Application.showProgTaskDatabase()
+GET     /showProgTaskEditDatabase       controllers.Application.showProgTaskEditDatabase()
+GET     /showCleanDataDatabase          controllers.Application.showCleanDataDatabase()
+
+#JUPYTER
+GET     /showOtrasConfigCleanData       controllers.Application.showOtrasConfigCleanData()
+
+#UPFILES
+GET     /showIndexerExcel               controllers.Application.showLoadOthersFile()
+GET     /showNewConfigOtherFiles        controllers.Application.showNewConfigOtherFiles()
+GET     /showEditConfigOtherFiles       controllers.Application.showEditConfigOtherFiles()
+GET     /showAddScriptOtherFiles        controllers.Application.showAddScriptOtherFiles()
+GET     /showProgTareaOtherFiles        controllers.Application.showProgTareaOtherFiles()
+GET     /showProgTareaEditOtherFiles    controllers.Application.showProgTareaEditOtherFiles()
+
+#SOLRTOSOLR
+GET     /showSolrToSolr                 controllers.Application.showSolrToSolr()
+POST    /getFieldsSolrToSolr            controllers.SolrToSolr.getFields()
+POST    /uploadSolrToSolr               controllers.SolrToSolr.uploadSolrToSolr()
+
+#PRUEBA SOLR ALEX
+GET     /consulta                       controllers.Application.consulta()
+GET     /consultaConfig                 controllers.Application.consultaConfig()
+POST    /postConsultaConfig             controllers.QueryRouteConfig.addConfig()    
+POST    /postConsulta                   controllers.ServiceSolrApi.enviarDatos()
+
+#BACKUP
+GET     /showDoBackUp                   controllers.Application.showBackup()
+GET     /showScheduleBackUp             controllers.Application.showScheduleBackup()
+GET     /showScheduleBackUpEdit         controllers.Application.showScheduleBackUpEdit()
+GET     /showRestoreBackUp              controllers.Application.showRestoreBackup()
+POST    /doBackUp                       controllers.BackUp.doBackUp()
+POST    /restoreBackUp                  controllers.BackUp.restoreBackUp()
+POST    /loadSolrInsts                  controllers.BackUp.loadSolrInsts()
+POST    /loadSolrCores                  controllers.BackUp.loadSolrCores()
+POST    /loadSolrLastBackUp             controllers.BackUp.loadSolrLastBackUp()
+POST    /loadSolrBackUpInsts            controllers.BackUp.loadSolrBackUpInsts()
+POST    /loadSolrBackups                controllers.BackUp.loadSolrBackUps()
+POST    /loadSolrBackUpCores            controllers.BackUp.loadSolrBackUpCores()
+POST    /saveScheduleTaskBackUp         controllers.BackUp.saveProgTaskBackUp()
+POST    /loadProgTaskBackUp             controllers.BackUp.loadProgTaskBackUp()
+POST    /updateScheduleTaskBackUp       controllers.BackUp.editProgTaskBackUp()
+POST    /deleteScheduleTaskBackUp       controllers.BackUp.deleteProgTaskBackUp()
+
+
+#FILESERVERS
+GET     /showAddFileServerConfig        controllers.Application.showAddFileServerConfig()
+GET     /showEditFileServerConfig       controllers.Application.showEditFileServerConfig()
+GET     /showProgTaskFileServer         controllers.Application.showProgTaskFileServer()
+GET     /showProgTaskEditFileServer     controllers.Application.showProgTaskEditFileServer()
+GET     /showCleanDataFileServer        controllers.Application.showCleanDataFileServer()
+
+#Save functions
+POST    /savePermission                 controllers.Permissions.savePermission()
+POST    /saveEditPermission             controllers.Permissions.saveEditPermission()
+POST    /deletePermission               controllers.Permissions.deletePermission()
+POST    /saveProfile                    controllers.Profiles.saveProfile()
+POST    /saveEditProfile                controllers.Profiles.saveEditProfile()
+POST    /deleteProfile                  controllers.Profiles.deleteProfile()
+POST    /saveGroup                      controllers.Groups.saveProfile()
+POST    /saveEditGroup                  controllers.Groups.saveEditGroup()
+POST    /deleteGroup                    controllers.Groups.deleteGroup()
+POST    /saveUser                       controllers.Users.saveUser()
+POST    /saveEditUser                   controllers.Users.saveEditUser()
+POST    /deleteUser                     controllers.Users.deleteUser()
+
+POST    /postConfiguration              controllers.Configuration.saveConfiguration()
+
+#DATABASES
+POST    /saveConnection                 controllers.Databases.saveConnection()
+POST    /saveEditConnection             controllers.Databases.saveEditConnection()
+POST    /deleteConnection               controllers.Databases.deleteConnection()
+POST    /saveProgTaskBD                 controllers.Databases.saveProgTaskBD()
+POST    /updateProgTaskBD               controllers.Databases.editTaskDatabases()
+POST    /deleteProgTaskBD               controllers.Databases.deleteTasksBD()
+
+#JUPYTER
+POST    /saveOtherConfiguration         controllers.ServiceJupyter.saveOtherConfiguration()
+POST    /generateScript                 controllers.ServiceJupyter.generateScript()
+POST    /runPython                      controllers.ServiceJupyter.runPython()
+POST    /indexer                        controllers.ServiceJupyter.indexer()
+POST    /syncNow                        controllers.ServiceJupyter.syncNow()
+
+#FILESERVERS
+POST    /saveConnectionFS               controllers.FileServers.saveConnection()
+POST    /saveEditConnectionFS           controllers.FileServers.saveEditConnection()
+POST    /deleteConnectionFS             controllers.FileServers.deleteConnection()
+POST    /saveProgTaskFS                 controllers.FileServers.saveProgTaskFS()
+POST    /updateProgTaskFS               controllers.FileServers.editProgTaskFS()
+POST    /deleteProgTaskFS               controllers.FileServers.deleteProgTaskFS()
+
+#INDEXADOR CSV
+POST    /saveAddScriptOthersFiles               controllers.UploadOtherFiles.saveAddScriptOthersFiles()
+POST    /saveNewConfigOthersFiles               controllers.UploadOtherFiles.saveNewConfigOthersFiles()
+POST    /saveScriptConOthersFiles               controllers.UploadOtherFiles.saveScriptConOthersFiles()
+POST    /saveProgTareaOthersFiles               controllers.UploadOtherFiles.saveProgTareaOthersFiles()
+POST    /updateProgTareaOthersFiles             controllers.UploadOtherFiles.editTaskOthersFiles()
+POST    /deleteConOthersFiles                   controllers.UploadOtherFiles.deleteConOthersFiles()
+POST    /deleteProgTareaOthersFiles             controllers.UploadOtherFiles.deleteProgTareaOthersFiles()
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file                   controllers.Assets.at(path="/public", file)

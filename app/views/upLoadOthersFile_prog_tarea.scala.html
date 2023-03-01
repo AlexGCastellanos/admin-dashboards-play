@@ -1,0 +1,232 @@
+@import helper._
+
+@(title: String, isLoggedIn: Boolean, userInfo: UserInfo, progTareaOthersFilesForm : Form[views.formdata.ProgTareaOthersFilesForm], arrListaSemanas : LinkedHashMap[String, String], arrListaDiaMes : LinkedHashMap[String, String], arrListaHoras : LinkedHashMap[String, String], arrListaMinutos : LinkedHashMap[String, String], nomConexiones : HashMap[String, String])
+
+@main(title, isLoggedIn, userInfo) { 
+        @menu_navigate(title, userInfo){
+            <script>
+                $(document).ready(function () {
+                    current_tab("h3_OtrosArchivos");
+                });
+            </script>
+            <div id="dvProg_tarea_OthersFile" class="list_item">
+                <div class="titleParam">Programaci&oacute;n de tareas de indexaci&oacute;n de Otros archivos</div>
+                <div class="tab-content">
+                    <div id="1a" class="tab-pane active" style="margin: 15px;">
+                        @helper.form(routes.UploadOtherFiles.saveProgTareaOthersFiles()) {
+                        <fieldset>
+                            <table style="width: 70%;">
+                                <tr>
+                                    <td colspan="2"><div style="border-bottom: solid; width: 91%;margin-bottom: 20px;" class="descrptionMessage"><b>Configuraci&oacute;n</b></div></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <div class="descrptionMessage" style="margin-bottom: 15px;">
+                                            Por favor seleccione la forma en que desea programar la tarea
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="width: 100%;display: inline-block;" class="form-group @if(progTareaOthersFilesForm("hiddenCheckedMinutos").hasErrors) {has-error}">
+                                             <input type="checkbox" style="margin-right: 10px;float: left;" id="checkedMinutos" /> 
+                                            <input type="hidden" name="@progTareaOthersFilesForm("hiddenCheckedMinutos").name" id="@progTareaOthersFilesForm("hiddenCheckedMinutos").id" value="false"/> 
+                                                   <div class="descrptionMessageTable">Por frecuencia de minutos</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="width: 80%;background: #eee;" class="form-group @if(progTareaOthersFilesForm("porMinutosTarea").hasErrors) {has-error}">
+                                             <div class="borderForms">
+                                                <table style="width: 100%;">
+                                                    <tr>
+                                                        <td style="width: 20%;"><div class="descrptionMessageTable">(Cada </div></td>
+                                                        <td style="width: 40%;"><input type="text" class="form-control" name="@progTareaOthersFilesForm("porMinutosTarea").name" id="@progTareaOthersFilesForm("porMinutosTarea").id" value="@progTareaOthersFilesForm("porMinutosTarea").value"/></td>
+                                                        <td><div class="descrptionMessageTable"> minuto(s).)</div></td>
+                                                    </tr>
+                                                </table>   
+                                            </div>
+                                            <span class="help-block" id="porMinutosTarea">@{progTareaOthersFilesForm("porMinutosTarea").error.map {error => error.message }}</span>                                                
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="width: 100%;display: inline-block;" class="form-group @if(progTareaOthersFilesForm("hiddenCheckedHoras").hasErrors) {has-error}">
+                                             <input type="checkbox" style="margin-right: 10px;float: left;" id="checkedHoras" /> 
+                                            <input type="hidden" name="@progTareaOthersFilesForm("hiddenCheckedHoras").name" id="@progTareaOthersFilesForm("hiddenCheckedHoras").id" value="false"/> 
+                                                   <div class="descrptionMessageTable">Por frecuencia de horas</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="width: 80%;background: #eee;" class="form-group @if(progTareaOthersFilesForm("porHorasTarea").hasErrors) {has-error}">
+                                             <div class="borderForms">
+                                                <table style="width: 100%;">
+                                                    <tr>
+                                                        <td style="width: 20%;"><div class="descrptionMessageTable">(Cada </div></td>
+                                                        <td style="width: 40%;"><input type="text" class="form-control" name="@progTareaOthersFilesForm("porHorasTarea").name" id="@progTareaOthersFilesForm("porHorasTarea").id" value="@progTareaOthersFilesForm("porHorasTarea").value"/></td>
+                                                        <td><div class="descrptionMessageTable"> hora(s).)</div></td>
+                                                    </tr>
+                                                </table>   
+                                            </div>
+                                            <span class="help-block" id="spanporHorasTarea">@{progTareaOthersFilesForm("porHorasTarea").error.map {error => error.message }}</span>                                                
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="width: 100%;display: inline-block;" class="form-group @if(progTareaOthersFilesForm("hiddenCheckedDias").hasErrors) {has-error}">
+                                             <input type="checkbox" style="margin-right: 10px;float: left;" id="checkedDias" /> 
+                                            <input type="hidden" name="@progTareaOthersFilesForm("hiddenCheckedDias").name" id="@progTareaOthersFilesForm("hiddenCheckedDias").id" value="false"/> 
+                                                   <div class="descrptionMessageTable">Por frecuencia de d&iacute;as</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="width: 80%;background: #eee;" class="form-group @if(progTareaOthersFilesForm("diaTarea").hasErrors) {has-error}">
+                                             <div class="borderForms">
+                                                <table style="width: 100%;">
+                                                    <tr>
+                                                        <td style="width: 20%;"><div class="descrptionMessageTable">(Cada </div></td>
+                                                        <td style="width: 40%;"><input type="text" class="form-control" name="@progTareaOthersFilesForm("diaTarea").name" id="@progTareaOthersFilesForm("diaTarea").id" value="@progTareaOthersFilesForm("diaTarea").value"/></td>
+                                                        <td><div class="descrptionMessageTable"> d&iacute;a(s).)</div></td>
+                                                    </tr>
+                                                </table>   
+                                            </div>
+                                            <span class="help-block" id="spandiaTarea">@{progTareaOthersFilesForm("diaTarea").error.map {error => error.message }}</span>                                                
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="width: 100%;display: inline-block;" class="form-group @if(progTareaOthersFilesForm("hiddenCheckedDiaSemana").hasErrors) {has-error}">
+                                            <input type="checkbox" style="margin-right: 10px;float: left;" id="checkedDiaSemana" />  
+                                            <input type="hidden" name="@progTareaOthersFilesForm("hiddenCheckedDiaSemana").name" id="@progTareaOthersFilesForm("hiddenCheckedDiaSemana").id" value="false"/>
+                                            <div class="descrptionMessageTable">Por d&iacute;a de la semana</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="width: 80%;background: #eee;" class="form-group @if(progTareaOthersFilesForm("diaSemanaTarea").hasErrors) {has-error}">
+                                             <div class="borderForms">
+                                                <table style="width: 100%;">
+                                                    <tr>
+                                                        <td style="width: 20%;"><div class="descrptionMessageTable">(El d&iacute;a </div></td>
+                                                        <td style="width: 40%;">
+                                                            @select(
+                                                            progTareaOthersFilesForm("diaSemanaTarea"),
+                                                            options(arrListaSemanas),
+                                                            '_label -> "",
+                                                            'class -> "custom-select-crg"
+                                                            )
+                                                        </td>
+                                                        <td><div class="descrptionMessageTable"> de cada Semana.)</div></td>
+                                                    </tr>
+                                                </table>   
+                                            </div>
+                                            <script>document.getElementById("diaSemanaTarea_field").removeChild(document.getElementById("diaSemanaTarea_field").firstElementChild);</script>
+                                            <span class="help-block" id="spandiaSemana">@{progTareaOthersFilesForm("diaSemanaTarea").error.map {error => error.message }}</span>                                                
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="width: 100%;display: inline-block;" class="form-group @if(progTareaOthersFilesForm("hiddenCheckedDiaMes").hasErrors) {has-error}">
+                                             <input type="checkbox" style="margin-right: 10px;float: left;" id="checkedDiaMes" />      
+                                            <input type="hidden" name="@progTareaOthersFilesForm("hiddenCheckedDiaMes").name" id="@progTareaOthersFilesForm("hiddenCheckedDiaMes").id" value="false"/>
+                                                   <div class="descrptionMessageTable">Por d&iacute;a del mes</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="width: 80%;background: #eee;" class="form-group @if(progTareaOthersFilesForm("diaMesTarea").hasErrors) {has-error}">
+                                             <div class="borderForms">
+                                                <table style="width: 100%;">
+                                                    <tr>
+                                                        <td style="width: 20%;"><div class="descrptionMessageTable">(El d&iacute;a </div></td>
+                                                        <td style="width: 40%;">
+                                                            @select(
+                                                            progTareaOthersFilesForm("diaMesTarea"),
+                                                            options(arrListaDiaMes),
+                                                            '_label -> "",
+                                                            'class -> "custom-select-crg"
+                                                            )
+                                                        </td>
+                                                        <td><div class="descrptionMessageTable"> de cada Mes.)</div></td>
+                                                    </tr>
+                                                </table>   
+                                            </div>
+                                            <script>document.getElementById("diaMesTarea_field").removeChild(document.getElementById("diaMesTarea_field").firstElementChild);</script>
+                                            <span class="help-block" id="spandiaSemana">@{progTareaOthersFilesForm("diaMesTarea").error.map {error => error.message }}</span>                                                
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <div class="form-group @if(progTareaOthersFilesForm("otrosErrores").hasErrors) {has-error}">
+                                             <span class="help-block" id="spanotrosErrores">@{progTareaOthersFilesForm("otrosErrores").error.map {error => error.message }}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="borderForms" style="display:none;" id="divProgHoras">
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td colspan="6">
+                                            <div class="descrptionMessage" style="margin-bottom: 15px;">
+                                                Por favor, Ingrese la frecuencia de d&iacute;as y seleccione la hora (En formato de 24 horas) en la cual se va a ejecutar la tarea:
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 10%;"><div class="descrptionMessageTable">Hora: </div></td>
+                                        <td>
+                                            <div style="width: 80%;margin-top: 20px;" class="form-group @if(progTareaOthersFilesForm("horaTarea").hasErrors) {has-error}">
+                                                 @select(
+                                                 progTareaOthersFilesForm("horaTarea"),
+                                                 options(arrListaHoras),
+                                                 '_label -> "",
+                                                 'class -> "custom-select-crg"
+                                                 )
+                                            <script>document.getElementById("horaTarea_field").removeChild(document.getElementById("horaTarea_field").firstElementChild);</script>
+                                            </div>
+                                        </td>
+                                        <td style="width: 10%;"><div class="descrptionMessageTable">Minuto: </div></td>
+                                        <td>
+                                            <div style="width: 80%;margin-top: 20px;" class="form-group @if(progTareaOthersFilesForm("minTarea").hasErrors) {has-error}">
+                                                 @select(
+                                                 progTareaOthersFilesForm("minTarea"),
+                                                 options(arrListaMinutos),
+                                                 '_label -> "",
+                                                 'class -> "custom-select-crg"
+                                                 )
+                                            <script>document.getElementById("minTarea_field").removeChild(document.getElementById("minTarea_field").firstElementChild);</script>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <table style="width: 70%;">
+                                <tr>
+                                    <td style="width: 32%;"><div class="descrptionMessageTable">Conexi&oacute;n:</div></td>
+                                    <td>
+                                        <div style="width: 80%;margin-top: 20px;" class="form-group @if(progTareaOthersFilesForm("selConexion").hasErrors) {has-error}">
+                                             @select(
+                                             progTareaOthersFilesForm("selConexion"),
+                                             options(nomConexiones),
+                                             '_label -> "",
+                                             'class -> "custom-select-crg"
+                                             )
+                                        <script>document.getElementById("selConexion_field").removeChild(document.getElementById("selConexion_field").firstElementChild);</script>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div style="margin-top: 15px;"><input class="btn btn-success" type="submit" value="Guardar"></div>
+                        </fieldset>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    
+    @footer(title)
+}

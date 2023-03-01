@@ -1,0 +1,257 @@
+@import helper._
+
+@(title: String, isLoggedIn: Boolean, userInfo: UserInfo, DatabasesForm : Form[views.formdata.DatabasesForm], arrBasesdatos : HashMap[String, String])
+
+@main(title, isLoggedIn, userInfo) { 
+    @menu_navigate(title, userInfo){
+        <script>
+            $(document).ready(function () {    
+                current_tab("h3_BaseDatos");
+            });
+        </script>
+        <div id="div_AddBaseDatos" class="list_item" style="margin-bottom: 300px"> 
+            @helper.form(routes.Databases.saveConnection()) {
+            <fieldset>
+                <table style="width: 100%;">
+                    <tr>
+                        <td colspan="3"><div class="titleParam">Agregar nueva conexi&oacute;n a Base de datos</div></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><div style="border-bottom: solid; width: 91%;margin-bottom: 20px;" class="descrptionMessage"><b>Configuraci&oacute;n</b></div></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;" colspan="3">
+                            <div style="width: 50%;" class="form-group @if(DatabasesForm("nomConnection").hasErrors) {has-error}">
+                                <div class="descrptionMessageTable">Ingrese el nombre de la conexi&oacute;n</div>
+                                <input type="text" class="form-control" name="@DatabasesForm("nomConnection").name" id="@DatabasesForm("nomConnection").id" value="@DatabasesForm("nomConnection").value"/>
+                                <span class="help-block" id="spannomConnection">@{DatabasesForm("nomConnection").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;" colspan="3">
+                            <div style="width: 70%;" class="form-group @if(DatabasesForm("separatorBD").hasErrors) {has-error}">
+                                <div class="descrptionMessageTable">Ingrese el separador de los campos con el que se generar&aacute; el volcado de la Base de datos</div>
+                                <input type="text" style="width: 100px;" class="form-control" name="@DatabasesForm("separatorBD").name" id="@DatabasesForm("separatorBD").id" value="@DatabasesForm("separatorBD").value"/>
+                                <span class="help-block" id="spanSeparatorBD">@{DatabasesForm("separatorBD").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;" colspan="3">
+                            <div style="width: 90%;" class="form-group @if(DatabasesForm("query").hasErrors) {has-error}">
+                                <div class="descrptionMessageTable">Ingrese la consulta o sentencia SQL de la vista:</div>
+                                <textarea rows="4" class="form-control" name="@DatabasesForm("query").name" id="@DatabasesForm("query").id" value="@DatabasesForm("query").value"></textarea>
+                                <span class="help-block" id="spanQuery">@{DatabasesForm("query").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                    </tr>
+                    
+                        
+                    <tr>
+                         <td>
+                            <div style="width: 100%;display: inline-block;margin-left: 20px;" class="form-group @if(DatabasesForm("hiddenChecked").hasErrors) {has-error}">
+                                <div class="descrptionMessageTable" style="float: left;">Ejecutar diariamente</div>
+                                <input type="checkbox" style="margin-left: 10px;" id="hiddenCheckedDate" checked/>                                                                                                
+                                <input type="hidden" name="@DatabasesForm("hiddenChecked").name" id="@DatabasesForm("hiddenChecked").id" value="true"/>       
+                           </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;" colspan="3">
+                            <div style="width: 90%;">
+                                 <div class="descrptionMessageTable"> Ingrese el rango de fechas por las que desee generar los datos</div>                                         
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>    
+                        <td style="width: 25%;">
+                            <div style="width: 95%;" class="form-group @if(DatabasesForm("date1").hasErrors) {has-error}">
+                                <input type="date" class="form-control" disabled="disabled" name="@DatabasesForm("date1").name" id="@DatabasesForm("date1").id" value="@DatabasesForm("date1").value"/>
+                                <span class="help-block" id="spanDate1">@{DatabasesForm("date1").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                        <td style="width: 25%;">
+                            <div style="width: 95%;" class="form-group @if(DatabasesForm("date2").hasErrors) {has-error}">
+                                <input type="date" disabled="disabled" class="form-control" name="@DatabasesForm("date2").name" id="@DatabasesForm("date2").id" value="@DatabasesForm("date2").value"/>
+                                <span class="help-block" id="spanDate2">@{DatabasesForm("date2").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                        <td style="width: 50%;"></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;" colspan="3">
+                            <div style="width: 90%;display: none"  id="nametableCampoFecha">
+                                 <div class="descrptionMessageTable"> Ingrese el nombre del campo de fecha por el cual desea generar los datos</div>                                         
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                             <td style="display: none" colspan="2" id="tableCampoFecha">
+                                    <input id="campoFecha_0" style="width: 50%" type="text" class="form-control" value="Todas">
+                                    <button id="btn_campoFecha_0" style="width: 50%" type="button" onclick="campoFechaADDWord(this.id[this.id.length - 1], this.value)">Agregar</button>
+                                    <select id="search_results_campoFecha_0" style="width: 50%" multiple="multiple" class="form-control" onchange="deletecampoFecha(this.id[this.id.length - 1])" onclick="deletecampoFecha(this.value)" style="height: 80px;"></select>
+                                    <input type="hidden" name="@DatabasesForm("fieldDate").name" id="@DatabasesForm("fieldDate").id" value=""/> 
+                            </td>
+                    </tr>
+                    <tr>
+                            
+                            <td style="width: 40%;" colspan="2">
+                                    <div style="width: 90%;">
+                                            <div class="descrptionMessageTable"> Ingrese el n&uacute;mero de d&iacute;as anteriores a la fecha actual</div>                                         
+                                    </div>
+                            </td>
+                            <td></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 25%;">
+                            <div style="width: 100%;" class="form-group @if(DatabasesForm("diascampoFecha").hasErrors) {has-error}">
+                                <input type="text" disabled="disabled" class="form-control" name="@DatabasesForm("diascampoFecha").name" id="@DatabasesForm("diascampoFecha").id" value="@DatabasesForm("diascampoFecha").value"/>
+                                <span class="help-block" id="spanFieldDate">@{DatabasesForm("diascampoFecha").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                        <td>
+                                <div style="width: 100%;display: inline-block;margin-left: 20px;" class="form-group @if(DatabasesForm("hiddenAllFile").hasErrors) {has-error}">
+                                        <div class="descrptionMessageTable" style="float: left;">Descargar toda la vista</div>
+                                        <input type="checkbox" style="margin-left: 10px;" id="hiddenDownloadAllFile" checked/>                                                                                                
+                                        <input type="hidden" name="@DatabasesForm("hiddenAllFile").name" id="@DatabasesForm("hiddenAllFile").id" value="true"/>       
+                                </div>
+                        </td>
+                    </tr>
+                   <tr>
+                        <td style="width: 40%;" colspan="3">
+                            <div style="width: 50%;" class="form-group @if(DatabasesForm("databases").hasErrors) {has-error}">
+                                <div class="descrptionMessageTable">Por favor, seleccione la base de datos para la conexi&oacute;n:</div>
+                                @select(
+                                    DatabasesForm("databases"),
+                                    options(arrBasesdatos),
+                                    '_label -> null,
+                                    'class -> "custom-select-crg"
+                                )
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;" colspan="3">
+                            <div style="width: 50%;" class="form-group @if(DatabasesForm("serverBD").hasErrors) {has-error}">
+                                <div class="descrptionMessageTable">Ingrese el nombre del servidor o IP de la Base de datos</div>
+                                <input type="text" class="form-control" name="@DatabasesForm("serverBD").name" id="@DatabasesForm("serverBD").id" value="@DatabasesForm("serverBD").value"/>
+                                <span class="help-block" id="spanServerBD">@{DatabasesForm("serverBD").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;" colspan="3">
+                            <div style="width: 50%;" class="form-group @if(DatabasesForm("portBD").hasErrors) {has-error}">
+                                <div class="descrptionMessageTable">Ingrese el puerto de la Base de datos (Opcional)</div>
+                                <input type="text" class="form-control" name="@DatabasesForm("portBD").name" id="@DatabasesForm("portBD").id" value="@DatabasesForm("portBD").value"/>
+                                <span class="help-block" id="spanPortBD">@{DatabasesForm("portBD").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;" colspan="3">
+                            <div style="width: 50%;" class="form-group @if(DatabasesForm("nameBD").hasErrors) {has-error}">
+                                <div class="descrptionMessageTable">Ingrese el nombre de la Base de datos</div>
+                                <input type="text" class="form-control" name="@DatabasesForm("nameBD").name" id="@DatabasesForm("nameBD").id" value="@DatabasesForm("nameBD").value"/>
+                                <span class="help-block" id="spanNameBD">@{DatabasesForm("nameBD").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;" colspan="3">
+                            <div style="width: 50%;" class="form-group @if(DatabasesForm("instanceBD").hasErrors) {has-error}">
+                                <div class="descrptionMessageTable">Ingrese la instancia de la Base de datos (Opcional)</div>
+                                <input type="text" class="form-control" name="@DatabasesForm("instanceBD").name" id="@DatabasesForm("instanceBD").id" value="@DatabasesForm("instanceBD").value"/>
+                                <span class="help-block" id="spanInstanceBD">@{DatabasesForm("instanceBD").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;" colspan="3">
+                            <div style="width: 50%;" class="form-group @if(DatabasesForm("userBD").hasErrors) {has-error}">
+                                <div class="descrptionMessageTable">Ingrese el nombre del usuario de la Base de datos</div>
+                                <input type="text" class="form-control" name="@DatabasesForm("userBD").name" id="@DatabasesForm("userBD").id" value="@DatabasesForm("userBD").value"/>
+                                <span class="help-block" id="spanuserBD">@{DatabasesForm("userBD").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;" colspan="3">
+                            <div style="width: 50%;" class="form-group @if(DatabasesForm("passBD").hasErrors) {has-error}">
+                                <div class="descrptionMessageTable">Ingrese la contrase&ntilde;a del usuario de la Base de datos</div>
+                                <input type="password" class="form-control" name="@DatabasesForm("passBD").name" id="@DatabasesForm("passBD").id" value="@DatabasesForm("passBD").value"/>
+                                <span class="help-block" id="spanpassBD">@{DatabasesForm("passBD").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="width: 100%;display: inline-block;margin-left: 20px;" class="form-group @if(DatabasesForm("disFracView").hasErrors) {has-error}">
+                                <div class="descrptionMessageTable" style="float: left;">Fraccionar vista</div>
+                                <input type="checkbox" style="margin-left: 10px;" id="hiddenCheckedFracView" checked/>                                                                                                
+                                <input type="hidden" name="@DatabasesForm("disFracView").name" id="@DatabasesForm("disFracView").id" value="true"/>       
+                           </div>
+                        </td>
+                        <td style="width: 40%;" colspan="2">
+                            <div style="width: 100%;" class="form-group @if(DatabasesForm("numFracView").hasErrors) {has-error}">
+                                <div class="descrptionMessageTable">Ingrese el n&uacute;mero de registros por el que desea fraccionar la vista</div>
+                                <input type="text" style="width: 60%;" class="form-control" name="@DatabasesForm("numFracView").name" id="@DatabasesForm("numFracView").id" value="@DatabasesForm("numFracView").value" />       
+                                <span class="help-block" id="spanNumFracView">@{DatabasesForm("numFracView").error.map {error => error.message }}</span>                                                
+                            </div> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="width: 40%;" colspan="2">
+                            <div style="width: 99%;" class="form-group @if(DatabasesForm("fieldOrderBy").hasErrors) {has-error}">
+                                <div class="descrptionMessageTable">Ingrese el nombre del campo de la vista por el que desea ordenar los registros</div>
+                                <input type="text" style="width: 50%;" class="form-control" name="@DatabasesForm("fieldOrderBy").name" id="@DatabasesForm("fieldOrderBy").id" value="@DatabasesForm("fieldOrderBy").value" />       
+                                <span class="help-block" id="spanFieldOrderBy">@{DatabasesForm("fieldOrderBy").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;" colspan="3">
+                            <div style="width: 50%;" class="form-group @if(DatabasesForm("tipoIndexacion").hasErrors) {has-error}">
+                                <div  class="descrptionMessageTable">Por favor, seleccione el tipo de limpieza</div>
+                                <select  class="custom-select-crg" id="selectCleanType" onchange="saveCleanType()"  >
+                                    <option value="servicioExterno">Servicio Externo</option>
+                                    <option value="servicioJupyter">Servicio Jupyter</option>
+                                </select>
+                                <input type="hidden" name="@DatabasesForm("cleanType").name" id="@DatabasesForm("cleanType").id" value="servicioExterno"/>             
+                            </div>
+                        </td> 
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;" colspan="2">
+                            <div style="width: 100%;" class="form-group @if(DatabasesForm("pathService").hasErrors) {has-error}">
+                                <div class="descrptionMessageTable">Ingrese el path o url del servicio donde se realizar&aacute; la indexaci&oacute;n</div>
+                                <input type="text" style="width: 90%;" class="form-control" name="@DatabasesForm("pathService").name" id="@DatabasesForm("pathService").id" value="@DatabasesForm("pathService").value" />       
+                                <span class="help-block" id="spanPathServiceDB">@{DatabasesForm("pathService").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                        <td>
+                            <div style="width: 100%;display: inline-block;margin-left: 20px;" class="form-group @if(DatabasesForm("hiddenCheckedCleanCore").hasErrors) {has-error}">
+                                <div class="descrptionMessageTable" style="float: left;">Limpiar colecci&oacute;n antes de indexar</div>
+                                <input type="checkbox" style="margin-left: 10px;" id="checkedCleanCore" />                                                                                                
+                                <input type="hidden" name="@DatabasesForm("hiddenCheckedCleanCore").name" id="@DatabasesForm("hiddenCheckedCleanCore").id" value="false"/>       
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;" colspan="3">
+                            <div style="width: 100%;">Salida de Volcados: /opt/data/IFindIt/admin_dashboards/admin_serviceDash/databases/filesViews</div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td><div style="margin-top: 15px;"><input class="btn btn-success" type="submit" value="Guardar"></div></td>
+                    </tr>
+                </table>
+            </fieldset>
+            }
+        </div>
+    }
+    @footer(title)
+}

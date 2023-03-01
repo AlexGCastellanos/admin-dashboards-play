@@ -1,0 +1,118 @@
+@import helper._
+
+@(title: String, isLoggedIn: Boolean, userInfo: UserInfo, FileServerForm : Form[views.formdata.FileServerForm])
+
+@main(title, isLoggedIn, userInfo) { 
+@menu_navigate(title, userInfo){
+<div id="div_EditFileServer" class="list_item table-responsive" style="margin-bottom: 300px">
+    <table class="table table-striped table-bordered table-hover" id="tableConnectionsFS" style="width: 100%;">
+        <thead>
+            <tr>
+                <th></th>
+                <th>ID</th>
+                <th>Conexi&oacute;n</th>
+                <th>IP</th>
+                <th>Puerto</th>
+                <th>Path</th>
+                <th>Usuario</th>
+                <th>Dominio</th>
+                <th>Servicio</th>
+                <th>Limpiar colecci&oacute;n</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modal-connectionsFS">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header" style="border: none;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Editar registro</h4> 
+                </div>
+                <div style="margin-top: 20px;height: 300px;">
+                    <table style="width: 100%;" id="tableEditConnections">
+                        <tr>
+                            <td><input type="hidden" id="idEdit" value="" /></td>
+                        </tr>
+                        <tr>
+                            <td><label for="nomConnection" class="control-label lb-left">Nombre de la conexi&oacute;n</label></td>
+                            <td><div class="col-sm-2" style="width: 95%;margin-top: 10px;"><input id="nomConnectionEdit" name="nomConnectionEdit" type="text"  disabled="true" class="form-control" autofocus="true"/></div></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <table>
+                                    <tr>
+                                        <td><label for="ipServerFS" class="control-label lb-left">IP</label></td>
+                                        <td><div class="col-sm-2" style="width: 95%;margin-top: 10px;"><input id="ipServerFSEdit" name="ipServerFSEdit" type="text" class="form-control" autofocus="true"/></div></td>
+                                        <td><label for="portServerFS" class="control-label lb-left">Puerto</label></td>
+                                        <td><div class="col-sm-2" style="width: 95%;margin-top: 10px;"><input id="portServerFSEdit" name="portServerFSEdit" type="text" class="form-control" autofocus="true"/></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="pathFileServer" class="control-label lb-left">Path</label></td>
+                                        <td colspan="3"><div class="col-sm-2" style="width: 95%;margin-top: 10px;"><input id="pathFileServerEdit" name="pathFileServerEdit" type="text" class="form-control" autofocus="true"/></div></td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td><label for="userFS" class="control-label lb-left">Usuario</label></td>
+                                        <td><div class="col-sm-2" style="width: 95%;margin-top: 10px;"><input id="userFSEdit" name="userFSEdit" type="text" class="form-control" autofocus="true"/></div></td>
+                                        <td><label for="domainFS" class="control-label lb-left">Dominio</label></td>
+                                        <td><div class="col-sm-2" style="width: 95%;margin-top: 10px;"><input id="domainFSEdit" name="domainFSEdit" type="text" class="form-control" autofocus="true"/></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="passFS" class="control-label lb-left">Contrase&ntilde;a</label></td>
+                                        <td colspan="3"><div class="col-sm-2" style="width: 95%;margin-top: 10px;"><input id="passFSEdit" name="passFSEdit" type="password" class="form-control" autofocus="true"/></div></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td><label for="pathService" class="control-label lb-left">Path del servicio de indexaci&oacute;n</label></td>
+                                        <td style="width: 60%;"><div class="col-sm-2" style="width: 95%;margin-top: 10px;"><input id="pathServiceEdit" name="pathServiceEdit" type="text" class="form-control"/></div></td>
+                                        <td><label for="hiddenCleanCore" class="control-label lb-left">Limpiar Colecci&oacute;n</label></td>
+                                        <td>
+                                            <div class="col-sm-2" style="width: 95%;margin-top: 10px;">
+                                                <input type="checkbox" style="margin-left: 10px;" id="hiddenCheckedEditCleanCore" />
+                                                <input type="hidden" name="EditHiddenCleanCore" id="EditHiddenCleanCore" value=""/>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer" style="border: none;">
+                    <button type="button" class="btn btn-default" id="modal-btn-SaveConnectionFS">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modal-DeleteConnectionFS">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Confirmar</h4>
+              <h4>Desea eliminar este registro?</h4>
+              <input type="hidden" id="idDeleteCon" value=""/>
+            </div>
+            <div class="modal-footer" style="border: none;">
+              <button type="button" class="btn btn-default" id="modal-btn-si-DeleteConnectionFS">Si</button>
+              <button type="button" class="btn btn-primary" id="modal-btn-no-DeleteConnectionFS">No</button>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        listConnectionsFS();
+        current_tab("h3_FileServer");
+    });
+</script>
+}
+@footer(title)
+}

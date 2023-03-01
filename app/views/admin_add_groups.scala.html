@@ -1,0 +1,51 @@
+@import helper._
+
+@(title: String, isLoggedIn: Boolean, userInfo: UserInfo, groupsForm : Form[views.formdata.GroupsForm])
+
+@main(title, isLoggedIn, userInfo) { 
+    @menu_navigate(title,userInfo){
+        <div id="divAddProfile" class="list_item">
+            <table style="width: 100%;">
+                <tr>
+                    <td><div class="titleParam">Administraci&oacute;n de grupos.</div></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="descriptionParam"><div class="paddingDescription">Estas configuraciones pueden afectar la visualizaci&oacute;n del m&oacute;dulo de administraci&oacute;n.</div></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 40%;">
+                        <div style="width: 50%;margin-top: 20px;" class="form-group @if(groupsForm("nomGrupo").hasErrors) {has-error}">
+                            <div class="descrptionMessageTable">Ingrese el nombre del grupo</div>
+                            <input type="text" class="form-control" name="@groupsForm("nomGrupo").name" id="@groupsForm("nomGrupo").id" value="@groupsForm("nomGrupo").value"/>
+                            <span class="help-block" id="spannomGrupo">@{groupsForm("nomGrupo").error.map {error => error.message }}</span>                                                
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 40%;" colspan="3">
+                        <div class="descrptionMessageTable">Seleccione los perfiles que desea incluir al grupo</div>
+                        <div id="selProfiles" style="width: 65%;float: left;">
+                            <table id="tableProfiles" style="width: 100%;"></table>
+                            <input type="hidden" name="@groupsForm("hiddenProfileGroup").name" id="@groupsForm("hiddenProfileGroup").id" value="@groupsForm("hiddenProfileGroup").value"/> 
+                        </div>
+                        <div style="padding-top: 5px;text-align: center;width: 85%;height: 35px;">
+                            Agregar todos <input type="checkbox" id="chAgregarTodosGrupos"/>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><div style="margin-top: 15px;margin-bottom: 50px;"><input class="btn btn-success" type="submit" value="Guardar" onclick="saveGroup()"></div></td>
+                </tr>
+            </table>
+            <script>
+                $(document).ready(function() {
+                    fillProfiles();
+                    current_tab("h3_Usuarios");
+                });
+            </script>
+        </div>
+    }
+    @footer(title)
+}

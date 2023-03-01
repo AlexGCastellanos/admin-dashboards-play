@@ -1,0 +1,141 @@
+@import helper._
+
+@(title: String, isLoggedIn: Boolean, userInfo: UserInfo, uploadFileForm : Form[views.formdata.uploadFileForm], arrScripts: HashMap[String, String])
+
+@main(title, isLoggedIn, userInfo) { 
+    @menu_navigate(title,userInfo){
+    <div id="6" class="list_item">
+        @helper.form(routes.UploadOtherFiles.saveNewConfigOthersFiles()) {
+        <fieldset>
+            <table style="width: 40%;">
+                <tr>
+                    <td colspan="2"><div class="titleParam">Agregar nueva conexi&oacute;n</div></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><div style="border-bottom: solid; width: 91%;margin-bottom: 20px;" class="descrptionMessage"><b>Configuraci&oacute;n</b></div></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div style="width: 100%;" class="form-group @if(uploadFileForm("nomConexion").hasErrors) {has-error}">
+                            <div class="descrptionMessageTable">Ingrese el nombre de la conexi&oacute;n</div>
+                            <input type="text" class="form-control" name="@uploadFileForm("nomConexion").name" id="@uploadFileForm("nomConexion").id" value="@uploadFileForm("nomConexion").value"/>
+                            <span class="help-block" id="spannomConexion">@{uploadFileForm("nomConexion").error.map {error => error.message }}</span>                                                
+                        </div>
+                    </td>
+                </tr>                      
+                <tr>
+                    <td colspan="2">
+                        <div style="width: 100%;" class="form-group">
+                            <div class="descrptionMessage">Seleccione el origen del archivo a indexar</div>
+                            <select class="form-control" style="width: 100%;" id="@uploadFileForm("typeUpload").id" name="@uploadFileForm("typeUpload").name">
+                                <option value="" disabled selected>Seleccione una opci&oacute;n</option>
+                                <option value="sftp">SFTP</option>
+                                <option value="http">HTTP</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="trFileURLUpload" style="display:none">
+                    <td><div class="descrptionMessage">Ingrese la URL del archivo</div></td>
+                </tr>
+                <tr class="trFileURLUpload" style="display:none">
+                    <td colspan="2">
+                        <input type="text" class="form-control" name="@uploadFileForm("pathFileURL").name" id="@uploadFileForm("pathFileURL").id" value="@uploadFileForm("pathFileURL").value"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <table id="tableParamsSFTP" style="width: 100%;display: none;">
+                            <tr>
+                                <td><div class="descrptionMessage">Ingrese la informacion del servicio SFTP.</div></td>
+                            </tr>
+                            <tr>
+                                <td><div class="descrptionMessage">Host</div></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control" name="@uploadFileForm("pathFileSFTPHost").name" id="@uploadFileForm("pathFileSFTPHost").id" value="@uploadFileForm("pathFileSFTPHost").value"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><div class="descrptionMessage">Usuario</div></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control" name="@uploadFileForm("pathFileSFTPUsername").name" id="@uploadFileForm("pathFileSFTPUsername").id" value="@uploadFileForm("pathFileSFTPUsername").value"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><div class="descrptionMessage">Contrase&ntilde;a</div></td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="password" class="form-control" name="@uploadFileForm("pathFileSFTPPass").name" id="@uploadFileForm("pathFileSFTPPass").id" value="@uploadFileForm("pathFileSFTPPass").value"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><div class="descrptionMessage">Ingrese el path del archivo en el servidor remoto</div></td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control" name="@uploadFileForm("pathFileSFTP").name" id="@uploadFileForm("pathFileSFTP").id" value="@uploadFileForm("pathFileSFTP").value"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" class="form-check-input" id="idCheckedCleanData" style="margin-top: 20px;margin-left: 0px;" /> 
+                        <input type="hidden" name="@uploadFileForm("checkedCleanDataExcel").name" id="@uploadFileForm("checkedCleanDataExcel").id" value="false"/> 
+                        <div class="descrptionMessage" style="margin-left: 20px;">Limpiar datos</div>
+                    </td>
+                    <td>
+                        <input type="checkbox" class="form-check-input" id="idCheckedCleanCore" style="margin-top: 20px;margin-left: 0px;" /> 
+                        <input type="hidden" name="@uploadFileForm("checkedCleanDataCore").name" id="@uploadFileForm("checkedCleanDataCore").id" value="false"/> 
+                        <div class="descrptionMessage" style="margin-left: 20px;">Limpiar colecci&oacute;n</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><div class="descrptionMessage">Seleccione un archivo de limpieza </div></td>
+                </tr>
+                <tr>
+                    <td>
+                        @select(
+                        uploadFileForm("nameScript"),
+                        options(arrScripts),
+                        '_label -> null,
+                        '_default -> "Seleccione un archivo de limpieza",
+                        'class -> "custom-select-crg"
+                        )
+                    </td>
+
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div style="width: 100%;" class="form-group">
+                            <div class="descrptionMessage">Seleccione el buscador donde se realizar&aacute; la indexaci&oacute;n de la informaci&oacute;n</div>
+                            <select class="form-control" style="width: 100%;" id="@uploadFileForm("buscador").id" name="@uploadFileForm("buscador").name">
+                                    <option value="" disabled selected>Seleccione un buscador</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><div style="margin-top: 15px;"><input class="btn btn-success" type="submit" value="Guardar"></div></td>
+                </tr>
+            </table>
+        </fieldset>
+        }
+        <script>
+            $(document).ready(function () {
+                current_tab("h3_OtrosArchivos");
+                fillBuscadores("excel");
+            });
+        </script>
+    </div>
+    }
+    @footer(title)
+}

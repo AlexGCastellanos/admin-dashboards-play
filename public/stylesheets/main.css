@@ -1,0 +1,423 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2/04/2018, 12:11:56 PM
+    Author     : atovar
+*/
+
+body {
+  padding-top: 70px;  /* Move body of page below navbar. */
+}
+
+textarea {
+    resize: none;
+}
+
+#global-nav {
+    background: url(../images/jq-global-nav.png) repeat-x 0 bottom #1b1b1b;
+}
+
+#global-nav nav {
+    height: 34px;
+}
+
+.navigate{
+    width: 20%;
+}
+
+.logo{
+    height: 150px;
+}
+
+.logoProfile{
+    height: 40px;
+    margin: 10px 10px 10px -30px;
+}
+
+.navbar-inverse {
+    background-color: #7eb644;
+    border-color: #7eb644;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #FFF;
+}
+
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:hover, .navbar-inverse .navbar-nav>.active>a:focus {
+    color: #fff;
+    background-color: #7eb644;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+    color: #fff;
+}
+
+.navbar-inverse .navbar-text {
+    color: #fff;
+}
+
+.menuItem{
+    margin-bottom: 10px;
+    font-size: 12px;
+}
+
+.btn-success {
+    color: #fff;
+    background-color: #7eb644;
+    border-color: #7eb644;
+}
+
+.panel-default>.panel-heading {
+    color: #333;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+}
+
+.panel-heading {
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+}
+
+.linkMenu{
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.linkMenu:hover{
+   cursor: pointer;
+   text-decoration: none; 
+}
+
+.contentMain{
+    width: 100%;
+    height: auto;
+    margin-left: 20px;
+}
+
+.titleParam{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.descriptionParam{
+    background-color: beige;
+}
+
+.paddingDescription{
+    padding: 10px;
+}
+
+.descrptionMessage{
+    margin-top: 15px;
+    color: #2d90bd;
+}
+
+.descriptionNote{
+    color: #6eac2c
+}
+
+.error{
+    color: #b94a48;
+}
+
+.checkbox{
+    float: left;
+    margin-right: 15px;
+    margin-top: 5px !important;
+}
+
+.linkMain{
+    text-align: right;
+    color: #0a7db1;
+    font-weight: bold;
+    cursor: pointer
+}
+
+.CodeMirror-scroll {
+    max-height: none !important;
+}
+
+.checkLeft{
+    float: left;
+    color: #2d90bd;
+    margin-right: 10px;
+}
+
+.tab-content{
+    border: solid 1px #eeeeee;
+}
+
+.iframeMonitor{
+    width: 100%;
+    height: 650px;
+    border: none;
+}
+
+.list_item{
+    margin-left: 20px;
+}
+
+.borderForms{
+    border: solid 1px #027aaf;
+    padding: 15px;
+}
+
+.descrptionMessageTable {
+    color: #2d90bd;
+    margin-bottom: 15px;
+}
+
+ .custom-select-crg{
+    display: inline-block;
+    width: 100%;
+    padding: .375rem 1.75rem .375rem .75rem;
+    line-height: 1.5;
+    color: #495057;
+    vertical-align: middle;
+    background: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: 35px 10px;
+    background-color: #FFF;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+ }
+ 
+div.dataTables_wrapper {
+    width: 900px;
+    margin: 0 auto;
+}
+    
+.table-responsive {
+    overflow-x: inherit;
+}
+
+.lb-left{
+    padding-left: 15px;
+}
+
+#tableEditConexiones td, #tableEditConexiones td * {
+    vertical-align: middle;
+}
+
+hr{
+    border-top: 1px solid #7eb644 !important;
+}
+
+.inputDisabled{
+    background: #eee;
+}
+
+.dvCheckbox{
+    margin: 5px;
+}
+
+thead{
+    background: #2d90bd;
+    color: #FFF;
+}
+
+#tablePermissions thead{
+    font-weight: bold;
+    background: #7eb644;
+    color: #FFF;
+}
+
+#tablePermissions tr{
+    border: solid 1px #2d90bd;
+}
+
+#tablePermissionsEdit thead{
+    font-weight: bold;
+    background: #7eb644;
+    color: #FFF;
+}
+
+#tablePermissionsEdit tr{
+    border: solid 1px #2d90bd;
+}
+
+#tableProfiles thead{
+    font-weight: bold;
+    background: #7eb644;
+    color: #FFF;
+}
+
+#tableProfiles tr{
+    border: solid 1px #2d90bd;
+}
+
+#tableProfilesEdit thead{
+    font-weight: bold;
+    background: #7eb644;
+    color: #FFF;
+}
+
+#tableProfilesEdit tr{
+    border: solid 1px #2d90bd;
+}
+
+#tableGroups thead{
+    font-weight: bold;
+    background: #7eb644;
+    color: #FFF;
+}
+
+#tableGroups tr{
+    border: solid 1px #2d90bd;
+}
+
+#tableGroupsEdit thead{
+    font-weight: bold;
+    background: #7eb644;
+    color: #FFF;
+}
+
+#tableGroupsEdit tr{
+    border: solid 1px #2d90bd;
+}
+
+#dvNameUser{
+    font-size: 16px;
+    text-transform: capitalize;
+    float: right;
+    margin-left: 10px;
+    color: gold;
+}
+
+#tableConexionesSpell{
+    width: auto;
+}
+
+.prueba{
+    display: none;
+}
+
+.linkOtherTemplate{
+    margin-right: 80px;
+    width: 140px;
+    text-align: center;
+    float: right;
+    border: solid 1px #7eb644;
+    color: #0a7db1;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.comp_search{
+    height: 33px;
+    font-size: 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    line-height: 20px;
+    padding-bottom: 4px;
+    color: lightslategrey;
+}
+
+.monitor_bc_part{
+    font-size: 150%;
+    color: #007C00;
+    cursor: pointer;
+}
+
+.monitor_bc_part:hover{
+    text-decoration: underline;
+    color: #4CAF50;
+}
+
+.monitor_url{
+    color: #007C00;
+    cursor: pointer;
+}
+
+.monitor_url:hover{
+    text-decoration: underline;
+    color: #4CAF50;
+}
+
+.monitor_url_blocked{
+    color: #000000;
+    cursor: text;
+    text-decoration: none;
+}
+
+.monitor_url_blocked:hover{
+    color: #000000;
+    cursor: text;
+    text-decoration: none;
+}
+
+.monitor_url_link{
+    float:left;
+    background: #7eb644;
+    border: none;
+    border-radius: 3px;
+    font-size: 80%;
+    margin-right: 1px;
+}
+.monitor_url_metas{
+    float: left;
+    background: lightgrey;
+    border: none;
+    border-radius: 3px;
+    font-size: 80%;
+    margin-right: 1px;
+}
+
+.monitor_numChildren{
+    float: right;
+    background: #fff49d;
+    border: none;
+    border-radius: 3px;
+    font-size: 80%;
+    margin-right: 1px;
+    padding: 2px;
+}
+
+.close_monitor_metas{
+    margin-top: -24px! important;
+}
+
+#monitor_url_metas>tbody>tr{
+    border-bottom: 1px solid #ddd;
+}
+
+.moitor_meta_val{
+    word-break: break-all;
+}
+
+.error_thead{
+    background: #bd2d2d;
+}
+
+.iframeCleanDataServiceDB{
+    width: 100%;
+    height: 1200px;
+}
+
+.iframeCleanDataServiceFS{
+    width: 100%;
+    height: 1200px;
+}
+
+.dvContainerCleanData{
+    width: 70%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.iframeCrg{
+    width: 100%;
+    height: 850px;
+    border: none;
+}

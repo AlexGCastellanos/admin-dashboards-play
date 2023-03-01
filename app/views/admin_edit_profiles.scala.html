@@ -1,0 +1,84 @@
+@import helper._
+
+@(title: String, isLoggedIn: Boolean, userInfo: UserInfo, profilesForm : Form[views.formdata.ProfilesForm])
+
+@main(title, isLoggedIn, userInfo) { 
+    @menu_navigate(title,userInfo){
+        <div id="div_EditProfiles" class="list_item table-responsive" style="margin-bottom: 300px">
+            <table class="table table-striped table-bordered table-hover" id="tableEditProfiles" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>ID</th>
+                        <th>Nombre del perfil</th>               
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modal-editProfiles">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header" style="border: none;">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Editar registro</h4> 
+                        </div>
+                        <div style="margin-top: 20px;height: auto;">
+                            <table style="width: 100%;" id="tableEditProfilesModal">
+                                <tr>
+                                    <td><input type="hidden" id="id_profileEdit" value="" /></td>
+                                </tr>
+                                <tr>
+                                    <td><label for="nomPerfilEdit" class="control-label lb-left" style="width: 90%;">Nombre del perfil</label></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="col-sm-2" style="width: 50%;">
+                                            <input type="text" class="form-control" name="nomPerfilEdit" id="nomPerfilEdit" disabled="true"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="col-sm-2" style="width: 80%;margin-top: 20px;">
+                                            <table id="tablePermissionsEdit" style="width: 100%;"></table>
+                                            <input type="hidden" name="hiddenPermissionsEdit" id="hiddenPermissionsEdit" value=""/> 
+                                        </div>
+                                        <div style="padding-top: 25px;text-align: center;width: 98%;height: 35px;">
+                                            Permitir todos <input type="checkbox" id="chPermitirTodosEditProfile"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer" style="border: none;">
+                            <button type="button" class="btn btn-default" id="modal-btn-SaveEditProfile">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modal-DeleteProfile">
+                <div class="modal-dialog modal-sm">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">Confirmar</h4>
+                      <h4>Desea eliminar este registro?</h4>
+                      <input type="hidden" id="idDelete" value=""/>
+                    </div>
+                    <div class="modal-footer" style="border: none;">
+                      <button type="button" class="btn btn-default" id="modal-btn-si-DeleteProfile">Si</button>
+                      <button type="button" class="btn btn-primary" id="modal-btn-no-DeleteProfile">No</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                listEditProfiles();
+                current_tab("h3_Usuarios");
+            });
+        </script>
+    }
+    @footer(title)
+}

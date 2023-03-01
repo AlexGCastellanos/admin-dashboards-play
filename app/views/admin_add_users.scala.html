@@ -1,0 +1,70 @@
+@import helper._
+
+@(title: String, isLoggedIn: Boolean, userInfo: UserInfo, usersForm : Form[views.formdata.UsersForm])
+
+@main(title, isLoggedIn, userInfo) { 
+    @menu_navigate(title,userInfo){
+        <div id="divAddUsers" class="list_item">
+            <table style="width: 100%;">
+                <tr>
+                    <td><div class="titleParam">Administraci&oacute;n de usuarios.</div></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="descriptionParam">
+                            <div class="paddingDescription">
+                                Estas configuraciones pueden afectar la visualizaci&oacute;n del m&oacute;dulo de administraci&oacute;n... 
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 40%;">
+                        <div style="margin-top: 20px;" class="form-group @if(usersForm("nomUser").hasErrors) {has-error}">
+                            <div class="descrptionMessageTable">Ingrese el nombre del nuevo usuario</div>
+                            <input type="text" style="width: 50%;" class="form-control" name="@usersForm("nomUser").name" id="@usersForm("nomUser").id" value="@usersForm("nomUser").value"/>
+                            <span class="help-block" id="spannomUser">@{usersForm("nomUser").error.map {error => error.message }}</span>                                                
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 40%;">
+                        <div style="margin-top: 20px;" class="form-group @if(usersForm("email").hasErrors) {has-error}">
+                             <div class="descrptionMessageTable">Ingrese el correo electr&oacute;nico del nuevo usuario</div>
+                            <input type="text" style="width: 50%;" class="form-control" placeholder="user&#64;email.com" name="@usersForm("email").name" id="@usersForm("email").id" value="@usersForm("email").value"/>
+                            <span class="help-block" id="spanemail">@{usersForm("email").error.map {error => error.message }}</span>                                                
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 40%;">
+                        <div style="margin-top: 20px;" class="form-group @if(usersForm("password").hasErrors) {has-error}">
+                             <div class="descrptionMessageTable">Ingrese la contrase&nacute;a del nuevo usuario</div>
+                            <input type="password" style="width: 50%;" class="form-control" name="@usersForm("password").name" id="@usersForm("password").id" value="@usersForm("password").value"/>
+                            <span class="help-block" id="spanpassword">@{usersForm("password").error.map {error => error.message }}</span>                                                
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 40%;" colspan="3">
+                        <div class="descrptionMessageTable">Seleccione el grupo al que pertenecer&aacute; el usuario</div>
+                        <div id="selGrupos" style="width: 65%;float: left;">
+                            <table id="tableGroups" style="width: 100%;"></table>
+                            <input type="hidden" name="@usersForm("hiddenGroup").name" id="@usersForm("hiddenGroup").id" value="@usersForm("hiddenGroup").value"/> 
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><div style="margin-top: 15px;margin-bottom: 50px;"><input class="btn btn-success" type="submit" value="Guardar" onclick="saveUser()"></div></td>
+                </tr>
+            </table>
+            <script>
+                $(document).ready(function() {
+                    fillGroups();
+                    current_tab("h3_Usuarios");
+                });
+            </script>
+        </div>
+    }
+    @footer(title)
+}

@@ -1,0 +1,173 @@
+@import helper._
+
+@(title: String, isLoggedIn: Boolean, userInfo: UserInfo, uploadFileForm : Form[views.formdata.uploadFileForm], arrScripts : HashMap[String, String])
+
+@main(title, isLoggedIn, userInfo) { 
+        @menu_navigate(title, userInfo){
+            <div id="div_EditOthersFiles" class="list_item" style="margin-bottom: 300px">
+                <div class="titleParam">Editar conexi&oacute;n de otros archivos</div>
+                <table class="table table-striped table-bordered table-hover" id="tableConexionesOthersFiles" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>ID</th>
+                            <th>Conexi&oacute;n</th>
+                            <th>Tipo de Conexi&oacute;n</th>
+                            <th>Ruta archivo URL</th>
+                            <th>Host SFTP</th>
+                            <th>Usuario SFTP</th>
+                            <th>Ruta archivo SFTP</th>
+                            <th>Limpieza de datos</th>
+                            <th>Archivo de limpieza</th>
+                            <th>Limpieza de colecci&oacute;n</th>
+                            <th>Buscador</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modal-conOthersFiles">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content p-3">
+                            <div class="modal-header" style="border: none;">
+                                <h4 class="modal-title" id="myModalLabel">Editar registro</h4> 
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>								
+                            </div>
+                            <div style="margin-top: 20px;height: auto;">
+                                <table style="width: 100%;" id="tableEditConexiones">
+                                    <tr>
+                                        <td><input type="hidden" id="idEdit" name="idEdit" value="" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 25%;"><label for="nomConexion" class="control-label lb-left">Nombre de la conexi&oacute;n</label></td>
+                                        <td><div class="col-sm-12" style="width: 95%;margin-top: 10px;"><input id="nomConexionEdit" name="nomConexionEdit" type="text"  disabled="true" class="form-control" autofocus="true"/></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="typeUpload" class="control-label lb-left">Seleccione el origen del archivo a indexar</label></td>
+                                        <td>
+                                            <div class="col-sm-12" style="width: 95%;margin-top: 10px;">
+                                                <select class="form-control" style="width: 50%;" id="typeUploadEdit" name="typeUploadEdit">
+                                                    <option value="" disabled selected>Seleccione una opci&oacute;n</option>
+                                                    <option value="sftp">SFTP</option>
+                                                    <option value="http">HTTP</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="trFileURLUpload">
+                                        <td><label for="pathFileURL" class="control-label lb-left">Ingrese la URL del archivo</label></td>
+                                        <td><div class="col-sm-12" style="width: 95%;"><input id="pathFileURLEdit" name="pathFileURLEdit" type="text" class="form-control" autofocus="true"/></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <table id="tableParamsSFTP" style="margin-left: 15px;width: 95%;display: none;" class="borderForms">
+                                                <tr>
+                                                    <td colspan="2"><div class="descrptionMessage" style="margin-left: 15px;">Ingrese la informacion del servicio SFTP.</div></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 30%;"><label for="pathFileSFTPHost" class="control-label lb-left">Host</label></td>
+                                                    <td><div class="col-sm-12" style="width: 95%;margin-top: 10px;"><input id="pathFileSFTPHostEdit" name="pathFileSFTPHostEdit" type="text" class="form-control" autofocus="true"/></div></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><label for="pathFileSFTPUsername" class="control-label lb-left">Usuario</label></td>
+                                                    <td><div class="col-sm-12" style="width: 95%;margin-top: 10px;"><input id="pathFileSFTPUsernameEdit" name="pathFileSFTPUsernameEdit" type="text" class="form-control" autofocus="true"/></div></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><label for="pathFileSFTPPass" class="control-label lb-left">Contrase&ntilde;a</label></td>
+                                                    <td><div class="col-sm-12" style="width: 95%;margin-top: 10px;"><input id="pathFileSFTPPassEdit" name="pathFileSFTPPassEdit" type="password" class="form-control" autofocus="true"/></div></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><label for="pathFileSFTP" class="control-label lb-left">Ingrese el path del archivo en el servidor remoto</label></td>
+                                                    <td style="padding-bottom: 15px;"><div class="col-sm-12" style="width: 95%;margin-top: 10px;"><input id="pathFileSFTPEdit" name="pathFileSFTPEdit" type="text" class="form-control" autofocus="true"/></div></td>
+                                                </tr>
+                                            </table>
+                                        </td>  
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <table>
+                                                <tr>
+                                                    <td><label for="checkedCleanData" class="control-label lb-left">Limpiar datos</label></td>
+                                                    <td>
+                                                        <div class="col-sm-12" style="width: 95%;">
+                                                            <input type="checkbox" style="margin-left: 10px;" id="idCheckedEditCleanData" />
+                                                            <input type="hidden" name="EditDisPreProc" id="checkedEditCleanDataExcel" value=""/>
+                                                        </div>
+                                                    </td>
+                                                    <td></td>
+                                                    <td><label for="checkedCleanDataCore" class="control-label lb-left">Limpiar colecci&oacute;n</label></td>
+                                                    <td>
+                                                        <div class="col-sm-12" style="width: 95%;">
+                                                            <input type="checkbox" style="margin-left: 10px;" id="idCheckedEditCleanCore" />
+                                                            <input type="hidden" name="EditDisPreProc" id="checkedEditCleanDataCore" value=""/>
+                                                        </div>
+                                                    </td>   
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="nameScript" class="control-label lb-left">Seleccione un archivo de limpieza</label></td>
+                                        <td>
+                                            @select(
+                                            uploadFileForm("nameScriptEdit"),
+                                            options(arrScripts),
+                                            '_label -> null,
+                                            '_default -> "Seleccione un archivo de limpieza",
+                                            'class -> "custom-select-crg"
+                                            )
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <table>
+                                                <tr>
+                                                    <td><label for="buscador" class="control-label lb-left">Buscador</label></td>
+                                                    <td style="width: 80%;">
+                                                        <div class="col-sm-12" style="width: 95%;margin-top: 10px;">
+                                                            <select class="form-control" id="buscador" name="buscador">
+                                                                    <option value="" disabled selected>Seleccione un buscador</option>
+                                                            </select> 
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr> 
+                                </table>
+                            </div>
+                            <div class="modal-footer" style="border: none;">
+                                <button type="button" class="btn btn-outline-secondary" id="modal-btn-SaveConOthersFiles">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modal-DeleteConOthersFiles">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content p-3">
+                        <div class="modal-header">
+                          <h4 class="modal-title" id="myModalLabel">Confirmar</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>						  
+                        </div>
+                        <div class="modal-body">
+                          <h5>Desea eliminar este registro?</h5>
+                          <input type="hidden" id="idDeleteCon" value=""/>
+                        </div>
+                        <div class="modal-footer" style="border: none;">
+                          <button type="button" class="btn btn-outline-secondary" id="modal-btn-si-DeleteConOthersFiles">Si</button>
+                          <button type="button" class="btn btn-primary" id="modal-btn-no-DeleteConOthersFiles">No</button>
+                        </div>
+                  </div>
+                </div>
+            </div>
+            </div>
+            <script>
+                $(document).ready(function () {
+                    listarConexionesOthersFiles();
+                    current_tab("h3_OtrosArchivos");
+                    fillBuscadores("excel");
+                });
+            </script>
+        
+    }
+    @footer(title)
+}

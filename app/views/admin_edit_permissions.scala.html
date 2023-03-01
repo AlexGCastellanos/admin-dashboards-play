@@ -1,0 +1,80 @@
+@import helper._
+
+@(title: String, isLoggedIn: Boolean, userInfo: UserInfo, permissionsForm : Form[views.formdata.PermissionsForm])
+
+@main(title, isLoggedIn, userInfo) { 
+    @menu_navigate(title,userInfo){
+        <div id="div_EditPermissions" class="list_item table-responsive" style="margin-bottom: 300px">
+            <div class="titleParam">Edici&oacute;n de permisos.</div>
+            <br>
+            <div class="descriptionParam">
+                <div class="paddingDescription" style="margin-bottom: 25px;">
+                    Estas configuraciones pueden afectar la visualizaci&oacute;n del m&oacute;dulo de administraci&oacute;n... 
+                </div>
+            </div>
+            <table class="table table-striped table-bordered table-hover" id="tableEditPermissions" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>ID</th>
+                        <th>Descripci&oacute;n del Permiso</th>               
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modal-editPermissions">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header" style="border: none;">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Editar registro</h4> 
+                        </div>
+                        <div style="margin-top: 20px;height: auto;">
+                            <table style="width: 100%;" id="tableEditPermissionsModal">
+                                <tr>
+                                    <td><input type="hidden" id="idEdit" value="" /></td>
+                                </tr>
+                                <tr>
+                                    <td><label for="descPermissionEdit" class="control-label lb-left" style="width: 90%;">Descripci&oacute;n del permiso</label></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="col-sm-2" style="width: 90%;">
+                                            <input type="text" class="form-control" name="descPermissionEdit" id="descPermissionEdit"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer" style="border: none;">
+                            <button type="button" class="btn btn-default" id="modal-btn-SaveEditPermission">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modal-DeletePermission">
+                <div class="modal-dialog modal-sm">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">Confirmar</h4>
+                      <h4>Desea eliminar este registro?</h4>
+                      <input type="hidden" id="idDelete" value=""/>
+                    </div>
+                    <div class="modal-footer" style="border: none;">
+                      <button type="button" class="btn btn-default" id="modal-btn-si-DelPermission">Si</button>
+                      <button type="button" class="btn btn-primary" id="modal-btn-no-DelPermission">No</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                listEditPermissions();
+                current_tab("h3_Usuarios");
+            });
+        </script>
+    }
+    @footer(title)
+}

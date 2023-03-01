@@ -1,0 +1,15 @@
+@(title: String, isLoggedIn: Boolean, userInfo: UserInfo)
+
+@main(title, isLoggedIn, userInfo) { 
+    @menu_navigate(title, userInfo){ 
+    <div id="1" class="list_item">       
+        <div><button class="btn btn-success" style="float:right">Ayuda</button></div>
+        <div class="titleParam">&iquest;Qu&eacute; desea hacer ahora?</div>
+        <br>
+        <div><a class="descrptionMessage" href="showAddDatabaseConfig"><b>Indexar una Base de datos</b></a></div>
+        <div><a class="descrptionMessage" href="showAddFileServerConfig"><b>Indexar un Servidor de archivos</b></a></div>
+    </div>
+    }
+    @footer(title)
+}
+    

@@ -1,0 +1,68 @@
+@import helper._
+
+@(title: String, isLoggedIn: Boolean, userInfo: UserInfo, cleanDataServiceForm : Form[views.formdata.CleanDataServiceForm])
+
+@main(title, isLoggedIn, userInfo) { 
+    @menu_navigate(title,userInfo){
+        <div id="6" class="list_item">
+            @helper.form(routes.ServiceJupyter.saveOtherConfiguration()) {
+                <fieldset>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td><div class="titleParam">Otras Configuraciones para limpieza de datos.</div></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="descriptionParam"><div class="paddingDescription">Estas configuraciones son necesarias para el funcionamiento adecuado del m&oacute;dulo de limpieza de datos.</div></div>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td><div class="descrptionMessage">Ingrese la IP del servicio de limpieza de datos.</div></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="width: 45%;float: left;margin-right: 10px;" class="form-group @if(cleanDataServiceForm("ipServiceCleanData").hasErrors) {has-error}">
+                                    <input type="text" class="form-control" name="@cleanDataServiceForm("ipServiceCleanData").name" id="@cleanDataServiceForm("ipServiceCleanData").id" value="@cleanDataServiceForm("ipServiceCleanData").value"/>
+                                    <span class="help-block" id="spanPathServiceCrawler">@{cleanDataServiceForm("ipServiceCleanData").error.map {error => error.message }}</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><div class="descrptionMessage">Ingrese el puerto del servicio de limpieza de datos.</div></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="width: 45%;float: left;margin-right: 10px;" class="form-group @if(cleanDataServiceForm("portServiceCleanData").hasErrors) {has-error}">
+                                    <input type="text" class="form-control" name="@cleanDataServiceForm("portServiceCleanData").name" id="@cleanDataServiceForm("portServiceCleanData").id" value="@cleanDataServiceForm("portServiceCleanData").value"/>
+                                    <span class="help-block" id="spanPathServiceCrawler">@{cleanDataServiceForm("portServiceCleanData").error.map {error => error.message }}</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><div class="descrptionMessage">Ingrese el segundo puerto del servicio de limpieza de datos.</div></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="width: 45%;float: left;margin-right: 10px;" class="form-group @if(cleanDataServiceForm("portBootleCleanData").hasErrors) {has-error}">
+                                    <input type="text" class="form-control" name="@cleanDataServiceForm("portBootleCleanData").name" id="@cleanDataServiceForm("portBootleCleanData").id" value="@cleanDataServiceForm("portBootleCleanData").value"/>
+                                    <span class="help-block" id="spanPathServiceCrawler">@{cleanDataServiceForm("portBootleCleanData").error.map {error => error.message }}</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><div style="margin-top: 15px;"><input class="btn btn-success" type="submit" value="Guardar"></div></td>
+                        </tr>
+                    </table>
+                </fieldset>
+            }
+            <script>
+                $(document).ready(function() {
+                    fillOtherConfigCleanData();
+                    current_tab("h3_CleanData");
+                });
+            </script>
+        </div>
+    }
+    @footer(title)
+}

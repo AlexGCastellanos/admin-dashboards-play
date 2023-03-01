@@ -1,0 +1,199 @@
+@import helper._
+
+@(title: String, isLoggedIn: Boolean, userInfo: UserInfo, uploadSolrToSolr : Form[views.formdata.uploadSolrToSolrForm])
+
+@main(title, isLoggedIn, userInfo) { 
+    @menu_navigate(title,userInfo){
+    
+        <div id="6" class="list_item">
+            @helper.form(routes.SolrToSolr.uploadSolrToSolr(),'enctype -> "multipart/form-data") {
+                <fieldset>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td><div class="titleParam">Carga De Archivos.</div></td>
+                        </tr>                       
+                        <tr>
+                            <td><div class="descrptionMessage">Ingrese la IP de origen de la indexacion.</div></td>
+                            <td><div class="descrptionMessage">Ingrese el puerto de origen de la indexacion.</div></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(uploadSolrToSolr("ipInSolrToSolr").hasErrors) {has-error}">
+                                    <input type="text" class="form-control" name="@uploadSolrToSolr("ipInSolrToSolr").name" id="@uploadSolrToSolr("ipInSolrToSolr").id" value="@uploadSolrToSolr("ipInSolrToSolr").value" />
+                                    <span class="help-block" id="spanPathServiceCrawler"></span>
+                                </div>
+                            </td> 
+                            <td>
+                                <div style="width: 35%;float: left;margin-right: 10px;" class="form-group @if(uploadSolrToSolr("portInSolrToSolr").hasErrors) {has-error}">
+                                    <input type="text" class="form-control" name="@uploadSolrToSolr("portInSolrToSolr").name" id="@uploadSolrToSolr("portInSolrToSolr").id" value="@uploadSolrToSolr("portInSolrToSolr").value"/>
+                                    <span class="help-block" id="spanPathServiceCrawler"></span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><div class="descrptionMessage">Ingrese la DNS de origen de la indexacion.</div></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(uploadSolrToSolr("dnsInSolrToSolr").hasErrors) {has-error}">
+                                    <input type="text" class="form-control" name="@uploadSolrToSolr("dnsInSolrToSolr").name" id="@uploadSolrToSolr("dnsInSolrToSolr").id" value="@uploadSolrToSolr("dnsInSolrToSolr").value"/>
+                                    <span class="help-block" id="spanPathServiceCrawler"></span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><div class="descrptionMessage">Ingrese el nombre de la coleccion.</div></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(uploadSolrToSolr("collectionNameInSolrToSolr").hasErrors) {has-error}">
+                                    <input type="text" class="form-control" name="@uploadSolrToSolr("collectionNameInSolrToSolr").name" id="@uploadSolrToSolr("collectionNameInSolrToSolr").id" value="@uploadSolrToSolr("collectionNameInSolrToSolr").value"/>
+                                    <span class="help-block" id="spanPathServiceCrawler"></span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><div style="margin-top: 15px;"><button class="btn btn-success" id="btnCargarSolrToSolr" type="button">Cargar Datos</button></div></td>
+                        </tr>
+                        
+                        </table>
+                
+            
+                
+                    <table style="width: 100%;">
+                        <tr>
+                            <td><div class="descrptionMessage">Ingrese el numero de filas a indexar.</div></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(uploadSolrToSolr("rowsOutSolrToSolr").hasErrors) {has-error}">
+                                    <div class="input-group mb-3">
+                                        <input type="number" class="form-control" name="@uploadSolrToSolr("rowsOutSolrToSolr").name" id="@uploadSolrToSolr("rowsOutSolrToSolr").id" value="@uploadSolrToSolr("rowsOutSolrToSolr").value"  aria-describedby="basic-addon2">
+                                        <span class="input-group-text" id="basic-addon2">de <span id="rowsCountSolrToSolr">0</span> disponibles</span>
+                                    </div>
+                                    <span class="help-block" id="spanPathServiceCrawler">@{uploadSolrToSolr("rowsOutSolrToSolr").error.map {error => error.message }}</span>
+                                </div>
+                            </td>
+                            
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="width: 100%;display: inline-block;" class="form-group @if(uploadSolrToSolr("hiddenCheckedBatches").hasErrors) {has-error}">
+                                    <div class="descrptionMessageTable" style="float: left;">Indexar por fracciones</div>
+                                    <input type="checkbox" style="margin-left: 10px;" id="chHiddenCheckedBatches"/>                                                                                                
+                                    <input type="hidden" name="@uploadSolrToSolr("hiddenCheckedBatches").name" id="@uploadSolrToSolr("hiddenCheckedBatches").id" value="false"/>       
+                               </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <table id="tableNumBatches" style="display: none;width: 65%;" class="borderForms">
+                                    <tr>
+                                        <td>
+                                            <div style="width: 100%;">
+                                                <div style="margin: 10px;" class="descrptionMessageTable"> Ingrese el n&uacute;mero de registros por fraccion</div>                                         
+                                           </div>
+                                        </td>
+                                        <td>
+                                            <div style="width: 95%;float: left;margin: 10px;" class="form-group @if(uploadSolrToSolr("numRecordsFrac").hasErrors) {has-error}">
+                                                <div class="input-group mb-3">
+                                                    <input type="number" class="form-control" name="@uploadSolrToSolr("numRecordsFrac").name" id="@uploadSolrToSolr("numRecordsFrac").id" value="@uploadSolrToSolr("numRecordsFrac").value">
+                                                </div>
+                                                <span class="help-block" id="spanNumRecordsFrac">@{uploadSolrToSolr("numRecordsFrac").error.map {error => error.message }}</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><div class="descrptionMessage">Campos disponibles</div></td>
+                            <td><div class="descrptionMessage">Campos a indexar</div></td>
+                        </tr>
+                        
+                    </table>
+                    <table>
+                        <tr>
+                            <td style="width: 45%;">                         
+                                <select size="10" style="width: 100%;" class="" id="availableFieldsSolrToSolr" name="availableFieldsSolrToSolr">
+                                    
+                                </select>
+                            </td>
+                            <td style="width: 6%;text-align: center;;">
+                                
+                                    <button id="btnAddFieldSolrToSolr"  type="button"> > </button>
+                                    <button id="btnAddAllFieldsSolrToSolr" type="button">>></button>
+                                    <button id="btnRemoveFieldSolrToSolr" type="button"> < </button>
+                                    <button id="btnRemoveAllFieldsSolrToSolr" type="button"><<</button>
+                                
+                            </td> 
+                                
+                            
+                            <td style="width: 45%;">                         
+                                <select size="10" style="width: 100%;float: left;" class="" id="copyFieldsSolrToSolr" name="copyFieldsSolrToSolr">
+                                    
+                                </select>
+                                <span class="help-block" id="spanPathServiceCrawler">@{uploadSolrToSolr("rowsOutSolrToSolr").error.map {error => error.message }}</span>
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td><div class="descrptionMessage">Ingrese la IP de destino de la indexacion.</div></td>
+                            <td><div class="descrptionMessage">Ingrese el puerto de destino de la indexacion.</div></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(uploadSolrToSolr("ipOutSolrToSolr").hasErrors) {has-error}">
+                                    <input type="text" class="form-control" name="@uploadSolrToSolr("ipOutSolrToSolr").name" id="@uploadSolrToSolr("ipOutSolrToSolr").id" value="@uploadSolrToSolr("ipOutSolrToSolr").value"/>
+                                    <span class="help-block" id="spanPathServiceCrawler">@{uploadSolrToSolr("ipOutSolrToSolr").error.map {error => error.message }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="width: 35%;float: left;margin-right: 10px;" class="form-group @if(uploadSolrToSolr("portOutSolrToSolr").hasErrors) {has-error}">
+                                    <input type="text" class="form-control" name="@uploadSolrToSolr("portOutSolrToSolr").name" id="@uploadSolrToSolr("portOutSolrToSolr").id" value="@uploadSolrToSolr("portOutSolrToSolr").value"/>
+                                    <span class="help-block" id="spanPathServiceCrawler">@{uploadSolrToSolr("portOutSolrToSolr").error.map {error => error.message }}</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><div class="descrptionMessage">Ingrese la DNS de destino de la indexacion.</div></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(uploadSolrToSolr("dnsOutSolrToSolr").hasErrors) {has-error}">
+                                    <input type="text" class="form-control" name="@uploadSolrToSolr("dnsOutSolrToSolr").name" id="@uploadSolrToSolr("dnsOutSolrToSolr").id" value="@uploadSolrToSolr("dnsOutSolrToSolr").value"/>
+                                    <span class="help-block" id="spanPathServiceCrawler">@{uploadSolrToSolr("dnsOutSolrToSolr").error.map {error => error.message }}</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><div class="descrptionMessage">Ingrese el nombre de la coleccion.</div><input type="hidden" name="@uploadSolrToSolr("fieldsdHiddenSolrToSolr").name" id="@uploadSolrToSolr("fieldsdHiddenSolrToSolr").id" value="@uploadSolrToSolr("fieldsdHiddenSolrToSolr").value"/></td>
+                            
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(uploadSolrToSolr("collectionNameOutSolrToSolr").hasErrors) {has-error}">
+                                    <input type="text" class="form-control" name="@uploadSolrToSolr("collectionNameOutSolrToSolr").name" id="@uploadSolrToSolr("collectionNameOutSolrToSolr").id" value="@uploadSolrToSolr("collectionNameOutSolrToSolr").value"/>
+                                    <span class="help-block" id="spanPathServiceCrawler">@{uploadSolrToSolr("collectionNameOutSolrToSolr").error.map {error => error.message }}</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><div style="margin-top: 15px;"><input class="btn btn-success" type="submit" value="Guardar"></div></td>
+                        </tr>
+                         </table>
+                </fieldset>
+                    
+            }
+            <script>
+                $(document).ready(function() {
+                    fillOtherConfigCleanData();
+                    current_tab("h3_UpCsvData");
+                });
+            </script>
+            
+        </div>
+    }
+    @footer(title)
+    }

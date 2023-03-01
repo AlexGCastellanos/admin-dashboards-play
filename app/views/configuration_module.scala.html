@@ -1,0 +1,76 @@
+@import helper._
+
+@(title: String, isLoggedIn: Boolean, userInfo: UserInfo, configForm : Form[views.formdata.ConfigurationForm])
+
+@main(title, isLoggedIn, userInfo) { 
+    @menu_navigate(title,userInfo){
+        <div id="6" class="list_item">
+            @helper.form(routes.Configuration.saveConfiguration(),'enctype -> "multipart/form-data") {
+                <fieldset>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td><div class="titleParam">Configuraciones b&aacute;sicas del m&oacute;dulo de administraci&oacute;n.</div></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="descriptionParam"><div class="paddingDescription">Estas configuraciones son necesarias para el funcionamiento adecuado del m&oacute;dulo de administraci&oacute;n.</div></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><div class="descrptionMessage">Ingrese la ruta donde se crear&aacute;n los archivos necesarios para el m&oacute;dulo de administraci&oacute;n.</div></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="width: 99%;" class="form-group @if(configForm("pathFileModule").hasErrors) {has-error}">
+                                    <input type="text" class="form-control" name="@configForm("pathFileModule").name" id="@configForm("pathFileModule").id" value="@configForm("pathFileModule").value" />
+                                    <span class="help-block" id="spanFileModule">@{configForm("pathFileModule").error.map {error => error.message }}</span>
+                                </div>
+                            </td>
+                        </tr>  
+                        <tr>
+                            <td><div class="descrptionMessage">Seleccione el certificado que desea cargar a m&oacute;dulo de administraci&oacute;n (.crt)</div></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 40%;">
+                                <div style="width: 70%;" class="form-group">
+                                    <input type="file" accept=".json" class="form-control" name="certificate"/>                                                                              
+                                </div>
+                            </td>
+                        </tr>    
+                        <tr>
+                            <td><div class="descrptionMessage">Seleccione el validador del certificado (.p12)</div></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 40%;">
+                                <div style="width: 90%;" class="form-group">
+                                    <input type="file" accept=".p12" class="form-control" name="certificateP12" id="certificateP12"/>                                                                              
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><div class="descrptionMessage">Ingrese la contrase&ntilde;a del certificado que utilizar&aacute; el m&oacute;dulo de administraci&oacute;n</div></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="width: 99%;" class="form-group @if(configForm("passwordCertificate").hasErrors) {has-error}">
+                                    <input type="password" class="form-control" name="@configForm("passwordCertificate").name" id="@configForm("passwordCertificate").id" value="@configForm("passwordCertificate").value" />
+                                    <span class="help-block" id="spanPasswordCertificate">@{configForm("passwordCertificate").error.map {error => error.message }}</span>
+                                </div>
+                            </td>
+                        </tr>     
+                        <tr>
+                            <td><div style="margin-top: 15px;"><input class="btn btn-success" type="submit" value="Guardar"></div></td>
+                        </tr>
+                    </table>
+                </fieldset>
+            }
+        </div>
+        <script>
+            $(document).ready(function() {                
+                fillConfigModule();     
+                current_tab("h3_Config_Principal");
+            });            
+        </script>
+    }
+    @footer(title)
+}

@@ -1,0 +1,52 @@
+@import helper._
+
+@(title: String, isLoggedIn: Boolean, userInfo: UserInfo, uploadFileForm : Form[views.formdata.uploadFileForm])
+
+@main(title, isLoggedIn, userInfo) { 
+    @menu_navigate(title,userInfo){
+        <div id="6" class="list_item">
+            @helper.form(routes.UploadOtherFiles.upLoadOtherFile(),'enctype -> "multipart/form-data") {
+                <fieldset>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td><div class="titleParam">Carga De Archivos.</div></td>
+                        </tr>                       
+                        <tr>
+                            <td><div class="descrptionMessage">Ingrese la IP de indexacion.</div></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="width: 45%;float: left;margin-right: 10px;" class="form-group @if(uploadFileForm("locationIndex").hasErrors) {has-error}">
+                                    <input type="text" class="form-control" name="@uploadFileForm("locationIndex").name" id="@uploadFileForm("locationIndex").id" value="@uploadFileForm("locationIndex").value"/>
+                                    <span class="help-block" id="spanPathServiceCrawler">@{uploadFileForm("locationIndex").error.map {error => error.message }}</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><div class="descrptionMessage">Seleccione su archivo </div></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="width: 45%;float: left;margin-right: 10px;" class="form-group @if(uploadFileForm("pathFile").hasErrors) {has-error}">
+                                    <input type="file" accept=".csv,.xlsx" name="@uploadFileForm("pathFile").name" id="@uploadFileForm("pathFile").id" value="@uploadFileForm("pathFile").value"/>
+                                    <span class="help-block" id="spanPathServiceCrawler">@{uploadFileForm("pathFile").error.map {error => error.message }}</span>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td><div style="margin-top: 15px;"><input class="btn btn-success" type="submit" value="Guardar"></div></td>
+                        </tr>
+                    </table>
+                </fieldset>
+            }
+            <script>
+                $(document).ready(function() {
+                    fillOtherConfigCleanData();
+                    current_tab("h3_UpCsvData");
+                });
+            </script>
+        </div>
+    }
+    @footer(title)
+}

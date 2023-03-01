@@ -1,0 +1,19 @@
+@import helper._
+
+@(title: String, isLoggedIn: Boolean, userInfo: UserInfo)
+
+@main(title, isLoggedIn, userInfo) { 
+    @menu_navigate(title,userInfo){
+        <div id="dvAdminUsers" class="list_item">
+            <iframe src="" class="iframeCrg" id="iframeAdminUsersDashboards"></iframe>
+        </div>
+        <script>
+            $(document).ready(function() {
+                fillAdminUsers();
+                current_tab("h3_Usuarios");
+            });
+            
+        </script>
+    }
+    @footer(title)
+}

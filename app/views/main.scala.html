@@ -1,0 +1,92 @@
+@(title: String, isLoggedIn: Boolean, userInfo: UserInfo)(content: Html)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>@title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="..@routes.Assets.at("stylesheets/bootstrap.min.css")" rel="stylesheet" type="text/css"/>
+        <link href="..@routes.Assets.at("font-awesome-4.7.0/css/font-awesome.min.css")" rel="stylesheet" type="text/css"/>
+        
+        <!--  Load site-specific customizations after bootstrap. -->
+        <link rel="stylesheet" media="screen" href="..@routes.Assets.at("stylesheets/main.css")">
+        <link rel="stylesheet" media="screen" href="..@routes.Assets.at("stylesheets/jquery-ui.css")">
+        <link rel="shortcut icon" type="image/png" href="..@routes.Assets.at("images/favicon.png")">
+
+        <!-- Editor XML -->
+        <link rel=stylesheet href="..@routes.Assets.at("codemirror/lib/codemirror.css")">
+        <script src="..@routes.Assets.at("codemirror/lib/codemirror.js")"></script>
+        <script src="..@routes.Assets.at("codemirror/mode/xml/xml.js")"></script>
+        <script src="..@routes.Assets.at("codemirror/mode/javascript/javascript.js")"></script>
+
+        <style>
+            .CodeMirror { height: auto; border: 1px solid #ddd; }
+            .CodeMirror-scroll { max-height: 200px; }
+            .CodeMirror pre { padding-left: 7px; line-height: 1.25; }
+        </style>
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
+          <script src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.2.0/respond.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <!-- Responsive navbar -->
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <!--  Display three horizontal lines when navbar collapsed. -->
+                        <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">Inicio</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-left">
+                        @if(isLoggedIn) {
+                            <li><img class="logoProfile" src='..@routes.Assets.at("images/logo-creangel-mini.png")' alt=""/></li>
+                            <li class='@("active".when(title == "Profile"))'><a href='..@routes.Application.profile()'>Est&aacute; logueado como:<div id="dvNameUser" >@userInfo.getName</div></a></li>
+                        }
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        @if(isLoggedIn) {
+                            <li><a href="@routes.Application.logout()">Cerrar sesi&oacute;n</a></li>
+                        } 
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Load jquery Javascript components.-->
+        <script src="..@routes.Assets.at("javascripts/jquery/jquery-1.12.4.js")" type="text/javascript"></script>
+        <script src="..@routes.Assets.at("javascripts/jquery/jquery-ui.js")"></script>
+        
+        <!-- Datatables -->
+        <link href="..@routes.Assets.at("datatables/jquery.dataTables.min.css")" rel="stylesheet" type="text/css"/>
+        <link href="..@routes.Assets.at("datatables/datatables.min.css")" rel="stylesheet" type="text/css"/>
+        <link href="..@routes.Assets.at("datatables/dataTables.editor.css")" rel="stylesheet" type="text/css"/>
+              
+        <script src="..@routes.Assets.at("datatables/jquery.dataTables.min.js")" type="text/javascript"></script>
+        <script src="..@routes.Assets.at("datatables/dataTables.editor.js")" type="text/javascript"></script>
+        
+        <script src="..@routes.Assets.at("javascripts/plots/d3.v3.min.js")" type="text/javascript"></script>
+        <script src="..@routes.Assets.at("javascripts/plots/dimple.v2.0.0.min.js")" type="text/javascript"></script>
+        <script src="..@routes.Assets.at("javascripts/plots/html2canvas.min.js")" type="text/javascript"></script>
+        <script src="..@routes.Assets.at("javascripts/plots/jspdf.min.js")" type="text/javascript"></script>
+        <script src="..@routes.Assets.at("javascripts/plots/canvg.min.js")" type="text/javascript"></script>
+        <script src="..@routes.Assets.at("javascripts/plots/modules/html.js")" type="text/javascript"></script>
+
+        @content
+        <!-- Load Bootstrap JavaScript components. HTMLUnit (used in testing) requires JQuery 1.8.3 or below). -->
+        <script src="..@routes.Assets.at("javascripts/bootstrap/bootstrap.min.js")"></script>
+        
+        <!-- Notify -->
+        <script src="..@routes.Assets.at("notify/bootstrap-notify.min.js")" type="text/javascript"></script>
+        
+        <!-- Loader -->
+        <link href="..@routes.Assets.at("stylesheets/loader.css")" rel="stylesheet" type="text/css"/>
+    </body>
+</html>

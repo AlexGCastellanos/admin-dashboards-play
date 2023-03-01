@@ -1,0 +1,233 @@
+@import helper._
+
+@(title: String, isLoggedIn: Boolean, userInfo: UserInfo, ScheduleTaskBackUpForm : Form[views.formdata.ScheduleTaskBackUpForm], arrListDaysWeek : LinkedHashMap[String, String], arrListaDayMonth : LinkedHashMap[String, String], arrListHours : LinkedHashMap[String, String], arrListMinutes : LinkedHashMap[String, String])
+
+@main(title, isLoggedIn, userInfo) { 
+@menu_navigate(title,userInfo){
+    <div  class="list_item table-responsive" style="margin-bottom: 300px">
+        <table class="table table-striped table-bordered table-hover" id="tableTasksBackUp" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>ID</th>
+                    <th>Por Minutos</th>
+                    <th>Por Horas</th>
+                    <th>D&iacute;as de frecuencia</th>
+                    <th>D&iacute;a de la semana</th>
+                    <th>D&iacute;a del mes</th>
+                    <th>Hora</th>
+                    <th>Minuto</th>
+                    <th>Instancia</th>  
+                    <th>Coleccion</th> 
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modal-tasksFS">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header" style="border: none;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Editar registro</h4> 
+                </div>
+                <div style="height: 895px;margin-left: 25px;margin-right: 25px;">
+                    <table style="width: 100%;border-spacing: 10px 1em;border-collapse: separate;" id="tableEditTasks">
+                        <tr>
+                            <td><input type="hidden" id="idEdit" value="" /></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 40%;">
+                                <input type="checkbox" style="margin-right: 10px;float: left;" id="checkedMinutesEdit" /> 
+                                <input type="hidden" name="hiddenCheckedMinutesEdit" id="hiddenCheckedMinutesEdit" value=""/> 
+                                <div class="descrptionMessageTable">Por frecuencia de minutos</div>
+                            </td>
+                            <td>
+                                <div class="borderForms" style="background: #eee;">
+                                    <table style="width: 100%;">
+                                        <tr>
+                                            <td style="width: 20%;"><div class="descrptionMessageTable">(Cada </div></td>
+                                            <td style="width: 30%;"><input type="text" class="form-control" name="perMinutesTaskEdit" id="perMinutesTaskEdit"/></td>
+                                            <td><div class="descrptionMessageTable" style="margin-left: 15px;"> minuto(s).)</div></td>
+                                        </tr>
+                                    </table>   
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 40%;">
+                                <input type="checkbox" style="margin-right: 10px;float: left;" id="checkedHoursEdit" /> 
+                                <input type="hidden" name="hiddenCheckedHoursEdit" id="hiddenCheckedHoursEdit" value=""/> 
+                                <div class="descrptionMessageTable">Por frecuencia de horas</div>
+                            </td>
+                            <td>
+                                <div class="borderForms" style="background: #eee;">
+                                    <table style="width: 100%;">
+                                        <tr>
+                                            <td style="width: 20%;"><div class="descrptionMessageTable">(Cada </div></td>
+                                            <td style="width: 30%;"><input type="text" class="form-control" name="perHoursTaskEdit" id="perHoursTaskEdit"/></td>
+                                            <td><div class="descrptionMessageTable" style="margin-left: 15px;"> hora(s).)</div></td>
+                                        </tr>
+                                    </table>   
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 40%;">
+                                <input type="checkbox" style="margin-right: 10px;float: left;" id="checkedDaysEdit" /> 
+                                <input type="hidden" name="hiddenCheckedDayEdit" id="hiddenCheckedDayEdit" value=""/> 
+                                <div class="descrptionMessageTable">Por frecuencia de d&iacute;as</div>
+                            </td>
+                            <td>
+                                <div class="borderForms" style="background: #eee;">
+                                    <table style="width: 100%;">
+                                        <tr>
+                                            <td style="width: 20%;"><div class="descrptionMessageTable">(Cada </div></td>
+                                            <td style="width: 30%;"><input type="text" class="form-control" name="dayTaskEdit" id="dayTaskEdit"/></td>
+                                            <td><div class="descrptionMessageTable" style="margin-left: 15px;"> d&iacute;as.)</div></td>
+                                        </tr>
+                                    </table>   
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" style="margin-right: 10px;float: left;" id="checkedDayWeekEdit" />  
+                                <input type="hidden" name="hiddenCheckedDayWeekEdit" id="hiddenCheckedDayWeekEdit"/>
+                                <div class="descrptionMessageTable">Por d&iacute;a de la semana</div>
+                            </td>
+                            <td>
+                                <div class="borderForms" style="background: #eee;">
+                                    <table style="width: 100%;">
+                                        <tr>
+                                            <td style="width: 20%;"><div class="descrptionMessageTable">(El d&iacute;a </div></td>
+                                            <td style="width: 30%;">
+                                                @select(
+                                                    ScheduleTaskBackUpForm("dayWeekEdit"),
+                                                    options(arrListDaysWeek),
+                                                    '_label -> "",
+                                                    'class -> "custom-select-crg"
+                                                )
+                                            </td>
+                                            <td><div class="descrptionMessageTable" style="margin-left: 15px;"> de cada Semana.)</div></td>
+                                        </tr>
+                                    </table>   
+                                    <script>document.getElementById("dayWeekEdit_field").removeChild(document.getElementById("dayWeekEdit_field").firstElementChild);</script>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" style="margin-right: 10px;float: left;" id="checkedDayMonthEdit" />      
+                                <input type="hidden" name="hiddenCheckedDayMonthEdit" id="hiddenCheckedDayMonthEdit"/>
+                                <div class="descrptionMessageTable">Por d&iacute;a del mes</div>
+                            </td>
+                            <td>
+                                <div class="borderForms" style="background: #eee;">
+                                        <table style="width: 100%;">
+                                            <tr>
+                                                <td style="width: 20%;"><div class="descrptionMessageTable">(El d&iacute;a </div></td>
+                                                <td style="width: 30%;">
+                                                    @select(
+                                                        ScheduleTaskBackUpForm("dayMonthEdit"),
+                                                        options(arrListaDayMonth),
+                                                        '_label -> "",
+                                                        'class -> "custom-select-crg"
+                                                    )
+                                                </td>
+                                                <td><div class="descrptionMessageTable" style="margin-left: 15px;"> de cada Mes.)</div></td>
+                                            </tr>
+                                        </table>   
+                                    <script>document.getElementById("dayMonthEdit_field").removeChild(document.getElementById("dayMonthEdit_field").firstElementChild);</script>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="borderForms" style="display: none;" id="divProgHoursDBEdit">
+                        <table style="width: 100%;">
+                            <tr>
+                                <td colspan="6">
+                                    <div class="descrptionMessage" style="margin-bottom: 15px;">
+                                        Por favor, Ingrese la frecuencia de d&iacute;as y seleccione la hora (En formato de 24 horas) en la cual se va a ejecutar la tarea para la conexi&oacute;n seleccionada:
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 10%;"><div class="descrptionMessageTable">Hora: </div></td>
+                                <td>
+                                    @select(
+                                        ScheduleTaskBackUpForm("hourTaskEdit"),
+                                        options(arrListHours),
+                                        '_label -> "",
+                                        'class -> "custom-select-crg"
+                                    )
+                                    <script>document.getElementById("hourTaskEdit_field").removeChild(document.getElementById("hourTaskEdit_field").firstElementChild);</script>
+                                </td>
+                                <td style="width: 10%;"><div class="descrptionMessageTable">Minuto: </div></td>
+                                <td>
+                                    @select(
+                                        ScheduleTaskBackUpForm("minuteTaskEdit"),
+                                        options(arrListMinutes),
+                                        '_label -> "",
+                                        'class -> "custom-select-crg"
+                                    )
+                                    <script>document.getElementById("minuteTaskEdit_field").removeChild(document.getElementById("minuteTaskEdit_field").firstElementChild);</script>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <table style="width: 100%;border-spacing: 10px 1em;border-collapse: separate;">
+                        <tr>
+                                <td style="width: 10%;"><div class="descrptionMessageTable">Instancia</div></td>
+                                <td>
+                                    <select class="form-control" id="backup_solr" name="backup_solr" onchange="fillBackupInstCores()">
+                                        
+                                </select>
+                                    <input type="hidden"  id="instHiddenBackUp" />
+                                    
+                                </td>
+                            </tr>
+                        </table>
+                    <table style="width: 100%;border-spacing: 10px 1em;border-collapse: separate;">
+                        <tr>
+                                <td style="width: 10%;"><div class="descrptionMessageTable">Coleccion</div></td>
+                                <td>
+                                    <select class="form-control" id="core_solr" name="core_solr" >
+                                        
+                                </select>
+                                    <input type="hidden"  id="coresHiddenBackUp" />
+                                    
+                                </td>
+                            </tr>
+                        </table>
+                    <div class="modal-footer" style="border: none;">
+                        <button type="button" class="btn btn-default" id="modal-btn-SaveTasksBackUp">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>   
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modal-DeleteTaskFS">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Confirmar</h4>
+              <h4>Desea eliminar este registro?</h4>
+              <input type="hidden" id="idDeletetaskFS" value=""/>
+            </div>
+            <div class="modal-footer" style="border: none;">
+              <button type="button" class="btn btn-default" id="modal-btn-si-DelTaskBackUp">Si</button>
+              <button type="button" class="btn btn-primary" id="modal-btn-no-DelTaskBackUp">No</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            listTasksBackUp();
+            current_tab("h3_BackUp");
+        });
+    </script>
+}
+@footer(title)
+}

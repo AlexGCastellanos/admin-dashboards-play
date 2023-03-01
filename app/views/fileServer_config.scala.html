@@ -1,0 +1,123 @@
+@import helper._
+
+@(title: String, isLoggedIn: Boolean, userInfo: UserInfo, FileServerForm : Form[views.formdata.FileServerForm])
+
+@main(title, isLoggedIn, userInfo) { 
+    @menu_navigate(title, userInfo){
+        <script>
+            $(document).ready(function () {    
+                current_tab("h3_FileServer");
+            });
+        </script>
+        <div id="div_AddFileServer" class="list_item" style="margin-bottom: 300px"> 
+            @helper.form(routes.FileServers.saveConnection()) {
+            <fieldset>
+                <table style="width: 100%;">
+                    <tr>
+                        <td colspan="3"><div class="titleParam">Agregar nueva conexi&oacute;n a Base de datos</div></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><div style="border-bottom: solid; width: 91%;margin-bottom: 20px;" class="descrptionMessage"><b>Configuraci&oacute;n</b></div></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;" colspan="3">
+                            <div style="width: 60%;" class="form-group @if(FileServerForm("nomConnection").hasErrors) {has-error}">
+                                <div class="descrptionMessageTable">Ingrese el nombre de la conexi&oacute;n</div>
+                                <input type="text" class="form-control" name="@FileServerForm("nomConnection").name" id="@FileServerForm("nomConnection").id" value="@FileServerForm("nomConnection").value"/>
+                                <span class="help-block" id="spannomConnection">@{FileServerForm("nomConnection").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;" colspan="3">
+                            <div style="width: 60%;" class="form-group @if(FileServerForm("ipServerFS").hasErrors) {has-error}">
+                                <div class="descrptionMessageTable">Ingrese el nombre del servidor o IP del servidor de archivos</div>
+                                <input type="text" class="form-control" name="@FileServerForm("ipServerFS").name" id="@FileServerForm("ipServerFS").id" value="@FileServerForm("ipServerFS").value"/>
+                                <span class="help-block" id="spanServer">@{FileServerForm("ipServerFS").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;" colspan="3">
+                            <div style="width: 50%;" class="form-group @if(FileServerForm("portServerFS").hasErrors) {has-error}">
+                                <div class="descrptionMessageTable">Ingrese el puerto del servidor de archivos (Opcional)</div>
+                                <input type="text" class="form-control" name="@FileServerForm("portServerFS").name" id="@FileServerForm("portServerFS").id" value="@FileServerForm("portServerFS").value"/>
+                                <span class="help-block" id="spanPortFS">@{FileServerForm("portServerFS").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;" colspan="3">
+                            <div style="width: 60%;" class="form-group @if(FileServerForm("pathFileServer").hasErrors) {has-error}">
+                                <div class="descrptionMessageTable">Ingrese la ruta o path de la carpeta donde se encuentran los archvos a indexar</div>
+                                <input type="text" placeholder="folder/subfolder" class="form-control" name="@FileServerForm("pathFileServer").name" id="@FileServerForm("pathFileServer").id" value="@FileServerForm("pathFileServer").value"/>
+                                <span class="help-block" id="spanPathFileServer">@{FileServerForm("pathFileServer").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;" colspan="3">
+                            <div style="width: 60%;" class="form-group @if(FileServerForm("userFS").hasErrors) {has-error}">
+                                <div class="descrptionMessageTable">Ingrese el nombre del usuario del servidor de archivos</div>
+                                <input type="text" class="form-control" name="@FileServerForm("userFS").name" id="@FileServerForm("userFS").id" value="@FileServerForm("userFS").value"/>
+                                <span class="help-block" id="spanuserFS">@{FileServerForm("userFS").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;" colspan="3">
+                            <div style="width: 60%;" class="form-group @if(FileServerForm("domainFS").hasErrors) {has-error}">
+                                <div class="descrptionMessageTable">Ingrese el dominio del usuario del servidor de archivos (Opcional)</div>
+                                <input type="text" class="form-control" name="@FileServerForm("domainFS").name" id="@FileServerForm("domainFS").id" value="@FileServerForm("domainFS").value"/>
+                                <span class="help-block" id="spandomainFS">@{FileServerForm("domainFS").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;" colspan="3">
+                            <div style="width: 60%;" class="form-group @if(FileServerForm("passFS").hasErrors) {has-error}">
+                                <div class="descrptionMessageTable">Ingrese la contrase&ntilde;a del usuario del servidor de archivos </div>
+                                <input type="password" class="form-control" name="@FileServerForm("passFS").name" id="@FileServerForm("passFS").id" value="@FileServerForm("passFS").value"/>
+                                <span class="help-block" id="spanpassFS">@{FileServerForm("passFS").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;" >
+                            <div style="width: 100%;" class="form-group @if(FileServerForm("pathService").hasErrors) {has-error}">
+                                <div class="descrptionMessageTable">Ingrese el path o url del servicio donde se realizar&aacute; la indexaci&oacute;n</div>
+                                <input type="text" style="width: 90%;" class="form-control" name="@FileServerForm("pathService").name" id="@FileServerForm("pathService").id" value="@FileServerForm("pathService").value" />       
+                                <span class="help-block" id="spanPathServiceFS">@{FileServerForm("pathService").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                        <td colspan="2">
+                            <div style="width: 100%;display: inline-block;margin-left: 20px;" class="form-group @if(FileServerForm("hiddenCheckedCleanCore").hasErrors) {has-error}">
+                                <div class="descrptionMessageTable" style="float: left;">Limpiar colecci&oacute;n antes de indexar</div>
+                                <input type="checkbox" style="margin-left: 10px;" id="checkedCleanCore" />                                                                                                
+                                <input type="hidden" name="@FileServerForm("hiddenCheckedCleanCore").name" id="@FileServerForm("hiddenCheckedCleanCore").id" value="false"/>       
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;" colspan="3">
+                            <div style="width: 60%;" class="form-group @if(FileServerForm("otherErrors").hasErrors) {has-error}">
+                                <div style="width: 100%;">Salida de Volcados: /opt/data/IFindIt/admin_dashboards/admin_serviceDash/fileServers/filesViews</div>
+                                <span class="help-block" id="spanPathFileServer">@{FileServerForm("otherErrors").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;" colspan="3">
+                            
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td><div style="margin-top: 15px;"><input class="btn btn-success" type="submit" value="Guardar"></div></td>
+                    </tr>
+                </table>
+            </fieldset>
+            }
+        }
+    @footer(title)
+}

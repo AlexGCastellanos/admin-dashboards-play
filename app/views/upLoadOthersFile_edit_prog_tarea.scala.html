@@ -1,0 +1,227 @@
+@import helper._
+
+@(title: String, isLoggedIn: Boolean, userInfo: UserInfo, progTareaOthersFilesForm : Form[views.formdata.ProgTareaOthersFilesForm], arrListaSemanas : LinkedHashMap[String, String], arrListaDiaMes : LinkedHashMap[String, String], arrListaHoras : LinkedHashMap[String, String], arrListaMinutos : LinkedHashMap[String, String], nomConexiones : HashMap[String, String])
+
+@main(title, isLoggedIn, userInfo) { 
+        @menu_navigate(title,userInfo){
+        <div id="div_Edit_ProgTarea_SpoOnline" class="list_item table-responsive" style="margin-bottom: 300px">
+            <div class="titleParam">Editar programaci&oacute;n de tareas de indexaci&oacute;n para otros archivos</div>
+            <table class="table table-striped table-bordered table-hover" id="tableTareasOthersFiles" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>ID</th>
+                        <th>Por Minutos</th>
+                        <th>Por Horas</th>
+                        <th>D&iacute;as de frecuencia</th>
+                        <th>D&iacute;a de la semana</th>
+                        <th>D&iacute;a del mes</th>
+                        <th>Hora</th>
+                        <th>Minuto</th>
+                        <th>Conexi&oacute;n</th>               
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modal-tareasOthersFiles">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content p-3">
+                        <div class="modal-header" style="border: none;">
+                            <h4 class="modal-title" id="myModalLabel">Editar registro</h4> 
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>                            
+                        </div>
+                        <div>
+                            <table style="width: 100%;border-spacing: 10px 1em;border-collapse: separate;" id="tableEditTareasOthersFiles">
+                                <tr>
+                                    <td><input type="hidden" id="idEdit" value="" /></td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 40%;">
+                                        <input type="checkbox" style="margin-right: 10px;float: left;" id="checkedMinutosEdit" /> 
+                                        <input type="hidden" name="hiddenCheckedMinutosEdit" id="hiddenCheckedMinutosEdit" value=""/> 
+                                        <div class="descrptionMessageTable">Por frecuencia de minutos</div>
+                                    </td>
+                                    <td>
+                                        <div class="borderForms" style="background: #eee;">
+                                            <table style="width: 100%;">
+                                                <tr>
+                                                    <td style="width: 20%;"><div class="descrptionMessageTable">(Cada </div></td>
+                                                    <td style="width: 30%;"><input type="text" class="form-control" name="porMinutosTareaEdit" id="porMinutosTareaEdit"/></td>
+                                                    <td><div class="descrptionMessageTable" style="margin-left: 15px;"> minuto(s).)</div></td>
+                                                </tr>
+                                            </table>   
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 40%;">
+                                        <input type="checkbox" style="margin-right: 10px;float: left;" id="checkedHorasEdit" /> 
+                                        <input type="hidden" name="hiddenCheckedHorasEdit" id="hiddenCheckedHorasEdit" value=""/> 
+                                        <div class="descrptionMessageTable">Por frecuencia de horas</div>
+                                    </td>
+                                    <td>
+                                        <div class="borderForms" style="background: #eee;">
+                                            <table style="width: 100%;">
+                                                <tr>
+                                                    <td style="width: 20%;"><div class="descrptionMessageTable">(Cada </div></td>
+                                                    <td style="width: 30%;"><input type="text" class="form-control" name="porHorasTareaEdit" id="porHorasTareaEdit"/></td>
+                                                    <td><div class="descrptionMessageTable" style="margin-left: 15px;"> hora(s).)</div></td>
+                                                </tr>
+                                            </table>   
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 40%;">
+                                        <input type="checkbox" style="margin-right: 10px;float: left;" id="checkedDiasEdit" /> 
+                                        <input type="hidden" name="hiddenCheckedDiaEdit" id="hiddenCheckedDiaEdit" value=""/> 
+                                        <div class="descrptionMessageTable">Por frecuencia de d&iacute;as</div>
+                                    </td>
+                                    <td>
+                                        <div class="borderForms" style="background: #eee;">
+                                            <table style="width: 100%;">
+                                                <tr>
+                                                    <td style="width: 20%;"><div class="descrptionMessageTable">(Cada </div></td>
+                                                    <td style="width: 30%;"><input type="text" class="form-control" name="diaTareaEdit" id="diaTareaEdit"/></td>
+                                                    <td><div class="descrptionMessageTable" style="margin-left: 15px;"> d&iacute;as.)</div></td>
+                                                </tr>
+                                            </table>   
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" style="margin-right: 10px;float: left;" id="checkedDiaSemanaEdit" />  
+                                        <input type="hidden" name="hiddenCheckedDiaSemanaEdit" id="hiddenCheckedDiaSemanaEdit"/>
+                                        <div class="descrptionMessageTable">Por d&iacute;a de la semana</div>
+                                    </td>
+                                    <td>
+                                        <div class="borderForms" style="background: #eee;">
+                                            <table style="width: 100%;">
+                                                <tr>
+                                                    <td style="width: 20%;"><div class="descrptionMessageTable">(El d&iacute;a </div></td>
+                                                    <td style="width: 30%;">
+                                                        @select(
+                                                        progTareaOthersFilesForm("diaSemanaEdit"),
+                                                        options(arrListaSemanas),
+                                                        '_label -> "",
+                                                        'class -> "custom-select-crg"
+                                                        )
+                                                    </td>
+                                                    <td><div class="descrptionMessageTable" style="margin-left: 15px;"> de cada Semana.)</div></td>
+                                                </tr>
+                                            </table>   
+                                            <script>document.getElementById("diaSemanaEdit_field").removeChild(document.getElementById("diaSemanaEdit_field").firstElementChild);</script>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" style="margin-right: 10px;float: left;" id="checkedDiaMesEdit" />      
+                                        <input type="hidden" name="hiddenCheckedDiaMesEdit" id="hiddenCheckedDiaMesEdit"/>
+                                        <div class="descrptionMessageTable">Por d&iacute;a del mes</div>
+                                    </td>
+                                    <td>
+                                        <div class="borderForms" style="background: #eee;">
+                                            <table style="width: 100%;">
+                                                <tr>
+                                                    <td style="width: 20%;"><div class="descrptionMessageTable">(El d&iacute;a </div></td>
+                                                    <td style="width: 30%;">
+                                                        @select(
+                                                        progTareaOthersFilesForm("diaMesEdit"),
+                                                        options(arrListaDiaMes),
+                                                        '_label -> "",
+                                                        'class -> "custom-select-crg"
+                                                        )
+                                                    </td>
+                                                    <td><div class="descrptionMessageTable" style="margin-left: 15px;"> de cada Mes.)</div></td>
+                                                </tr>
+                                            </table>   
+                                            <script>document.getElementById("diaMesEdit_field").removeChild(document.getElementById("diaMesEdit_field").firstElementChild);</script>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="borderForms" style="display: none;" id="divProgHorasEdit">
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td colspan="6">
+                                            <div class="descrptionMessage" style="margin-bottom: 15px;">
+                                                Por favor, Ingrese la frecuencia de d&iacute;as y seleccione la hora (En formato de 24 horas) en la cual se va a ejecutar la tarea para la conexi&oacute;n seleccionada:
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 10%;"><div class="descrptionMessageTable">Hora: </div></td>
+                                        <td>
+                                            @select(
+                                            progTareaOthersFilesForm("horaTareaEdit"),
+                                            options(arrListaHoras),
+                                            '_label -> "",
+                                            'class -> "custom-select-crg"
+                                            )
+                                            <script>document.getElementById("horaTareaEdit_field").removeChild(document.getElementById("horaTareaEdit_field").firstElementChild);</script>
+                                        </td>
+                                        <td style="width: 10%;"><div class="descrptionMessageTable">Minuto: </div></td>
+                                        <td>
+                                            @select(
+                                            progTareaOthersFilesForm("minTareaEdit"),
+                                            options(arrListaMinutos),
+                                            '_label -> "",
+                                            'class -> "custom-select-crg"
+                                            )
+                                            <script>document.getElementById("minTareaEdit_field").removeChild(document.getElementById("minTareaEdit_field").firstElementChild);</script>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <table style="width: 100%;border-spacing: 10px 1em;border-collapse: separate;">
+                                <tr>
+                                    <td style="width: 10%;"><div class="descrptionMessageTable">Conexi&oacute;n</div></td>
+                                    <td>
+                                        @select(
+                                        progTareaOthersFilesForm("selConexionEdit"),
+                                        options(nomConexiones),
+                                        '_label -> "",
+                                        'class -> "custom-select-crg"
+                                        )
+                                        <script>document.getElementById("selConexionEdit_field").removeChild(document.getElementById("selConexionEdit_field").firstElementChild);</script>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="modal-footer" style="border: none;">
+                                <button type="button" class="btn btn-outline-secondary" id="modal-btn-SaveTareasOthersFiles">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>   
+            </div>
+            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modal-DeleteTaskOthersFiles">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content p-3">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">Confirmar</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <h5>Desea eliminar este registro?</h5>
+                            <input type="hidden" id="idDeletetaskOthersFiles" value=""/>
+                        </div>
+                        <div class="modal-footer" style="border: none;">
+                            <button type="button" class="btn btn-outline-secondary" id="modal-btn-si-DelTaskOthersFiles">Si</button>
+                            <button type="button" class="btn btn-primary" id="modal-btn-no-DelTaskOthersFiles">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                $(document).ready(function () {
+                    listarTareasOthersFiles();
+                    current_tab("h3_OtrosArchivos");
+                });
+            </script>
+        </div>
+        
+    }
+@footer(title)
+}

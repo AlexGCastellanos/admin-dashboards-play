@@ -1,0 +1,235 @@
+@import helper._
+
+@(title: String, isLoggedIn: Boolean, userInfo: UserInfo, DatabasesForm : Form[views.formdata.DatabasesForm], arrBasesdatos : HashMap[String, String])
+
+@main(title, isLoggedIn, userInfo) { 
+@menu_navigate(title, userInfo){
+<div id="div_EditBaseDatos" class="list_item table-responsive" style="margin-bottom: 300px">
+    <table class="table table-striped table-bordered table-hover" id="tableConnections" style="width: 100%;">
+        <thead>
+            <tr>
+                <th></th>
+                <th>ID</th>
+                <th>Conexi&oacute;n</th>
+                <th>Separador BD</th>
+                <th>Consulta</th>
+                <th>Fecha Inicial</th>
+                <th>Fecha Final</th>
+                <th>Campo Fecha</th>
+                <th>N&uacute;mero de d&iacute;as</th>
+                <th>Tipo BD</th>
+                <th>IP BD</th>
+                <th>Puerto BD</th>
+                <th>Nombre BD</th>
+                <th>Instancia BD</th>
+                <th>Usuario BD</th>
+                <th>Registros por fraccion</th>
+                <th>Fraccionar registros</th>
+                <th>Campo de Ordenamiento</th>
+                <th>Servicio</th>
+                <th>Limpiar colecci&oacute;n</th>
+                <th>Tipo de indexaci&oacute;n</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modal-connections">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header" style="border: none;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Editar registro</h4> 
+                </div>
+                <div style="margin-top: 20px;height: 810px;">
+                    <table style="width: 100%;" id="tableEditConnections">
+                        <tr>
+                            <td><input type="hidden" id="idEdit" value="" /></td>
+                        </tr>
+                        <tr>
+                            <td><label for="nomConnection" class="control-label lb-left">Nombre de la conexi&oacute;n</label></td>
+                            <td><div class="col-sm-2" style="width: 95%;margin-top: 10px;"><input id="nomConnectionEdit" name="nomConnectionEdit" type="text"  disabled="true" class="form-control" autofocus="true"/></div></td>
+                        </tr>
+                        <tr>
+                            <td><label for="separatorBD" class="control-label lb-left">Separador BD</label></td>
+                            <td><div class="col-sm-2" style="width: 95%;margin-top: 10px;"><input id="separatorBDEdit" name="separatorBDEdit" type="text" class="form-control" autofocus="true"/></div></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 25%;"><label for="query" class="control-label lb-left">Consulta</label></td>
+                            <td><div class="col-sm-2" style="width: 95%;"><textarea id="queryEdit" rows="4" name="queryEdit" class="form-control" autofocus="true"></textarea></div></td>
+                        </tr>
+<!--                        <tr>
+                            <td><label for="fieldURL" class="control-label lb-left">Campo ID o URL</label></td>
+                            <td><div class="col-sm-2" style="width: 95%;margin-top: 10px;"><input id="fieldURLEdit" name="fieldURLEdit" type="text" class="form-control" autofocus="true"/></div></td>
+                        </tr>-->
+                        <tr>
+                            <td colspan="2">
+                                <table style="margin-top: 10px;">
+                                    <tr>
+                                        <td style="width: 20%;"><label for="date1" class="control-label lb-left">Fecha Inicial</label></td>
+                                        <td><div class="col-sm-2" style="width: 95%;margin-top: 10px;"><input id="date1Edit" name="date1Edit" type="date" class="form-control" autofocus="true"/></div></td>
+                                        <td style="width: 20%;"><label for="date2" class="control-label lb-left">Fecha Final</label></td>
+                                        <td><div class="col-sm-2" style="width: 95%;margin-top: 10px;"><input id="date2Edit" name="date2Edit" type="date" class="form-control" autofocus="true"/></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                        <div class="col-sm-2" style="width: 95%;margin-top: 10px;">
+                                            <label for="fieldDateEdit" class="control-label lb-left">n&uacute;mero de d&iacute;as anteriores a la fecha actual</label>
+                                            <input id="fieldDateEdit" name="fieldDateEdit" type="text" class="form-control" autofocus="true"/>
+                                        </div>
+                                        <div class="col-sm-2" style="width: 95%;margin-top: 10px;">
+                                                <label for="CheckedEditDate" class="control-label lb-left">Descargar toda la vista</label>
+                                                <input type="checkbox" style="margin-left: 10px;" id="CheckedEditDate" />
+                                                <input type="hidden" name="hiddenDownloadAllFile" id="hiddenDownloadAllFile" value=""/>
+                                        </div>
+                                        </td>
+                                         <td style="width: 92%" colspan="2" id="tableCampoFecha">
+                                                <label for="campoFecha_0" style="width: 92%" class="control-label lb-left">Campo Fecha</label>
+                                                <input id="campoFecha_0" style="width: 92%" type="text" class="form-control" value="Todas">
+                                                <button id="btn_campoFecha_0" style="width: 92%" type="button" onclick="campoFechaADDWord(this.id[this.id.length - 1], this.value)">Agregar</button>
+                                                <select id="search_results_campoFecha_0" style="width: 92%"  multiple="multiple" class="form-control" onchange="deletecampoFecha(this.id[this.id.length - 1])" onclick="deletecampoFecha(this.value)" style="height: 80px;"></select>
+                                                <input id="fieldDate" name="fieldDate" type="hidden" class="form-control" autofocus="true"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <table>
+                                    <tr>
+                                        <td><label for="databases" class="control-label lb-left">Tipo de Base de datos</label></td>
+                                        <td>
+                                            <div class="col-sm-2" style="width: 95%;">
+                                                @select(
+                                                    DatabasesForm("databasesEdit"),
+                                                    options(arrBasesdatos),
+                                                    '_label -> null,
+                                                    'class -> "custom-select-crg"
+                                                )
+                                            </div>
+                                        </td>
+                                        <td><label for="hiddenCheckedDate" class="control-label lb-left" style="margin-top: 20px;">Ejecutar diariamente</label></td>
+                                        <td>
+                                            <div class="col-sm-2" style="width: 95%;margin-top: 10px;">
+                                                <input type="checkbox" style="margin-left: 10px;" id="hiddenCheckedEditDate" />
+                                                <input type="hidden" name="hiddenCheckedEdit" id="hiddenCheckedEdit" value=""/>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <table>
+                                    <tr>
+                                        <td><label for="serverBD" class="control-label lb-left">IP</label></td>
+                                        <td><div class="col-sm-2" style="width: 95%;margin-top: 10px;"><input id="serverBDEdit" name="serverBDEdit" type="text" class="form-control" autofocus="true"/></div></td>
+                                        <td><label for="puertoBD" class="control-label lb-left">Puerto</label></td>
+                                        <td><div class="col-sm-2" style="width: 95%;margin-top: 10px;"><input id="portBDEdit" name="portBDEdit" type="text" class="form-control" autofocus="true"/></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="nameBD" class="control-label lb-left">Nombre BD</label></td>
+                                        <td><div class="col-sm-2" style="width: 95%;margin-top: 10px;"><input id="nameBDEdit" name="nameBDEdit" type="text" class="form-control" autofocus="true"/></div></td>
+                                        <td><label for="instanceBD" class="control-label lb-left">Instancia</label></td>
+                                        <td><div class="col-sm-2" style="width: 95%;margin-top: 10px;"><input id="instanceBDEdit" name="instanceBDEdit" type="text" class="form-control" autofocus="true"/></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="userBD" class="control-label lb-left">Usuario</label></td>
+                                        <td><div class="col-sm-2" style="width: 95%;margin-top: 10px;"><input id="userBDEdit" name="userBDEdit" type="text" class="form-control" autofocus="true"/></div></td>
+                                        <td><label for="passBD" class="control-label lb-left">Contrase&ntilde;a</label></td>
+                                        <td><div class="col-sm-2" style="width: 95%;margin-top: 10px;"><input id="passBDEdit" name="passBDEdit" type="password" class="form-control" autofocus="true"/></div></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="padding-top: 15px;">
+                                <table>
+                                    <tr>
+                                        <td><label for="pathService" class="control-label lb-left">Fraccionar vista</label></td>
+                                        <td>
+                                            <div class="col-sm-2" style="width: 95%;margin-top: 10px;">
+                                                <input type="checkbox" style="margin-left: 10px;" id="hiddenCheckedEditFracView" />
+                                                <input type="hidden" name="EditFracView" id="EditFracView" value=""/>
+                                            </div>
+                                        </td>
+                                        <td><label for="numFracView" class="control-label lb-left"># de registros</label></td>
+                                        <td style="width: 40%;">
+                                            <div class="col-sm-2" style="width: 95%;margin-top: 10px;">
+                                                <input type="text" class="form-control" name="numFracViewEdit" id="numFracViewEdit" value=""/>
+                                            </div>
+                                        </td>
+                                        <td><label for="fieldOrderBy" class="control-label lb-left">Campo de ordenamiento</label></td>
+                                        <td style="width: 40%;">
+                                            <div class="col-sm-2" style="width: 95%;margin-top: 10px;">
+                                                <input type="text" class="form-control" name="fieldOrderByEdit" id="fieldOrderByEdit" value=""/>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">    
+                                <table>
+                                    <tr>
+                                        <td><label for="pathService" class="control-label lb-left">Path del servicio de indexaci&oacute;n</label></td>
+                                        <td style="width: 60%;"><div class="col-sm-2" style="width: 95%;margin-top: 10px;"><input id="pathServiceEdit" name="pathServiceEdit" type="text" class="form-control"/></div></td>
+                                        <td><label for="hiddenCleanCore" class="control-label lb-left">Limpiar Colecci&oacute;n</label></td>
+                                        <td>
+                                            <div class="col-sm-2" style="width: 95%;margin-top: 10px;">
+                                                <input type="checkbox" style="margin-left: 10px;" id="hiddenCheckedEditCleanCore" />
+                                                <input type="hidden" name="EditHiddenCleanCore" id="EditHiddenCleanCore" value=""/>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                    <td style="width: 40%;" colspan="3">
+                                        <div style="width: 60%;margin-left: 15px;" class="form-group" >
+                                            <div style="font-weight: bold;" class="control-label lb-left">Por favor, seleccione el tipo de limpieza</div>
+                                            <select  class="custom-select-crg" id="selectCleanType" onchange="saveCleanType()"  >
+                                                <option value="servicioExterno">servicio Externo</option>
+                                                <option value="servicioJupyter">servicio Jupyter</option>
+                                            </select>
+                                            <input type="hidden"  id="cleanType" value="servicioExterno"/>             
+                                        </div>
+                                    </td> 
+                                </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer" style="border: none;">
+                    <button type="button" class="btn btn-default" id="modal-btn-SaveConnection">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modal-DeleteConnection">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Confirmar</h4>
+              <h4>Desea eliminar este registro?</h4>
+              <input type="hidden" id="idDeleteCon" value=""/>
+            </div>
+            <div class="modal-footer" style="border: none;">
+              <button type="button" class="btn btn-default" id="modal-btn-si-DeleteConnection">Si</button>
+              <button type="button" class="btn btn-primary" id="modal-btn-no-DeleteConnection">No</button>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        listConnections();
+        current_tab("h3_BaseDatos");
+    });
+</script>
+}
+@footer(title)
+}

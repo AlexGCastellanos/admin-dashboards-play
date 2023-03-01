@@ -1,0 +1,230 @@
+@import helper._
+
+@(title: String, isLoggedIn: Boolean, userInfo: UserInfo, ProgTaskDatabasesForm : Form[views.formdata.ProgTaskDatabasesForm], arrListDayWeeks : LinkedHashMap[String, String], arrListDayMonth : LinkedHashMap[String, String], arrListHours : LinkedHashMap[String, String], arrListMinutes : LinkedHashMap[String, String], nomConnections : LinkedHashMap[String, String])
+
+@main(title, isLoggedIn, userInfo) { 
+@menu_navigate(title, userInfo){
+<script>
+    $(document).ready(function() {
+        current_tab("h3_BaseDatos");
+    });
+</script>
+<div id="dvProg_tarea_BD" class="list_item">
+    <div class="tab-content">
+        <div id="1a" class="tab-pane active" style="margin: 15px;">
+            @helper.form(routes.Databases.saveProgTaskBD()) {
+            <fieldset>
+                <table style="width: 70%;">
+                    <tr>
+                        <td colspan="2"><div style="border-bottom: solid; width: 91%;margin-bottom: 20px;" class="descrptionMessage"><b>Configuraci&oacute;n</b></div></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="descrptionMessage" style="margin-bottom: 15px;">
+                                Por favor seleccione la forma en que desea programar la tarea
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="width: 100%;display: inline-block;" class="form-group @if(ProgTaskDatabasesForm("hiddenCheckedMinutes").hasErrors) {has-error}">
+                                <input type="checkbox" style="margin-right: 10px;float: left;" id="checkedMinutes" /> 
+                                <input type="hidden" name="@ProgTaskDatabasesForm("hiddenCheckedMinutes").name" id="@ProgTaskDatabasesForm("hiddenCheckedMinutes").id" value="false"/> 
+                                <div class="descrptionMessageTable">Por frecuencia de minutos</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="width: 80%;background: #eee;" class="form-group @if(ProgTaskDatabasesForm("perMinutesTask").hasErrors) {has-error}">
+                                 <div class="borderForms">
+                                    <table style="width: 100%;">
+                                        <tr>
+                                            <td style="width: 20%;"><div class="descrptionMessageTable">(Cada </div></td>
+                                            <td style="width: 40%;"><input type="text" class="form-control" name="@ProgTaskDatabasesForm("perMinutesTask").name" id="@ProgTaskDatabasesForm("perMinutesTask").id" value="@ProgTaskDatabasesForm("perMinutesTask").value"/></td>
+                                            <td><div class="descrptionMessageTable"> minuto(s).)</div></td>
+                                        </tr>
+                                    </table>   
+                                </div>
+                                <span class="help-block" id="spanperMinutesTask">@{ProgTaskDatabasesForm("perMinutesTask").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="width: 100%;display: inline-block;" class="form-group @if(ProgTaskDatabasesForm("hiddenCheckedHours").hasErrors) {has-error}">
+                                <input type="checkbox" style="margin-right: 10px;float: left;" id="checkedHours" /> 
+                                <input type="hidden" name="@ProgTaskDatabasesForm("hiddenCheckedHours").name" id="@ProgTaskDatabasesForm("hiddenCheckedHours").id" value="false"/> 
+                                <div class="descrptionMessageTable">Por frecuencia de horas</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="width: 80%;background: #eee;" class="form-group @if(ProgTaskDatabasesForm("perHoursTask").hasErrors) {has-error}">
+                                 <div class="borderForms">
+                                    <table style="width: 100%;">
+                                        <tr>
+                                            <td style="width: 20%;"><div class="descrptionMessageTable">(Cada </div></td>
+                                            <td style="width: 40%;"><input type="text" class="form-control" name="@ProgTaskDatabasesForm("perHoursTask").name" id="@ProgTaskDatabasesForm("perHoursTask").id" value="@ProgTaskDatabasesForm("perHoursTask").value"/></td>
+                                            <td><div class="descrptionMessageTable"> hora(s).)</div></td>
+                                        </tr>
+                                    </table>   
+                                </div>
+                                <span class="help-block" id="spanperHoursTask">@{ProgTaskDatabasesForm("perHoursTask").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="width: 100%;display: inline-block;" class="form-group @if(ProgTaskDatabasesForm("hiddenCheckedDays").hasErrors) {has-error}">
+                                <input type="checkbox" style="margin-right: 10px;float: left;" id="checkedDays" /> 
+                                <input type="hidden" name="@ProgTaskDatabasesForm("hiddenCheckedDays").name" id="@ProgTaskDatabasesForm("hiddenCheckedDays").id" value="false"/> 
+                                <div class="descrptionMessageTable">Por frecuencia de d&iacute;as</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="width: 80%;background: #eee;" class="form-group @if(ProgTaskDatabasesForm("dayTask").hasErrors) {has-error}">
+                                 <div class="borderForms">
+                                    <table style="width: 100%;">
+                                        <tr>
+                                            <td style="width: 20%;"><div class="descrptionMessageTable">(Cada </div></td>
+                                            <td style="width: 40%;"><input type="text" class="form-control" name="@ProgTaskDatabasesForm("dayTask").name" id="@ProgTaskDatabasesForm("dayTask").id" value="@ProgTaskDatabasesForm("dayTask").value"/></td>
+                                            <td><div class="descrptionMessageTable"> d&iacute;a(s).)</div></td>
+                                        </tr>
+                                    </table>   
+                                </div>
+                                <span class="help-block" id="spandayTask">@{ProgTaskDatabasesForm("dayTask").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="width: 100%;display: inline-block;" class="form-group @if(ProgTaskDatabasesForm("hiddenCheckedDayWeek").hasErrors) {has-error}">
+                                <input type="checkbox" style="margin-right: 10px;float: left;" id="checkedDayWeek" />  
+                                <input type="hidden" name="@ProgTaskDatabasesForm("hiddenCheckedDayWeek").name" id="@ProgTaskDatabasesForm("hiddenCheckedDayWeek").id" value="false"/>
+                                <div class="descrptionMessageTable">Por d&iacute;a de la semana</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="width: 80%;background: #eee;" class="form-group @if(ProgTaskDatabasesForm("dayWeekTask").hasErrors) {has-error}">
+                                 <div class="borderForms">
+                                    <table style="width: 100%;">
+                                        <tr>
+                                            <td style="width: 20%;"><div class="descrptionMessageTable">(El d&iacute;a </div></td>
+                                            <td style="width: 40%;">
+                                                @select(
+                                                    ProgTaskDatabasesForm("dayWeekTask"),
+                                                    options(arrListDayWeeks),
+                                                    '_label -> "",
+                                                    'class -> "custom-select-crg"
+                                                )
+                                            </td>
+                                            <td><div class="descrptionMessageTable"> de cada Semana.)</div></td>
+                                        </tr>
+                                    </table>   
+                                </div>
+                                <script>document.getElementById("dayWeekTask_field").removeChild(document.getElementById("dayWeekTask_field").firstElementChild);</script>
+                                <span class="help-block" id="spandayWeekTask">@{ProgTaskDatabasesForm("dayWeekTask").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="width: 100%;display: inline-block;" class="form-group @if(ProgTaskDatabasesForm("hiddenCheckedDayMonth").hasErrors) {has-error}">
+                                <input type="checkbox" style="margin-right: 10px;float: left;" id="checkedDayMonth" />      
+                                <input type="hidden" name="@ProgTaskDatabasesForm("hiddenCheckedDayMonth").name" id="@ProgTaskDatabasesForm("hiddenCheckedDayMonth").id" value="false"/>
+                                <div class="descrptionMessageTable">Por d&iacute;a del mes</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="width: 80%;background: #eee;" class="form-group @if(ProgTaskDatabasesForm("dayMonthTask").hasErrors) {has-error}">
+                                 <div class="borderForms">
+                                    <table style="width: 100%;">
+                                        <tr>
+                                            <td style="width: 20%;"><div class="descrptionMessageTable">(El d&iacute;a </div></td>
+                                            <td style="width: 40%;">
+                                                @select(
+                                                    ProgTaskDatabasesForm("dayMonthTask"),
+                                                    options(arrListDayMonth),
+                                                    '_label -> "",
+                                                    'class -> "custom-select-crg"
+                                                )
+                                            </td>
+                                            <td><div class="descrptionMessageTable"> de cada Mes.)</div></td>
+                                        </tr>
+                                    </table>   
+                                </div>
+                                <script>document.getElementById("dayMonthTask_field").removeChild(document.getElementById("dayMonthTask_field").firstElementChild);</script>
+                                <span class="help-block" id="spandayMonthTask">@{ProgTaskDatabasesForm("dayMonthTask").error.map {error => error.message }}</span>                                                
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="form-group @if(ProgTaskDatabasesForm("otherErrors").hasErrors) {has-error}">
+                                 <span class="help-block" id="spanotherErrors">@{ProgTaskDatabasesForm("otherErrors").error.map {error => error.message }}</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="borderForms" style="display:none;" id="divProgHoursDB">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td colspan="6">
+                                <div class="descrptionMessage" style="margin-bottom: 15px;">
+                                    Por favor, Ingrese la frecuencia de d&iacute;as y seleccione la hora (En formato de 24 horas) en la cual se va a ejecutar la tarea:
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 10%;"><div class="descrptionMessageTable">Hora: </div></td>
+                            <td>
+                                <div style="width: 80%;margin-top: 20px;" class="form-group @if(ProgTaskDatabasesForm("hourTask").hasErrors) {has-error}">
+                                    @select(
+                                        ProgTaskDatabasesForm("hourTask"),
+                                        options(arrListHours),
+                                        '_label -> "",
+                                        'class -> "custom-select-crg"
+                                    )
+                                    <script>document.getElementById("hourTask_field").removeChild(document.getElementById("hourTask_field").firstElementChild);</script>
+                                </div>
+                            </td>
+                            <td style="width: 10%;"><div class="descrptionMessageTable">Minuto: </div></td>
+                            <td>
+                                <div style="width: 80%;margin-top: 20px;" class="form-group @if(ProgTaskDatabasesForm("minuteTask").hasErrors) {has-error}">
+                                    @select(
+                                        ProgTaskDatabasesForm("minuteTask"),
+                                        options(arrListMinutes),
+                                        '_label -> "",
+                                        'class -> "custom-select-crg"
+                                    )
+                                    <script>document.getElementById("minuteTask_field").removeChild(document.getElementById("minuteTask_field").firstElementChild);</script>
+                                </div>
+                            </td>
+                            
+                        </tr>
+                    </table>
+                </div>
+                
+                <table style="width: 70%;">
+                    <tr>
+                        <td style="width: 32%;"><div class="descrptionMessageTable">Conexi&oacute;n:</div></td>
+                            <td>
+                                <div style="width: 80%;margin-top: 20px;" class="form-group @if(ProgTaskDatabasesForm("selConnection").hasErrors) {has-error}">
+                                    @select(
+                                        ProgTaskDatabasesForm("selConnection"),
+                                        options(nomConnections),
+                                        '_label -> "",
+                                        'class -> "custom-select-crg"
+                                    )
+                                    <script>document.getElementById("selConnection_field").removeChild(document.getElementById("selConnection_field").firstElementChild);</script>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                <div style="margin-top: 15px;"><input class="btn btn-success" type="submit" value="Guardar"></div>
+            </fieldset>
+            }
+        </div>
+    </div>
+</div>
+}
+@footer(title)
+}
