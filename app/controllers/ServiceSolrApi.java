@@ -1,12 +1,12 @@
 package controllers;
 
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
@@ -35,14 +35,14 @@ public class ServiceSolrApi extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result enviarDatos() {
-        
+
         /*Lineas para Guardar en LOG */
         String username = request().username();
         String ipAddress = request().getHeader("X-FORWARDED-FOR");
         if (ipAddress == null) {
             ipAddress = request().remoteAddress();
         }
-        
+
         String lineLog = ipAddress + "<;>" + username + "<;>Haciendo pruebas del metodo de validacion";
         generateLineLog(lineLog);
 
@@ -64,7 +64,7 @@ public class ServiceSolrApi extends Controller {
 
             QueryAndIndexingForm created = filledQueryAndIndexForm.get();
             StringBuilder response = new StringBuilder("");
-            
+
             try {
 
                 pf.loadConfiguracionPruebaIndexar();
@@ -82,7 +82,7 @@ public class ServiceSolrApi extends Controller {
                 String destinationCollectionName = created.destinationCollectionName;
                 String operationSelector = created.operationSelector;
                 String saveLocation = created.saveLocation;
-                String jsonToText = created.jsonFileToIndex;
+                String jsonToText = "";
 
                 if (operationSelector.equals("Indexar Archivo JSON")) {
 
@@ -107,35 +107,36 @@ public class ServiceSolrApi extends Controller {
                     }
                 }
 
-                JSONObject formData = new JSONObject()
-                        .put("ip", ipOrigin)
-                        .put("puerto", portOrigin)
-                        .put("origen", originCollectionName)
-                        .put("id", idsQuery)
-                        .put("ipD", ipDestination)
-                        .put("puertoD", portDestination)
-                        .put("destino", destinationCollectionName)
-                        .put("operacion", operationSelector)
-                        .put("ubicacion", saveLocation)
-                        .put("archivoJson", jsonToText);
-                
+                JSONObject formData = new JSONObject();
+
+                formData.put("ip", ipOrigin);
+                formData.put("puerto", portOrigin);
+                formData.put("origen", originCollectionName);
+                formData.put("id", idsQuery);
+                formData.put("ipD", ipDestination);
+                formData.put("puertoD", portDestination);
+                formData.put("destino", destinationCollectionName);
+                formData.put("operacion", operationSelector);
+                formData.put("ubicacion", saveLocation);
+                formData.put("archivoJson", jsonToText);
+
                 logger.info("Los datos del formulario en formato json son: " + formData.toString());
+
                 logger.info("La url de la API es: " + urlApiSolr + "   +++......+++");
-                
+
                 URL url = new URL(urlApiSolr);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("POST");
-
-                con.setRequestProperty("User-Agent", USER_AGENT);
-                con.setRequestProperty("Accept-Charset", "UTF-8");
-                con.setRequestProperty("Content-Type", "application/json; charset=UTF8;");
+                con.setRequestProperty("Content-type", "application/json");
                 con.setDoOutput(true);
 
                 logger.info("formData --->" + formData);
+
+                OutputStream wr = con.getOutputStream();
                 
-                try (DataOutputStream wr = new DataOutputStream(con.getOutputStream())) {
-                    wr.write(formData.toString().getBytes());
-                }
+                wr.write(formData.toString().getBytes("UTF-8"));
+                wr.flush();
+                wr.close();
 
                 int responseCode = con.getResponseCode();
                 logger.info("Response Code consulta a API: " + responseCode);
@@ -159,14 +160,15 @@ public class ServiceSolrApi extends Controller {
                     return badRequest(response.toString());
                 }
                 
+                con.disconnect();
                 return ok("El codigo de respuesta es: " + responseCode + "El cuerpo de la respuesta es: " + response.toString());
 
             } catch (IOException ex) {
                 logger.error("Error al leer todos los datos del formulario" + ex.getMessage());
                 logger.error(ex);
             }
-            
-            return null;            
+
+            return null;
         }
     }
 
