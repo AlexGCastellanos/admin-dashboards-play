@@ -35,12 +35,14 @@ public class ServiceSolrApi extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result enviarDatos() {
+        
         /*Lineas para Guardar en LOG */
         String username = request().username();
         String ipAddress = request().getHeader("X-FORWARDED-FOR");
         if (ipAddress == null) {
             ipAddress = request().remoteAddress();
         }
+        
         String lineLog = ipAddress + "<;>" + username + "<;>Haciendo pruebas del metodo de validacion";
         generateLineLog(lineLog);
 
@@ -118,7 +120,8 @@ public class ServiceSolrApi extends Controller {
                         .put("archivoJson", jsonToText);
                 
                 logger.info("Los datos del formulario en formato json son: " + formData.toString());
-
+                logger.info("La url de la API es: " + urlApiSolr + "   +++......+++");
+                
                 URL url = new URL(urlApiSolr);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("POST");
@@ -159,7 +162,7 @@ public class ServiceSolrApi extends Controller {
                 return ok("El codigo de respuesta es: " + responseCode + "El cuerpo de la respuesta es: " + response.toString());
 
             } catch (IOException ex) {
-                System.out.println("Error al leer todos los datos del formulario" + ex.getMessage());
+                logger.error("Error al leer todos los datos del formulario" + ex.getMessage());
                 logger.error(ex);
             }
             
