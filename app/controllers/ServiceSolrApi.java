@@ -161,7 +161,7 @@ public class ServiceSolrApi extends Controller {
                 }
                 
                 con.disconnect();
-                return ok("El codigo de respuesta es: " + responseCode + "El cuerpo de la respuesta es: " + response.toString());
+                return ok("El codigo de respuesta es: " + responseCode + " el cuerpo de la respuesta es: " + response.toString());
 
             } catch (IOException ex) {
                 logger.error("Error al leer todos los datos del formulario" + ex.getMessage());
