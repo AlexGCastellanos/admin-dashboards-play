@@ -7,137 +7,137 @@
 
 <div id="6" class="list_item">
     <div class="titleParam">@title</div>
-    <form action="/admin-dashboards/postConsulta" enctype="multipart/form-data" method="post" >
-        <div id="origin_data" >    
-            <table style="width: 100%;">                   
-                <tr>
-                    <td><div class="descrptionMessage">Ingrese la IP de origen.</div></td>
-                    <td><div class="descrptionMessage">Ingrese el puerto de origen.</div></td>
-                </tr>
-                <tr>
-                    <td>
-                        <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("ipOrigin").hasErrors) {has-error}">
-                             <input type="text" class="form-control" name="ipOrigin"/>
-                            <span class="help-block" style="color: red">@{QueryAndIndexingForm("ipOrigin").error.map {error => error.message }}</span>
-                        </div>
-                    </td> 
-                    <td>
-                        <div style="width: 35%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("portOrigin").hasErrors) {has-error}">
-                             <input type="text" class="form-control" name="portOrigin"/>
-                            <span class="help-block" style="color: red">@{QueryAndIndexingForm("portOrigin").error.map {error => error.message }}</span>
-                        </div>                        
-                    </td>
-                </tr>              
-                <tr>
-                    <td><div class="descrptionMessage">Ingrese el nombre de la coleccion.</div></td>
-                </tr>
-                <tr>
-                    <td>
-                        <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("originCollectionName").hasErrors) {has-error}">
-                             <input type="text" class="form-control" name="originCollectionName"/>
-                            <span class="help-block" style="color: red">@{QueryAndIndexingForm("originCollectionName").error.map {error => error.message }}</span>
-                        </div>                        
-                    </td>
-                </tr>
-
-                <tr>
-                    <td><div class="descrptionMessage">Ids a consultar (use || para separarlos)</div></td>
-                </tr>
-                <tr>
-                    <td>
-                        <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("idsQuery").hasErrors) {has-error}">
-                             <input type="text" class="form-control" name="idsQuery"/>
-                            <span class="help-block" style="color: red">@{QueryAndIndexingForm("idsQuery").error.map {error => error.message }}</span>
-                        </div>                        
-                    </td>
-                </tr>
-            </table>
+    @helper.form(routes.ServiceSolrApi.enviarDatos(),'enctype -> "multipart/form-data") {    
+    <div style="width: 70%;">            
+        <div style="width: 60%;" class="form-group @if(QueryAndIndexingForm("operationSelector").hasErrors) {has-error}">
+             <div class="descrptionMessageTable">Seleccione la operacion a realizar:</div>
+            @select(
+            QueryAndIndexingForm("operationSelector"),
+            options(arrOperations),
+            '_default -> "Seleccione una opcion",
+            '_label -> null,
+            'class -> "custom-select-crg"
+            )
         </div>
+        <span class="help-block" style="color: red">@{QueryAndIndexingForm("operationSelector").error.map {error => error.message}}</span>
+    </div>
 
-        <div id="destination_data">
-            <table style="width: 100%;">
-                <tr>
-                    <td><div class="descrptionMessage">Ingrese la IP de destino.</div></td>
-                    <td><div class="descrptionMessage">Ingrese el puerto de destino</div></td>
-                </tr>
-                <tr>
-                    <td>
-                        <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("ipDestination").hasErrors) {has-error}">
-                             <input type="text" class="form-control" name="ipDestination"/>
-                            <span class="help-block" style="color: red">@{QueryAndIndexingForm("ipDestination").error.map {error => error.message }}</span>
-                        </div>                        
-                    </td>
-                    <td>
-                        <div style="width: 35%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("portDestination").hasErrors) {has-error}">
-                             <input type="text" class="form-control" name="portDestination"/>
-                            <span class="help-block" style="color: red">@{QueryAndIndexingForm("portDestination").error.map {error => error.message }}</span>
-                        </div>                        
-                    </td>
-                </tr>
-                <tr>
-                    <td><div class="descrptionMessage">Ingrese el nombre de la coleccion destino.</div></td> 
-                </tr>
-                <tr>
-                    <td>
-                        <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("destinationCollectionName").hasErrors) {has-error}">
-                             <input type="text" class="form-control" name="destinationCollectionName"/>
-                            <span class="help-block" style="color: red">@{QueryAndIndexingForm("destinationCollectionName").error.map {error => error.message }}</span>
-                        </div>                        
-                    </td>
-                </tr>            
-            </table>
-        </div>
+    <div id="origin_data" >    
+        <table style="width: 100%;">                   
+            <tr>
+                <td><div class="descrptionMessage">Ingrese la IP de origen.</div></td>
+                <td><div class="descrptionMessage">Ingrese el puerto de origen.</div></td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("ipOrigin").hasErrors) {has-error}">
+                         <input type="text" class="form-control" name="ipOrigin"/>
+                        <span class="help-block" style="color: red">@{QueryAndIndexingForm("ipOrigin").error.map {error => error.message }}</span>
+                    </div>
+                </td> 
+                <td>
+                    <div style="width: 35%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("portOrigin").hasErrors) {has-error}">
+                         <input type="text" class="form-control" name="portOrigin"/>
+                        <span class="help-block" style="color: red">@{QueryAndIndexingForm("portOrigin").error.map {error => error.message }}</span>
+                    </div>                        
+                </td>
+            </tr>              
+            <tr>
+                <td><div class="descrptionMessage">Ingrese el nombre de la coleccion.</div></td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("originCollectionName").hasErrors) {has-error}">
+                         <input type="text" class="form-control" name="originCollectionName"/>
+                        <span class="help-block" style="color: red">@{QueryAndIndexingForm("originCollectionName").error.map {error => error.message }}</span>
+                    </div>                        
+                </td>
+            </tr>
 
-        <div id="save_data">
-            <table style="width: 100%;">
-                <tr>
-                    <td><div class="descrptionMessage">Ingrese la ubicacion donde quiere guardar el archivo</div></td> 
-                </tr>
-                <tr>
-                    <td>
-                        <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("saveLocation").hasErrors) {has-error}">
-                             <input type="text" class="form-control" name="saveLocation"/>
-                            <span class="help-block" style="color: red">@{QueryAndIndexingForm("saveLocation").error.map {error => error.message }}</span>
-                        </div>                        
-                    </td>
-                </tr>
-            </table>
-        </div>    
+            <tr>
+                <td><div class="descrptionMessage">Ids a consultar (use || para separarlos)</div></td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("idsQuery").hasErrors) {has-error}">
+                         <input type="text" class="form-control" name="idsQuery"/>
+                        <span class="help-block" style="color: red">@{QueryAndIndexingForm("idsQuery").error.map {error => error.message }}</span>
+                    </div>                        
+                </td>
+            </tr>
+        </table>
+    </div>
 
-        <div id="jsonFile_data">
-            <table style="width: 100%;">
-                <tr>
-                    <td><div class="descrptionMessage">Seleccione el archivo que desea indexar (.json)</div></td>
-                </tr>
-                <tr>
-                    <td style="width: 40%;">
-                        <div style="width: 95%;" class="form-group @if(QueryAndIndexingForm("jsonFileToIndex").hasErrors) {has-error}">
-                             <input type="file" accept=".crt" class="form-control" name="jsonFileToIndex"/>
-                            <span class="help-block" style="color: red">@{QueryAndIndexingForm("jsonFileToIndex").error.map {error => error.message }}</span>
-                        </div>                        
-                    </td>
-                </tr>               
-            </table>
-        </div>
+    <div id="destination_data">
+        <table style="width: 100%;">
+            <tr>
+                <td><div class="descrptionMessage">Ingrese la IP de destino.</div></td>
+                <td><div class="descrptionMessage">Ingrese el puerto de destino</div></td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("ipDestination").hasErrors) {has-error}">
+                         <input type="text" class="form-control" name="ipDestination"/>
+                        <span class="help-block" style="color: red">@{QueryAndIndexingForm("ipDestination").error.map {error => error.message }}</span>
+                    </div>                        
+                </td>
+                <td>
+                    <div style="width: 35%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("portDestination").hasErrors) {has-error}">
+                         <input type="text" class="form-control" name="portDestination"/>
+                        <span class="help-block" style="color: red">@{QueryAndIndexingForm("portDestination").error.map {error => error.message }}</span>
+                    </div>                        
+                </td>
+            </tr>
+            <tr>
+                <td><div class="descrptionMessage">Ingrese el nombre de la coleccion destino.</div></td> 
+            </tr>
+            <tr>
+                <td>
+                    <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("destinationCollectionName").hasErrors) {has-error}">
+                         <input type="text" class="form-control" name="destinationCollectionName"/>
+                        <span class="help-block" style="color: red">@{QueryAndIndexingForm("destinationCollectionName").error.map {error => error.message }}</span>
+                    </div>                        
+                </td>
+            </tr>            
+        </table>
+    </div>
 
-        <div style="width: 60%;">            
-            <div style="width: 50%;" class="form-group @if(QueryAndIndexingForm("operationSelector").hasErrors) {has-error}">
-                 <div class="descrptionMessageTable">Seleccione la operacion a realizar:</div>
-                    @select(
-                    QueryAndIndexingForm("operationSelector"),
-                    options(arrOperations),
-                    '_label -> null,
-                    'class -> "custom-select-crg"
-                    )
-            </div>
-            <span class="help-block" style="color: red">@{QueryAndIndexingForm("operationSelector").error.map {error => error.message}}</span>
-        </div>
+    <div id="save_data">
+        <table style="width: 100%;">
+            <tr>
+                <td><div class="descrptionMessage">Ingrese la ubicacion donde quiere guardar el archivo</div></td> 
+            </tr>
+            <tr>
+                <td>
+                    <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("saveLocation").hasErrors) {has-error}">
+                         <input type="text" class="form-control" name="saveLocation"/>
+                        <span class="help-block" style="color: red">@{QueryAndIndexingForm("saveLocation").error.map {error => error.message }}</span>
+                    </div>                        
+                </td>
+            </tr>
+        </table>
+    </div>    
 
-        <div style="margin-top: 15px;">
-            <input class="btn btn-success" type="submit" value="Ejecutar">
-        </div>
+    <div id="jsonFile_data">
+        <table style="width: 100%;">
+            <tr>
+                <td><div class="descrptionMessage">Seleccione el archivo que desea indexar (.json)</div></td>
+            </tr>
+            <tr>
+                <td style="width: 40%;">
+                    <div style="width: 95%;" class="form-group @if(QueryAndIndexingForm("jsonFileToIndex").hasErrors) {has-error}">
+                         <input type="file" accept=".crt" class="form-control" name="jsonFileToIndex"/>
+                        <span class="help-block" style="color: red">@{QueryAndIndexingForm("jsonFileToIndex").error.map {error => error.message }}</span>
+                    </div>                        
+                </td>
+            </tr>               
+        </table>
+    </div>       
 
-    </form>
+    <div style="margin-top: 15px;">
+        <input class="btn btn-success" type="submit" value="Ejecutar">
+    </div>
+    }
 </div>
 
 <script>
@@ -147,7 +147,7 @@
     var destinationDiv = document.getElementById("destination_data");
     var saveDiv = document.getElementById("save_data");
     var fileDiv = document.getElementById("jsonFile_data");
-      
+
     select.addEventListener("change", function () {
         if (select.value === "Indexar") {
 
@@ -179,7 +179,7 @@
 
         }
     });
-    
+
 </script>
 
 }
