@@ -314,12 +314,13 @@ public class Application extends Controller {
         arrOperations = operations.fillOperations();
         arrOperationsSort = operations.sortHashMapByValues(arrOperations);
         
-        return ok(prueba_indexacion_solr.render("Prueba de Indexacion Alex", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm, arrOperationsSort));
+        return ok(prueba_indexacion_solr.render("Consultar, guardar e indexar", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm, arrOperationsSort));
+        
     }
 
     public static Result consultaConfig(){
         Form<RouteQueryForm> filledForm = Form.form(RouteQueryForm.class);
-        return ok(config_prueba_indexacion.render("Configurar URL de la API para la prueba en Solr", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm));
+        return ok(config_prueba_indexacion.render("Configurar url de API y ruta de guardado", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm));
     }
 
     public static Result loadAdminUsers() {

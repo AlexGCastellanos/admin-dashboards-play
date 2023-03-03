@@ -60,6 +60,7 @@ public class QueryRouteConfig extends Controller {
                 
                 String okResponse = "Se ha agregado correctamente a la configuracion la URL: " + created.urlApiSolr;
                 
+                logger.info("Se ha agregado correctamente a la configuracion la URL: " + created.urlApiSolr);
                 return ok(okResponse);
                 
             } catch (IOException ex) {

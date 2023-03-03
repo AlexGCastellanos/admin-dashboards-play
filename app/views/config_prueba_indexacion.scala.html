@@ -6,38 +6,38 @@
 @menu_navigate(title,userInfo){
 
 <div id="6" class="list_item">
-    
+
     <div class="titleParam">@title</div>
-    
+
     <div class="descriptionParam">
         <div class="paddingDescription">Estas configuraciones son necesarias para el funcionamiento adecuado del m&oacute;dulo de prueba de Indexacion de Solr</div>            
     </div>
-    
-    @helper.form(routes.QueryRouteConfig.addConfig()) {
-    
-        <table style="width: 100%;">
-          
-            <tr>
-                <td><div class="descrptionMessage">Ingrese la url de la API que se guardar&aacute; en el archivo de configuracion</div></td>
-            </tr>
-            
-            <tr>
-                <td>
-                    <div style="width: 95%;" class="form-group @if(routeQueryForm("urlApiSolr").hasErrors) {has-error}">
-                         <input type="text" class="form-control" name="urlApiSolr"/>
-                        <span class="help-block" style="display: red">@{routeQueryForm("urlApiSolr").error.map {error => error.message }}</span>
-                    </div>
-                </td>
-            </tr>
-            
-        </table>        
 
-        <div style="margin-top: 15px;">
-            <input class="btn btn-success" type="submit" value="Guardar">
-        </div>
+    @helper.form(routes.QueryRouteConfig.addConfig()) {
+
+    <table style="width: 100%;">
+
+        <tr>
+            <td><div class="descrptionMessage">Ingrese la url de la API que se guardar&aacute; en el archivo de configuracion</div></td>
+        </tr>
+
+        <tr>
+            <td>
+                <div style="width: 95%;" class="form-group @if(routeQueryForm("urlApiSolr").hasErrors) {has-error}">
+                     <input type="text" class="form-control" name="urlApiSolr"/>
+                    <span class="help-block" style="display: red">@{routeQueryForm("urlApiSolr").error.map {error => error.message }}</span>
+                </div>
+            </td>
+        </tr>
+
+    </table>        
+
+    <div style="margin-top: 15px;">
+        <input class="btn btn-success" type="submit" value="Guardar">
+    </div>
 
     }
-    
+
 </div>
 
 }

@@ -17,7 +17,6 @@ import play.mvc.*;
 import static play.mvc.Results.badRequest;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
-import static play.mvc.Http.HeaderNames.USER_AGENT;
 import views.formdata.QueryAndIndexingForm;
 
 import views.html.*;
@@ -58,7 +57,7 @@ public class ServiceSolrApi extends Controller {
 
         if (filledQueryAndIndexForm.hasErrors()) {
             logger.error("Errores encontrados.");
-            return badRequest(prueba_indexacion_solr.render("Prueba de Indexacion Alex con errores", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledQueryAndIndexForm, arrOperationsSort));
+            return badRequest(prueba_indexacion_solr.render("Consultar, guardar e indexar", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledQueryAndIndexForm, arrOperationsSort));
         } else {
 
             QueryAndIndexingForm created = filledQueryAndIndexForm.get();
@@ -80,7 +79,6 @@ public class ServiceSolrApi extends Controller {
                 String portDestination = created.portDestination;
                 String destinationCollectionName = created.destinationCollectionName;
                 String operationSelector = created.operationSelector;
-                String saveLocation = created.saveLocation;
                 
                 Http.MultipartFormData body = request().body().asMultipartFormData();
                 Http.MultipartFormData.FilePart json = body.getFile("jsonFileToIndex");
@@ -104,7 +102,7 @@ public class ServiceSolrApi extends Controller {
                             jsonToText = textoJsonLeido.toString();
 
                         }
-                    }
+                    } 
                 }
 
                 JSONObject formData = new JSONObject();
@@ -117,7 +115,6 @@ public class ServiceSolrApi extends Controller {
                 formData.put("puertoD", portDestination);
                 formData.put("destino", destinationCollectionName);
                 formData.put("operacion", operationSelector);
-                formData.put("ubicacion", saveLocation);
                 formData.put("archivoJson", jsonToText);
 
                 logger.info("Los datos del formulario en formato json son: " + formData.toString());
@@ -163,7 +160,7 @@ public class ServiceSolrApi extends Controller {
                 return ok("El codigo de respuesta es: " + responseCode + "\n" + "El cuerpo de la respuesta es:\n\n" + response.toString());
 
             } catch (IOException ex) {
-                logger.error("Error al leer todos los datos del formulario:\n\n" + ex.getMessage());
+                logger.error("La URL a la que se intenta enviar el formulario, no existe:\n\n" + ex.getMessage());
             }
 
             return null;

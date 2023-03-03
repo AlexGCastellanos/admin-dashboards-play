@@ -6,11 +6,11 @@
 @menu_navigate(title,userInfo){
 
 <div id="6" class="list_item">
-    <div class="titleParam">@title</div>
+    <div class="titleParam" style="margin-bottom: 1em;">@title</div>
     @helper.form(routes.ServiceSolrApi.enviarDatos(),'enctype -> "multipart/form-data") {    
     <div style="width: 70%;">            
         <div style="width: 60%;" class="form-group @if(QueryAndIndexingForm("operationSelector").hasErrors) {has-error}">
-             <div class="descrptionMessageTable">Seleccione la operacion a realizar:</div>
+            <div class="descrptionMessageTable">Seleccione la operacion a realizar:</div>
             @select(
             QueryAndIndexingForm("operationSelector"),
             options(arrOperations),
@@ -102,22 +102,6 @@
         </table>
     </div>
 
-    <div id="save_data">
-        <table style="width: 100%;">
-            <tr>
-                <td><div class="descrptionMessage">Ingrese la ubicacion donde quiere guardar el archivo</div></td> 
-            </tr>
-            <tr>
-                <td>
-                    <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("saveLocation").hasErrors) {has-error}">
-                         <input type="text" class="form-control" name="saveLocation"/>
-                        <span class="help-block" style="color: red">@{QueryAndIndexingForm("saveLocation").error.map {error => error.message }}</span>
-                    </div>                        
-                </td>
-            </tr>
-        </table>
-    </div>    
-
     <div id="jsonFile_data">
         <table style="width: 100%;">
             <tr>
@@ -145,7 +129,6 @@
     var select = document.getElementById("operationSelector");
     var originDiv = document.getElementById("origin_data");
     var destinationDiv = document.getElementById("destination_data");
-    var saveDiv = document.getElementById("save_data");
     var fileDiv = document.getElementById("jsonFile_data");
 
     select.addEventListener("change", function () {
@@ -153,31 +136,28 @@
 
             originDiv.style.display = "block";
             destinationDiv.style.display = "block";
-            saveDiv.style.display = "none";
             fileDiv.style.display = "none";
 
         } else if (select.value === "Guardar") {
 
             originDiv.style.display = "block";
             destinationDiv.style.display = "none";
-            saveDiv.style.display = "block";
             fileDiv.style.display = "none";
 
         } else if (select.value === "Guardar e Indexar") {
 
             originDiv.style.display = "block";
             destinationDiv.style.display = "block";
-            saveDiv.style.display = "block";
             fileDiv.style.display = "none";
 
         } else if (select.value === "Indexar Archivo JSON") {
 
             originDiv.style.display = "none";
             destinationDiv.style.display = "block";
-            saveDiv.style.display = "none";
             fileDiv.style.display = "block";
 
         }
+        
     });
 
 </script>

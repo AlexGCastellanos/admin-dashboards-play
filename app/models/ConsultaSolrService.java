@@ -104,7 +104,7 @@ public class ConsultaSolrService {
             return resultado.toString();
 
         } catch (IOException ex) {
-            logger.error("Error en consulta de coleccion:" + ex.getMessage());
+            logger.error("Error en consulta del schema:" + ex.getMessage());
             return "error";
         }
     }

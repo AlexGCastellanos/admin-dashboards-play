@@ -7,30 +7,30 @@
                 <div id="accordion">
                     <h3>M&oacute;dulos de administraci&oacute;n de IfindIt.</h3>
                     <div>
-                        <div id="1"><div class="menuItem"><a class="linkMenu" onclick="location.href='profile';">Inicio</a></div></div>
+                        <div id="1"><div class="menuItem"><a class="linkMenu" onclick="location.href = 'profile';">Inicio</a></div></div>
                     </div>
                     @if(userInfo.getName=="superusuario"){
                     <h3 id="h3_Config_Principal" style="display: none;">Configuraci&oacute;n</h3>
                     <div>
-                        <div id="2" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href='showConfigurationModule';">Configuraci&oacute;n b&aacute;sica del m&oacute;dulo</a></div></div>
+                        <div id="2" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href = 'showConfigurationModule';">Configuraci&oacute;n b&aacute;sica del m&oacute;dulo</a></div></div>
                     </div>
                     }
-                                      
+
                     <h3 id="h3_BaseDatos" style="display: none;">Indexaci&oacute;n (Bases de datos)</h3>
                     <div id="moduleBasesDatos">
-                        <div id="3" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href='showAddDatabaseConfig';">Configurar Base de datos</a></div></div>
+                        <div id="3" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href = 'showAddDatabaseConfig';">Configurar Base de datos</a></div></div>
                         <div id="4" style="display: none;">
-                            <div class="menuItem"><a class="linkMenu" onclick="location.href='showEditDatabaseConfig';">Editar Base de datos</a></div>
+                            <div class="menuItem"><a class="linkMenu" onclick="location.href = 'showEditDatabaseConfig';">Editar Base de datos</a></div>
                             <hr>
                         </div>
-                        <div id="5" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href='showExtraccionContenido';">Configurar extracci&oacute;n de contenido</a></div></div>
+                        <div id="5" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href = 'showExtraccionContenido';">Configurar extracci&oacute;n de contenido</a></div></div>
                         <div id="6" style="display: none;">
-                            <div class="menuItem"><a class="linkMenu" onclick="location.href='showEditExtraccionContenido';">Editar extracci&oacute;n de contenido</a></div>
+                            <div class="menuItem"><a class="linkMenu" onclick="location.href = 'showEditExtraccionContenido';">Editar extracci&oacute;n de contenido</a></div>
                             <hr>
                         </div>
-                        <div id="7" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href='showProgTaskDatabase';">Configurar programaci&oacute;n de tareas</a></div></div>
+                        <div id="7" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href = 'showProgTaskDatabase';">Configurar programaci&oacute;n de tareas</a></div></div>
                         <div id="8" style="display: none;">
-                            <div class="menuItem"><a class="linkMenu" onclick="location.href='showProgTaskEditDatabase';">Editar programaci&oacute;n de tareas</a></div>
+                            <div class="menuItem"><a class="linkMenu" onclick="location.href = 'showProgTaskEditDatabase';">Editar programaci&oacute;n de tareas</a></div>
                             <hr>
                         </div>
                         <div id="22" style="display: none;">
@@ -55,119 +55,112 @@
                             </div>
                             <hr>
                         </div>
-                        
+
                         <div id="9" style="display: none;">
-                            <div class="menuItem"><a class="linkMenu" onclick="location.href='showCleanDataDatabase';">Limpiar datos</a></div>
+                            <div class="menuItem"><a class="linkMenu" onclick="location.href = 'showCleanDataDatabase';">Limpiar datos</a></div>
                             <hr>
                         </div>
-                        
+
                         @if(userInfo.getName=="superusuario"){
-                            <div id="10" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href='showOtrasConfigBD';">Otras configuraciones</a></div></div>
+                        <div id="10" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href = 'showOtrasConfigBD';">Otras configuraciones</a></div></div>
                         }
                     </div>
                     <h3 id="h3_FileServer" style="display: none;">Indexaci&oacute;n (Servidor de archivos)</h3>
                     <div id="moduleFileServers">
-                        <div id="11" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href='showAddFileServerConfig';">Configurar Servidor de archivos</a></div></div>
+                        <div id="11" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href = 'showAddFileServerConfig';">Configurar Servidor de archivos</a></div></div>
                         <div id="12" style="display: none;">
-                            <div class="menuItem"><a class="linkMenu" onclick="location.href='showEditFileServerConfig';">Editar Servidor de archivos</a></div>
+                            <div class="menuItem"><a class="linkMenu" onclick="location.href = 'showEditFileServerConfig';">Editar Servidor de archivos</a></div>
                             <hr>
                         </div>
-                        <div id="13" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href='showProgTaskFileServer';">Configurar programaci&oacute;n de tareas</a></div></div>
+                        <div id="13" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href = 'showProgTaskFileServer';">Configurar programaci&oacute;n de tareas</a></div></div>
                         <div id="14" style="display: none;">
-                            <div class="menuItem"><a class="linkMenu" onclick="location.href='showProgTaskEditFileServer';">Editar programaci&oacute;n de tareas</a></div>
+                            <div class="menuItem"><a class="linkMenu" onclick="location.href = 'showProgTaskEditFileServer';">Editar programaci&oacute;n de tareas</a></div>
                             <hr>
                         </div>
                         <div id="15" style="display: none;">
-                            <div class="menuItem"><a class="linkMenu" onclick="location.href='showCleanDataFileServer';">Limpiar datos</a></div>
+                            <div class="menuItem"><a class="linkMenu" onclick="location.href = 'showCleanDataFileServer';">Limpiar datos</a></div>
                             <hr>
                         </div>
                         @if(userInfo.getName=="superusuario"){
-                            <div id="16" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href='showOtrasConfigBD';">Otras configuraciones</a></div></div>
+                        <div id="16" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href = 'showOtrasConfigBD';">Otras configuraciones</a></div></div>
                         }
                     </div>
                     <h3 id="h3_UpCsvData" style="display: none;">Indexaci&oacute;n (Otros tipos de archivos)</h3>
                     <div id="moduleUpCsvData">
-                        <div id="24" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href='showNewConfigOtherFiles';">Crear nueva configuraci&oacute;n</a></div></div>
+                        <div id="24" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href = 'showNewConfigOtherFiles';">Crear nueva configuraci&oacute;n</a></div></div>
                         <div id="30" style="display: none;">
-                            <div class="menuItem"><a class="linkMenu" onclick="location.href='showEditConfigOtherFiles';">Editar configuraci&oacute;n</a></div>
+                            <div class="menuItem"><a class="linkMenu" onclick="location.href = 'showEditConfigOtherFiles';">Editar configuraci&oacute;n</a></div>
                             <hr>
                         </div>
                         <div id="31" style="display: none;">
-                            <div class="menuItem"><a class="linkMenu" onclick="location.href='showAddScriptOtherFiles';">Agregar archivo de limpieza</a></div>
+                            <div class="menuItem"><a class="linkMenu" onclick="location.href = 'showAddScriptOtherFiles';">Agregar archivo de limpieza</a></div>
                             <hr>
                         </div>
-                        <div id="32" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href='showProgTareaOtherFiles';">Configurar programaci&oacute;n de tareas</a></div></div>
+                        <div id="32" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href = 'showProgTareaOtherFiles';">Configurar programaci&oacute;n de tareas</a></div></div>
                         <div id="33" style="display: none;">
-                            <div class="menuItem"><a class="linkMenu" onclick="location.href='showProgTareaEditOtherFiles';">Editar programaci&oacute;n de tareas</a></div>
+                            <div class="menuItem"><a class="linkMenu" onclick="location.href = 'showProgTareaEditOtherFiles';">Editar programaci&oacute;n de tareas</a></div>
                             <hr>
                         </div>
                         <!--<div id="upLoadOthersFile" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href='showIndexerCSV';">Indexar CSV</a></div></div>-->
                         <div id="34" style="display: none;">
-                            <div class="menuItem"><a class="linkMenu" onclick="location.href='showIndexerExcel';">Indexar Excel</a></div>
+                            <div class="menuItem"><a class="linkMenu" onclick="location.href = 'showIndexerExcel';">Indexar Excel</a></div>
                             <hr>
                         </div>                        
                         @if(userInfo.getName=="superusuario"){
-                            <!--<div id="24" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href='showLoadOthersFile';">Carga desde archivos</a></div></div>-->
-                            <div id="25" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href='showSolrToSolr';">Copiar desde Solr</a></div></div>
+                        <!--<div id="24" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href='showLoadOthersFile';">Carga desde archivos</a></div></div>-->
+                        <div id="25" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href = 'showSolrToSolr';">Copiar desde Solr</a></div></div>
                         }
                     </div>
+
+                    <h3 id="h3_pruebaJson" style="display: none;">Administrador de Colecciones</h3>
+                    <div id="modulePruebaJson">
+                        <div id="prueba" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href = 'consulta';">Consultar, guardar e indexar</a></div></div>    
+                        <div id="config" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href = 'consultaConfig';">Configurar url de API y ruta de guardado</a></div></div>
+                    </div>
+
                     <h3 id="h3_BackUp" style="display: none;">Back Up</h3>
                     <div id="moduleBackUp">
-                                                
-                       
-                            <div id="26" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href='showDoBackUp';">Hacer copia de seguridad</a></div></div>
-                            <hr>
-                            <div id="28" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href='showScheduleBackUp';">Configurar programaci&oacute;n de copias</a></div></div>
-                            <div id="29" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href='showScheduleBackUpEdit ';">Editar programaci&oacute;n de copias</a></div></div>
-                            <hr>
-                            <div id="27" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href='showRestoreBackUp';">Restaurar copia de seguridad</a></div></div>
-                        
+
+
+                        <div id="26" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href = 'showDoBackUp';">Hacer copia de seguridad</a></div></div>
+                        <hr>
+                        <div id="28" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href = 'showScheduleBackUp';">Configurar programaci&oacute;n de copias</a></div></div>
+                        <div id="29" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href = 'showScheduleBackUpEdit ';">Editar programaci&oacute;n de copias</a></div></div>
+                        <hr>
+                        <div id="27" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href = 'showRestoreBackUp';">Restaurar copia de seguridad</a></div></div>
+
                     </div>
                     <h3 id="h3_CleanData" style="display: none;">Limpieza de datos</h3>
                     <div id="moduleCleanData">
-                                                
+
                         @if(userInfo.getName=="superusuario"){
-                            <div id="17" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href='showOtrasConfigCleanData';">Otras configuraciones</a></div></div>
+                        <div id="17" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href = 'showOtrasConfigCleanData';">Otras configuraciones</a></div></div>
                         }
                     </div>
-                    
+
                     <h3 id="h3_Usuarios" style="display: none;">Administrar Usuarios</h3>
                     <div id="moduleUsuarios">
                         <div id="23" style="display: none;">
-                            <div class="menuItem"><a class="linkMenu" onclick="location.href='showAdminUsers';">Administrador de usuarios de Dashboards</a></div>
+                            <div class="menuItem"><a class="linkMenu" onclick="location.href = 'showAdminUsers';">Administrador de usuarios de Dashboards</a></div>
                             <hr>
                         </div>
                         @if(userInfo.getName=="superusuario"){
-                            <div class="menuItem"><a class="linkMenu" onclick="location.href='showAddPermission';">Agregar Permiso</a></div>
-                            <div class="menuItem"><a class="linkMenu" onclick="location.href='showEditPermission';">Editar Permiso</a></div>
-                            <hr>
-                            <div class="menuItem"><a class="linkMenu" onclick="location.href='showAddProfiles';">Agregar Perfiles</a></div>
-                            <div class="menuItem"><a class="linkMenu" onclick="location.href='showEditProfiles';">Editar Perfiles</a></div>
-                            <hr>
+                        <div class="menuItem"><a class="linkMenu" onclick="location.href = 'showAddPermission';">Agregar Permiso</a></div>
+                        <div class="menuItem"><a class="linkMenu" onclick="location.href = 'showEditPermission';">Editar Permiso</a></div>
+                        <hr>
+                        <div class="menuItem"><a class="linkMenu" onclick="location.href = 'showAddProfiles';">Agregar Perfiles</a></div>
+                        <div class="menuItem"><a class="linkMenu" onclick="location.href = 'showEditProfiles';">Editar Perfiles</a></div>
+                        <hr>
                         } 
-                        <div id="18" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href='showAddGroups';">Agregar Grupos</a></div></div>
+                        <div id="18" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href = 'showAddGroups';">Agregar Grupos</a></div></div>
                         <div id="19" style="display: none;">
-                            <div class="menuItem"><a class="linkMenu" onclick="location.href='showEditGroups';">Editar Grupos</a></div>
+                            <div class="menuItem"><a class="linkMenu" onclick="location.href = 'showEditGroups';">Editar Grupos</a></div>
                             <hr>
                         </div>
-                        <div id="20" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href='showAddUsers';">Agregar Usuarios</a></div></div>
-                        <div id="21" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href='showEditUsers';">Editar Usuarios</a></div></div>
+                        <div id="20" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href = 'showAddUsers';">Agregar Usuarios</a></div></div>
+                        <div id="21" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href = 'showEditUsers';">Editar Usuarios</a></div></div>
                     </div>
-                    
-                    <h3 id="h3_pruebaJson" style="display: none;">Prueba Indexacion Solr Alex</h3>
-                    <div id="modulePruebaJson">                                                
-                        @if(userInfo.getName=="superusuario"){
-                            <div id="prueba" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href='consulta';">Consulta, guarda o indexa documentos desde Solr</a></div></div>
-                        }
-                    </div>
-                    
-                    <h3 id="h3_configPrueba" style="display: none;">Configuraci&oacute;n API de pruebas Solr</h3>
-                    <div id="modulePruebaJson">                                                
-                        @if(userInfo.getName=="superusuario"){
-                            <div id="config" style="display: none;"><div class="menuItem"><a class="linkMenu" onclick="location.href='consultaConfig';">Configurar ruta del archivo de la url de la API </a></div></div>
-                        }
-                    </div>
-                    
+
                 </div>
             </td>
             <td valign="top">
@@ -180,71 +173,69 @@
     <input type="hidden" id="nameUser" value="@userInfo.getName"/>
     <script>
         $("#accordion").accordion();
-        
+
         var permissions = @userInfo.getPermissions;
-                
-        for(var i=0; i<permissions.length; i++){
-            if(permissions[i]===2){
+                for (var i = 0; i < permissions.length; i++) {
+            if (permissions[i] === 2) {
                 document.getElementById("h3_Config_Principal").style.display = "block";
                 document.getElementById(permissions[i]).style.display = "block";
             }
-            
-            if((permissions[i]>2 && permissions[i]<=10) || permissions[i]===22){
+
+            if ((permissions[i] > 2 && permissions[i] <= 10) || permissions[i] === 22) {
                 document.getElementById("h3_BaseDatos").style.display = "block";
                 document.getElementById(permissions[i]).style.display = "block";
-            }       
-            
-            if(permissions[i]>10 && permissions[i]<=16){
+            }
+
+            if (permissions[i] > 10 && permissions[i] <= 16) {
                 document.getElementById("h3_FileServer").style.display = "block";
                 document.getElementById(permissions[i]).style.display = "block";
             }
-            
-            if(permissions[i]===17){
+
+            if (permissions[i] === 17) {
                 document.getElementById("h3_CleanData").style.display = "block";
                 document.getElementById(permissions[i]).style.display = "block";
             }
-            if(permissions[i]===24){
+            if (permissions[i] === 24) {
                 document.getElementById("h3_UpCsvData").style.display = "block";
                 document.getElementById(permissions[i]).style.display = "block";
             }
-            if(permissions[i]===25){
+            if (permissions[i] === 25) {
                 document.getElementById("h3_UpCsvData").style.display = "block";
                 document.getElementById(permissions[i]).style.display = "block";
             }
-            if(permissions[i]===26){
+            if (permissions[i] === 26) {
                 document.getElementById("h3_BackUp").style.display = "block";
                 document.getElementById(permissions[i]).style.display = "block";
             }
-            if(permissions[i]===27){
+            if (permissions[i] === 27) {
                 document.getElementById("h3_BackUp").style.display = "block";
                 document.getElementById(permissions[i]).style.display = "block";
-                
+
             }
-            if(permissions[i]===28){
+            if (permissions[i] === 28) {
                 document.getElementById("h3_BackUp").style.display = "block";
-                document.getElementById(permissions[i]).style.display = "block";               
+                document.getElementById(permissions[i]).style.display = "block";
             }
-            if(permissions[i]===29){
+            if (permissions[i] === 29) {
                 document.getElementById("h3_BackUp").style.display = "block";
-                document.getElementById(permissions[i]).style.display = "block";               
+                document.getElementById(permissions[i]).style.display = "block";
             }
-            
-            if(permissions[i]>29 && permissions[i]<=34){
+
+            if (permissions[i] > 29 && permissions[i] <= 34) {
                 document.getElementById("h3_UpCsvData").style.display = "block";
                 document.getElementById(permissions[i]).style.display = "block";
             }
-            
-            if(permissions[i]>17 && permissions[i]<=21 || permissions[i]===23){
+
+            if (permissions[i] > 17 && permissions[i] <= 21 || permissions[i] === 23) {
                 document.getElementById("h3_Usuarios").style.display = "block";
-                document.getElementById(permissions[i]).style.display = "block";                
+                document.getElementById(permissions[i]).style.display = "block";
             }
         }
-        
-        if(document.getElementById("nameUser").value==="superusuario"){
+
+        if (document.getElementById("nameUser").value === "superusuario") {
             document.getElementById("h3_Usuarios").style.display = "block";
             document.getElementById("h3_pruebaJson").style.display = "block";
             document.getElementById("prueba").style.display = "block";
-            document.getElementById("h3_configPrueba").style.display = "block";
             document.getElementById("config").style.display = "block";
         }
     </script>

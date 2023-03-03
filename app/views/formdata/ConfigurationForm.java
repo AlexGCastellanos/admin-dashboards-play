@@ -14,6 +14,7 @@ import play.data.validation.ValidationError;
  * @author atovar
  */
 public class ConfigurationForm {
+    
     public String pathFileModule;
     public String passwordCertificate;
     
