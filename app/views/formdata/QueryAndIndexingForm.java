@@ -1,12 +1,8 @@
 package views.formdata;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import models.ConsultaSolrService;
 import org.json.JSONObject;
 import play.data.validation.ValidationError;
 
@@ -30,30 +26,7 @@ public class QueryAndIndexingForm {
      *
      * @return Null if valid, or a List[ValidationError] if problems found.
      */
-    public String consultarSchema(String ip, String puerto, String coleccion) throws IOException {
-
-        //Obteniendo url para consultar schema Origen
-        String schema = "http://" + ip + ":" + puerto + "/solr/" + coleccion + "/schema";
-        URL urlSchema = new URL(schema);
-
-        HttpURLConnection connOrigen = (HttpURLConnection) urlSchema.openConnection();
-        connOrigen.setRequestMethod("GET");
-
-        BufferedReader rd = new BufferedReader(new InputStreamReader(connOrigen.getInputStream()));
-
-        StringBuilder resultado = new StringBuilder();
-        String linea;
-
-        while ((linea = rd.readLine()) != null) {
-            resultado.append(linea);
-        }
-
-        connOrigen.disconnect();
-
-        return resultado.toString();
-
-    }
-
+    
     public List<ValidationError> validate() {
 
         List<ValidationError> errors = new ArrayList<>();
@@ -68,6 +41,24 @@ public class QueryAndIndexingForm {
         if (operationSelector.equals("Indexar") || operationSelector.equals("Guardar") || operationSelector.equals("Guardar e Indexar")) {
             if (idsQuery == null || idsQuery.isEmpty()) {
                 errors.add(new ValidationError("idsQuery", "El campo id no puede ser vacio"));
+            } else {
+
+                String respuestaConsulta = ConsultaSolrService.consultarColeccion(ipOrigin, portOrigin, originCollectionName, idsQuery);
+
+                if (!respuestaConsulta.equals("error")) {
+
+                    JSONObject jsonConsulta = new JSONObject(respuestaConsulta);
+                    JSONObject responseHeader = jsonConsulta.getJSONObject("responseHeader");
+                    Integer status = responseHeader.getInt("status");
+                    JSONObject respuesta = jsonConsulta.getJSONObject("response");
+                    Integer numFound = respuesta.getInt("numFound");
+                    if (status != 0 || numFound == 0) {
+                        errors.add(new ValidationError("idsQuery", "El id ingresado no existe en la colección de origen"));
+                    }
+
+                } else {
+                    errors.add(new ValidationError("idsQuery", "Error en la consulta, verifica si los datos de id, ip, puerto o coleccion son correctos"));
+                }
             }
         }
 
@@ -95,16 +86,20 @@ public class QueryAndIndexingForm {
                 errors.add(new ValidationError("originCollectionName", "El nombre de la coleccion no puede estar vacio"));
             } else {
 
-                try {
-                    JSONObject consulta = new JSONObject(consultarSchema(ipOrigin, portOrigin, originCollectionName));
-                    Integer status = consulta.getJSONObject("responseHeader").getInt("status");
-                    if (status != 0) {
-                        errors.add(new ValidationError("origen", "Esta colección no existe, ingresa una colección valida"));
-                    }
-                } catch (IOException ex) {
-                    errors.add(new ValidationError("origen", "Error consultando esta colección, verifica si existe o si está escrita correctamente"));
-                }
+                String respuestaConsulta = ConsultaSolrService.consultarSchema(ipOrigin, portOrigin, originCollectionName);
 
+                if (!respuestaConsulta.equals("error")) {
+
+                    JSONObject consulta = new JSONObject(respuestaConsulta);
+                    Integer status = consulta.getJSONObject("responseHeader").getInt("status");
+
+                    if (status != 0) {
+                        errors.add(new ValidationError("originCollectionName", "Error consultando esta colección, verifica si existe o si está escrita correctamente"));
+                    }
+
+                } else {
+                    errors.add(new ValidationError("originCollectionName", "Error consultando esta colección, verifica si existe o si está escrita correctamente"));
+                }
             }
         }
 
@@ -130,6 +125,20 @@ public class QueryAndIndexingForm {
 
             if (destinationCollectionName.isEmpty()) {
                 errors.add(new ValidationError("destinationCollectionName", "El nombre de la coleccion no puede ser vacio"));
+            } else {
+                String respuestaConsulta = ConsultaSolrService.consultarSchema(ipDestination, portDestination, destinationCollectionName);
+
+                if (!respuestaConsulta.equals("error")) {
+
+                    JSONObject consulta = new JSONObject(respuestaConsulta);
+                    Integer status = consulta.getJSONObject("responseHeader").getInt("status");
+                    if (status != 0) {
+                        errors.add(new ValidationError("destinationCollectionName", "Error consultando esta colección, verifica si existe o si está escrita correctamente"));
+                    }
+
+                } else {
+                    errors.add(new ValidationError("destinationCollectionName", "Error consultando esta colección, verifica si existe o si está escrita correctamente"));
+                }
             }
         }
 

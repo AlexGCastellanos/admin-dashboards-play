@@ -45,6 +45,7 @@ public class FileServerForm {
      * @return Null if valid, or a List[ValidationError] if problems found.
      */
     public List<ValidationError> validate() {
+        
         List<ValidationError> errors = new ArrayList<>();
         
         if(nomConnection==null || nomConnection.length()==0){

@@ -1,7 +1,6 @@
 package controllers;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -82,12 +81,13 @@ public class ServiceSolrApi extends Controller {
                 String destinationCollectionName = created.destinationCollectionName;
                 String operationSelector = created.operationSelector;
                 String saveLocation = created.saveLocation;
-                String jsonToText = "";
+                
+                Http.MultipartFormData body = request().body().asMultipartFormData();
+                Http.MultipartFormData.FilePart json = body.getFile("jsonFileToIndex");
+                
+                String jsonToText = " ";
 
-                if (operationSelector.equals("Indexar Archivo JSON")) {
-
-                    Http.MultipartFormData body = request().body().asMultipartFormData();
-                    Http.MultipartFormData.FilePart json = body.getFile("jsonFileToIndex");
+                if (operationSelector.equals("Indexar Archivo JSON")) {                   
 
                     if (json != null) {
 
@@ -142,8 +142,7 @@ public class ServiceSolrApi extends Controller {
                 logger.info("Response Code consulta a API: " + responseCode);
 
                 if (responseCode == 200) {
-                    try (BufferedReader in = new BufferedReader(
-                            new InputStreamReader(con.getInputStream()))) {
+                    try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
                         String inputLine;
                         while ((inputLine = in.readLine()) != null) {
                             response.append(inputLine);
@@ -161,11 +160,10 @@ public class ServiceSolrApi extends Controller {
                 }
                 
                 con.disconnect();
-                return ok("El codigo de respuesta es: " + responseCode + " el cuerpo de la respuesta es: " + response.toString());
+                return ok("El codigo de respuesta es: " + responseCode + "\n" + "El cuerpo de la respuesta es:\n\n" + response.toString());
 
             } catch (IOException ex) {
-                logger.error("Error al leer todos los datos del formulario" + ex.getMessage());
-                logger.error(ex);
+                logger.error("Error al leer todos los datos del formulario:\n\n" + ex.getMessage());
             }
 
             return null;
