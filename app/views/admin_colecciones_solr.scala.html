@@ -10,7 +10,7 @@
     @helper.form(routes.ServiceSolrApi.enviarDatos(),'enctype -> "multipart/form-data") {    
     <div style="width: 70%;">            
         <div style="width: 60%;" class="form-group @if(QueryAndIndexingForm("operationSelector").hasErrors) {has-error}">
-            <div class="descrptionMessageTable">Seleccione la operacion a realizar:</div>
+             <div class="descrptionMessageTable">Seleccione la operacion a realizar:</div>
             @select(
             QueryAndIndexingForm("operationSelector"),
             options(arrOperations),
@@ -109,12 +109,15 @@
             </tr>
             <tr>
                 <td style="width: 40%;">
-                    <div style="width: 95%;" class="form-group @if(QueryAndIndexingForm("jsonFileToIndex").hasErrors) {has-error}">
+                    <div style="width: 95%;" class="form-group @if(QueryAndIndexingForm("jsonCargado").hasErrors) {has-error}">
                          <input type="file" accept=".crt" class="form-control" name="jsonFileToIndex"/>
-                        <span class="help-block" style="color: red">@{QueryAndIndexingForm("jsonFileToIndex").error.map {error => error.message }}</span>
+                        <span class="help-block" style="color: red">@{QueryAndIndexingForm("jsonCargado").error.map {error => error.message }}</span>
                     </div>                        
                 </td>
-            </tr>               
+            </tr>
+            <div>
+                <input type="hidden" name="jsonCargado" id="jsonCargado" value="">
+            </div>
         </table>
     </div>       
 
@@ -130,6 +133,13 @@
     var originDiv = document.getElementById("origin_data");
     var destinationDiv = document.getElementById("destination_data");
     var fileDiv = document.getElementById("jsonFile_data");
+
+    document.querySelector('input[type="file"]').addEventListener('change', function () {
+        if (this.files && this.files[0]) {
+            var hiddenArchivo = document.getElementById("jsonCargado");
+            hiddenArchivo.value = this.files[0].name;
+        }
+    });
 
     select.addEventListener("change", function () {
         if (select.value === "Indexar") {
@@ -157,7 +167,7 @@
             fileDiv.style.display = "block";
 
         }
-        
+
     });
 
 </script>

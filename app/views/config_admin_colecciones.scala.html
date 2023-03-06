@@ -10,7 +10,7 @@
     <div class="titleParam">@title</div>
 
     <div class="descriptionParam">
-        <div class="paddingDescription">Estas configuraciones son necesarias para el funcionamiento adecuado del m&oacute;dulo de prueba de Indexacion de Solr</div>            
+        <div class="paddingDescription">Estas configuraciones son necesarias para el funcionamiento adecuado del m&oacute;dulo de administracion de colecciones </div>            
     </div>
 
     @helper.form(routes.QueryRouteConfig.addConfig()) {
@@ -24,8 +24,8 @@
         <tr>
             <td>
                 <div style="width: 95%;" class="form-group @if(routeQueryForm("urlApiSolr").hasErrors) {has-error}">
-                     <input type="text" class="form-control" name="urlApiSolr"/>
-                    <span class="help-block" style="display: red">@{routeQueryForm("urlApiSolr").error.map {error => error.message }}</span>
+                     <input type="text" class="form-control" name="@routeQueryForm("urlApiSolr").name" id="@routeQueryForm("urlApiSolr").id" value="@routeQueryForm("urlApiSolr").value"/>
+                       <span class="help-block" style="display: red">@{routeQueryForm("urlApiSolr").error.map {error => error.message }}</span>
                 </div>
             </td>
         </tr>
@@ -39,6 +39,13 @@
     }
 
 </div>
+
+<script>
+    $(document).ready(function () {
+        fillConfigUrlApiModule();
+        current_tab("h3_Config_Principal");
+    });
+</script>
 
 }
 @footer(title)

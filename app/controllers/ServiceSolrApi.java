@@ -1,5 +1,6 @@
 package controllers;
 
+import static controllers.QueryRouteConfig.routeQueryForm;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -18,6 +19,7 @@ import static play.mvc.Results.badRequest;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import views.formdata.QueryAndIndexingForm;
+import views.formdata.RouteQueryForm;
 
 import views.html.*;
 
@@ -43,9 +45,13 @@ public class ServiceSolrApi extends Controller {
 
         String lineLog = ipAddress + "<;>" + username + "<;>Haciendo pruebas del metodo de validacion";
         generateLineLog(lineLog);
-
+        
+        //Obtengo formulario de consulta e indexacion
         Form<QueryAndIndexingForm> filledQueryAndIndexForm = queryAndIndexingForm.bindFromRequest();
-
+        
+        //Obtengo formulario de configuracion de url API
+        Form<RouteQueryForm> filledRouteQueryForm = routeQueryForm.bindFromRequest();
+        
         HashMap<String, String> arrOperations;
         HashMap<String, String> arrOperationsSort;
         OperationsModel operations = new OperationsModel();
@@ -54,21 +60,30 @@ public class ServiceSolrApi extends Controller {
 
         PropertiesFile pf = new PropertiesFile();
         pf.loadProperties();
-
+        
+        String urlApiSolr = pf.getUrlApiSolr();
+        
+        logger.info("El valor de la variable urlApiSolr es --> " + urlApiSolr);
+        
         if (filledQueryAndIndexForm.hasErrors()) {
+            
             logger.error("Errores encontrados.");
-            return badRequest(prueba_indexacion_solr.render("Consultar, guardar e indexar", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledQueryAndIndexForm, arrOperationsSort));
-        } else {
-
+            return badRequest(admin_colecciones_solr.render("Consultar, guardar e indexar", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledQueryAndIndexForm, arrOperationsSort));
+            
+        } else if(urlApiSolr == null || urlApiSolr.isEmpty()){
+            
+            logger.error("Errores encontrados en la URL.");
+            logger.error("No existe url de la API en el archivo de configuracion");
+            return badRequest(config_admin_colecciones.render("Configurar URL de la API", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledRouteQueryForm));            
+        
+        }else{
+            
             QueryAndIndexingForm created = filledQueryAndIndexForm.get();
             StringBuilder response = new StringBuilder("");
 
             try {
 
                 pf.loadConfiguracionPruebaIndexar();
-
-                //Obtengo la URL del archivo de configuracion
-                String urlApiSolr = pf.getUrlApiSolr();
 
                 //Obtengo los campos del formulario                
                 String ipOrigin = created.ipOrigin;
@@ -157,7 +172,8 @@ public class ServiceSolrApi extends Controller {
                 }
                 
                 con.disconnect();
-                return ok("El codigo de respuesta es: " + responseCode + "\n" + "El cuerpo de la respuesta es:\n\n" + response.toString());
+                logger.info("El codigo de respuesta es: " + responseCode + "\n" + "El cuerpo de la respuesta es:\n\n" + response.toString());
+                return ok(response_admin_colecciones.render("Consultar, guardar e indexar", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), response.toString()));
 
             } catch (IOException ex) {
                 logger.error("La URL a la que se intenta enviar el formulario, no existe:\n\n" + ex.getMessage());

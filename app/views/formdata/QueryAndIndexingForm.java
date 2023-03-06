@@ -16,6 +16,7 @@ public class QueryAndIndexingForm {
     public String portDestination;
     public String destinationCollectionName;
     public String operationSelector;
+    public String jsonCargado;
     
     /**
      * Validates Form<QueryAndIndexingForm>. Called automatically in the
@@ -303,6 +304,10 @@ public class QueryAndIndexingForm {
         if (operationSelector.equals("Indexar Archivo JSON")) {
             
             boolean ipDestinationValid = true, portDestinationValid = true;
+            
+            if(jsonCargado.isEmpty()){
+                errors.add(new ValidationError("jsonCargado", "Por favor seleccione un archivo json"));
+            }
             
             if (ipDestination.isEmpty()) {
                 errors.add(new ValidationError("ipDestination", "El campo ip destino no puede ser vacio"));

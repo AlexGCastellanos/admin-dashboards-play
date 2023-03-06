@@ -85,6 +85,7 @@ POST    /uploadSolrToSolr               controllers.SolrToSolr.uploadSolrToSolr(
 
 #PRUEBA SOLR ALEX
 GET     /consulta                       controllers.Application.consulta()
+GET     /loadUrlConfig                  controllers.Application.loadUrlConfig()
 GET     /consultaConfig                 controllers.Application.consultaConfig()
 POST    /postConsultaConfig             controllers.QueryRouteConfig.addConfig()    
 POST    /postConsulta                   controllers.ServiceSolrApi.enviarDatos()

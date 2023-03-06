@@ -141,7 +141,7 @@ public class Application extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result showAddDatabaseConfig() {
-        
+
         Form<DatabasesForm> filledForm = Form.form(DatabasesForm.class);
 
         HashMap<String, String> arrDatabases;
@@ -151,7 +151,7 @@ public class Application extends Controller {
         arrDatabasesSort = databases.sortHashMapByValues(arrDatabases);
 
         return ok(databases_config.render("Configuracion Bases de datos", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm, arrDatabasesSort));
-    
+
     }
 
     @Security.Authenticated(Secured.class)
@@ -304,8 +304,9 @@ public class Application extends Controller {
         Form<uploadSolrToSolrForm> filledForm = Form.form(uploadSolrToSolrForm.class);
         return ok(loadCopySolrToSolr.render("Copia de Solr a Solr", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm));
     }
-    
-    public static Result consulta(){
+
+    public static Result consulta() {
+
         Form<QueryAndIndexingForm> filledForm = Form.form(QueryAndIndexingForm.class);
 
         HashMap<String, String> arrOperations;
@@ -313,14 +314,21 @@ public class Application extends Controller {
         OperationsModel operations = new OperationsModel();
         arrOperations = operations.fillOperations();
         arrOperationsSort = operations.sortHashMapByValues(arrOperations);
-        
-        return ok(prueba_indexacion_solr.render("Consultar, guardar e indexar", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm, arrOperationsSort));
-        
+
+        return ok(admin_colecciones_solr.render("Consultar, guardar e indexar", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm, arrOperationsSort));
+
     }
 
-    public static Result consultaConfig(){
+    public static Result consultaConfig() {
         Form<RouteQueryForm> filledForm = Form.form(RouteQueryForm.class);
-        return ok(config_prueba_indexacion.render("Configurar url de API y ruta de guardado", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm));
+        return ok(config_admin_colecciones.render("Configurar url de la API", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm));
+    }
+
+    public static Result loadUrlConfig() {
+        PropertiesFile pf = new PropertiesFile();
+        pf.loadConfiguracionPruebaIndexar();
+        String concat = pf.getUrlApiSolr();
+        return ok(concat);
     }
 
     public static Result loadAdminUsers() {
@@ -407,8 +415,6 @@ public class Application extends Controller {
     public static Result showRestoreBackup() {
         return ok(restoreBackUp.render("Copia de seguridad", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx())));
     }
-    
-    
 
     @Security.Authenticated(Secured.class)
     public static Result showNewConfigOtherFiles() {
@@ -479,6 +485,6 @@ public class Application extends Controller {
         arrConfigurations = configurationsOthersFiles.fillConfigurations();
         arrConfigurationsSort = configurationsOthersFiles.sortHashMapByValues(arrConfigurations);
         return ok(upLoadOthersFile_edit_prog_tarea.render("Editar Programaci\u00F3n Tarea otros archivos", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm, arrListaSemanas, arrListaDiaMes, arrListaHoras, arrListaMinutos, arrConfigurationsSort));
-    }    
+    }
 
 }
