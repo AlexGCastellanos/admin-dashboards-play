@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
  * @author bgarzon
  */
 public class ConsultaSolrService {
-    
+
     static Logger logger = Logger.getLogger(ConsultaSolrService.class);
 
     private static String[] idsArray(String ids) {
@@ -40,21 +40,25 @@ public class ConsultaSolrService {
 
             //Formando la url de origen de consulta
             String urlSolr = "http://" + ip + ":" + puerto + "/solr/" + origen + "/select?";
-
-            //Genero un arreglo a partir de la cadena limpia
-            String[] idsArray = idsArray(ids);
-
             StringBuilder queryParam = new StringBuilder();
 
-            //Doy formato URL por cada id en el arreglo
-            for (int i = 0; i < idsArray.length; i++) {
-                if (i == (idsArray.length - 1)) {
-                    queryParam.append("id:").append(idsArray[i]);
-                } else {
-                    queryParam.append("id:").append(idsArray[i]).append("%20OR%20");
+            if (ids == null || ids.isEmpty()) {
+                queryParam.append("");
+            } else {
+                
+                //Genero un arreglo a partir de la cadena limpia
+                String[] idsArray = idsArray(ids);
+
+                //Doy formato URL por cada id en el arreglo
+                for (int i = 0; i < idsArray.length; i++) {
+                    if (i == (idsArray.length - 1)) {
+                        queryParam.append("id:").append(idsArray[i]);
+                    } else {
+                        queryParam.append("id:").append(idsArray[i]).append("%20OR%20");
+                    }
                 }
             }
-            
+
             logger.info("Los parametros id quedaron como: " + queryParam.toString());
             URL solrOrigen = new URL(urlSolr + "fq=" + queryParam.toString() + "&q=*:*&wt=json");
 
@@ -79,7 +83,7 @@ public class ConsultaSolrService {
             logger.error("Error en consulta de coleccion:" + ex.getMessage());
             return "error";
         }
-        
+
     }
 
     public static String consultarSchema(String ip, String puerto, String coleccion) {

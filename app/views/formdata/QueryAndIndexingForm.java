@@ -17,7 +17,7 @@ public class QueryAndIndexingForm {
     public String destinationCollectionName;
     public String operationSelector;
     public String jsonCargado;
-    
+
     /**
      * Validates Form<QueryAndIndexingForm>. Called automatically in the
      * controller by bindFromRequest(). Checks to see that email and password
@@ -79,9 +79,7 @@ public class QueryAndIndexingForm {
                 }
             }
 
-            if (idsQuery == null || idsQuery.isEmpty()) {
-                errors.add(new ValidationError("idsQuery", "El campo id no puede ser vacio"));
-            } else if ((ipValid && portValid && collectionNameValid)) {
+            if ((ipValid && portValid && collectionNameValid)) {
 
                 String respuestaConsulta = ConsultaSolrService.consultarColeccion(ipOrigin, portOrigin, originCollectionName, idsQuery);
 
@@ -179,9 +177,7 @@ public class QueryAndIndexingForm {
                 }
             }
 
-            if (idsQuery == null || idsQuery.isEmpty()) {
-                errors.add(new ValidationError("idsQuery", "El campo id no puede ser vacio"));
-            } else if ((ipValid && portValid && collectionNameValid)) {
+            if ((ipValid && portValid && collectionNameValid)) {
                 String respuestaConsulta = ConsultaSolrService.consultarColeccion(ipOrigin, portOrigin, originCollectionName, idsQuery);
 
                 if (!respuestaConsulta.equals("error")) {
@@ -244,9 +240,7 @@ public class QueryAndIndexingForm {
                 }
             }
 
-            if (idsQuery == null || idsQuery.isEmpty()) {
-                errors.add(new ValidationError("idsQuery", "El campo id no puede ser vacio"));
-            } else if ((ipValid && portValid && collectionNameValid)) {
+            if ((ipValid && portValid && collectionNameValid)) {
 
                 String respuestaConsulta = ConsultaSolrService.consultarColeccion(ipOrigin, portOrigin, originCollectionName, idsQuery);
 
@@ -302,13 +296,13 @@ public class QueryAndIndexingForm {
         }
 
         if (operationSelector.equals("Indexar Archivo JSON")) {
-            
+
             boolean ipDestinationValid = true, portDestinationValid = true;
-            
-            if(jsonCargado.isEmpty()){
+
+            if (jsonCargado.isEmpty()) {
                 errors.add(new ValidationError("jsonCargado", "Por favor seleccione un archivo json"));
             }
-            
+
             if (ipDestination.isEmpty()) {
                 errors.add(new ValidationError("ipDestination", "El campo ip destino no puede ser vacio"));
                 ipDestinationValid = false;

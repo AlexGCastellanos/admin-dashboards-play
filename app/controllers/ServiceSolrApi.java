@@ -89,7 +89,7 @@ public class ServiceSolrApi extends Controller {
                 String ipOrigin = created.ipOrigin;
                 String portOrigin = created.portOrigin;
                 String originCollectionName = created.originCollectionName;
-                String idsQuery = created.idsQuery;
+                String idsQuery = (created.idsQuery == null || created.idsQuery.isEmpty())? " " : created.idsQuery;
                 String ipDestination = created.ipDestination;
                 String portDestination = created.portDestination;
                 String destinationCollectionName = created.destinationCollectionName;
