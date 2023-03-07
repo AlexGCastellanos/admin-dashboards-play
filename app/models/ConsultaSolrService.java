@@ -60,6 +60,7 @@ public class ConsultaSolrService {
 
             HttpURLConnection connOrigen = (HttpURLConnection) solrOrigen.openConnection();
             connOrigen.setRequestMethod("GET");
+            connOrigen.setConnectTimeout(3000);
 
             BufferedReader rd = new BufferedReader(new InputStreamReader(connOrigen.getInputStream()));
 
@@ -90,6 +91,7 @@ public class ConsultaSolrService {
 
             HttpURLConnection connOrigen = (HttpURLConnection) urlSchema.openConnection();
             connOrigen.setRequestMethod("GET");
+            connOrigen.setConnectTimeout(3000);
 
             BufferedReader rd = new BufferedReader(new InputStreamReader(connOrigen.getInputStream()));
 

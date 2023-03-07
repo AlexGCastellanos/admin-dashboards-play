@@ -139,7 +139,7 @@ public class ServiceSolrApi extends Controller {
                 URL url = new URL(urlApiSolr);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("POST");
-                con.setRequestProperty("Content-type", "application/json");
+                con.setRequestProperty("Content-type", "application/json");                
                 con.setDoOutput(true);
 
                 logger.info("formData --->" + formData);

@@ -18,8 +18,7 @@
             '_label -> null,
             'class -> "custom-select-crg"
             )
-        </div>
-        <span class="help-block" style="color: red">@{QueryAndIndexingForm("operationSelector").error.map {error => error.message}}</span>
+        </div>        
     </div>
 
     <div id="origin_data" >    
@@ -32,13 +31,13 @@
                 <td>
                     <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("ipOrigin").hasErrors) {has-error}">
                          <input type="text" class="form-control" name="ipOrigin"/>
-                        <span class="help-block" style="color: red">@{QueryAndIndexingForm("ipOrigin").error.map {error => error.message }}</span>
+                         <span class="help-block">@{QueryAndIndexingForm("ipOrigin").error.map {error => error.message }}</span>
                     </div>
                 </td> 
                 <td>
-                    <div style="width: 35%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("portOrigin").hasErrors) {has-error}">
-                         <input type="text" class="form-control" name="portOrigin"/>
-                        <span class="help-block" style="color: red">@{QueryAndIndexingForm("portOrigin").error.map {error => error.message }}</span>
+                    <div style="width: 100%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("portOrigin").hasErrors) {has-error}">
+                         <input type="text" style="width: 40%;" class="form-control" name="portOrigin"/>
+                         <span class="help-block">@{QueryAndIndexingForm("portOrigin").error.map {error => error.message }}</span>
                     </div>                        
                 </td>
             </tr>              
@@ -49,19 +48,19 @@
                 <td>
                     <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("originCollectionName").hasErrors) {has-error}">
                          <input type="text" class="form-control" name="originCollectionName"/>
-                        <span class="help-block" style="color: red">@{QueryAndIndexingForm("originCollectionName").error.map {error => error.message }}</span>
+                        <span class="help-block">@{QueryAndIndexingForm("originCollectionName").error.map {error => error.message }}</span>
                     </div>                        
                 </td>
             </tr>
 
             <tr>
-                <td><div class="descrptionMessage">Ids a consultar (use || para separarlos)</div></td>
+                <td><div class="descrptionMessage">Ids a consultar (use || para separarlos, si no se ingresan Ids, se consultar&aacute;n todos los ids existentes)</div></td>
             </tr>
             <tr>
                 <td>
                     <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("idsQuery").hasErrors) {has-error}">
                          <input type="text" class="form-control" name="idsQuery"/>
-                        <span class="help-block" style="color: red">@{QueryAndIndexingForm("idsQuery").error.map {error => error.message }}</span>
+                        <span class="help-block">@{QueryAndIndexingForm("idsQuery").error.map {error => error.message }}</span>
                     </div>                        
                 </td>
             </tr>
@@ -78,13 +77,13 @@
                 <td>
                     <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("ipDestination").hasErrors) {has-error}">
                          <input type="text" class="form-control" name="ipDestination"/>
-                        <span class="help-block" style="color: red">@{QueryAndIndexingForm("ipDestination").error.map {error => error.message }}</span>
+                        <span class="help-block">@{QueryAndIndexingForm("ipDestination").error.map {error => error.message }}</span>
                     </div>                        
                 </td>
                 <td>
-                    <div style="width: 35%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("portDestination").hasErrors) {has-error}">
-                         <input type="text" class="form-control" name="portDestination"/>
-                        <span class="help-block" style="color: red">@{QueryAndIndexingForm("portDestination").error.map {error => error.message }}</span>
+                    <div style="width: 100%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("portDestination").hasErrors) {has-error}">
+                         <input type="text" style="width: 40%;" class="form-control" name="portDestination"/>
+                        <span class="help-block">@{QueryAndIndexingForm("portDestination").error.map {error => error.message }}</span>
                     </div>                        
                 </td>
             </tr>
@@ -95,7 +94,7 @@
                 <td>
                     <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("destinationCollectionName").hasErrors) {has-error}">
                          <input type="text" class="form-control" name="destinationCollectionName"/>
-                        <span class="help-block" style="color: red">@{QueryAndIndexingForm("destinationCollectionName").error.map {error => error.message }}</span>
+                        <span class="help-block">@{QueryAndIndexingForm("destinationCollectionName").error.map {error => error.message }}</span>
                     </div>                        
                 </td>
             </tr>            
@@ -108,10 +107,10 @@
                 <td><div class="descrptionMessage">Seleccione el archivo que desea indexar (.json)</div></td>
             </tr>
             <tr>
-                <td style="width: 40%;">
-                    <div style="width: 95%;" class="form-group @if(QueryAndIndexingForm("jsonCargado").hasErrors) {has-error}">
-                         <input type="file" accept=".crt" class="form-control" name="jsonFileToIndex"/>
-                        <span class="help-block" style="color: red">@{QueryAndIndexingForm("jsonCargado").error.map {error => error.message }}</span>
+                <td>
+                    <div style="width: 70%;" class="form-group @if(QueryAndIndexingForm("jsonCargado").hasErrors) {has-error}">
+                         <input type="file" accept=".json" class="form-control" name="jsonFileToIndex"/>
+                        <span class="help-block">@{QueryAndIndexingForm("jsonCargado").error.map {error => error.message }}</span>
                     </div>                        
                 </td>
             </tr>

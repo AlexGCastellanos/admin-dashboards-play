@@ -23,7 +23,6 @@ function fillConfigUrlApiModule(){
     $.ajax({
         url: "/admin-dashboards/loadUrlConfig",
         success: function (data){
-            console.log("La data de la solicitud es: " + data);
             $("#urlApiSolr").val(data);
         }
     });

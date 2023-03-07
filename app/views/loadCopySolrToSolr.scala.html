@@ -24,8 +24,8 @@
                                 </div>
                             </td> 
                             <td>
-                                <div style="width: 35%;float: left;margin-right: 10px;" class="form-group @if(uploadSolrToSolr("portInSolrToSolr").hasErrors) {has-error}">
-                                    <input type="text" class="form-control" name="@uploadSolrToSolr("portInSolrToSolr").name" id="@uploadSolrToSolr("portInSolrToSolr").id" value="@uploadSolrToSolr("portInSolrToSolr").value"/>
+                                <div style="width: 100%;float: left;margin-right: 10px;" class="form-group @if(uploadSolrToSolr("portInSolrToSolr").hasErrors) {has-error}">
+                                    <input type="text" style="width: 40%;" class="form-control" name="@uploadSolrToSolr("portInSolrToSolr").name" id="@uploadSolrToSolr("portInSolrToSolr").id" value="@uploadSolrToSolr("portInSolrToSolr").value"/>
                                     <span class="help-block" id="spanPathServiceCrawler"></span>
                                 </div>
                             </td>
@@ -150,8 +150,8 @@
                                 </div>
                             </td>
                             <td>
-                                <div style="width: 35%;float: left;margin-right: 10px;" class="form-group @if(uploadSolrToSolr("portOutSolrToSolr").hasErrors) {has-error}">
-                                    <input type="text" class="form-control" name="@uploadSolrToSolr("portOutSolrToSolr").name" id="@uploadSolrToSolr("portOutSolrToSolr").id" value="@uploadSolrToSolr("portOutSolrToSolr").value"/>
+                                <div style="width: 100%;float: left;margin-right: 10px;" class="form-group @if(uploadSolrToSolr("portOutSolrToSolr").hasErrors) {has-error}">
+                                    <input type="text" style="width: 40%;" class="form-control" name="@uploadSolrToSolr("portOutSolrToSolr").name" id="@uploadSolrToSolr("portOutSolrToSolr").id" value="@uploadSolrToSolr("portOutSolrToSolr").value"/>
                                     <span class="help-block" id="spanPathServiceCrawler">@{uploadSolrToSolr("portOutSolrToSolr").error.map {error => error.message }}</span>
                                 </div>
                             </td>

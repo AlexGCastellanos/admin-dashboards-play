@@ -74,7 +74,7 @@ public class QueryAndIndexingForm {
                     }
 
                 } else {
-                    errors.add(new ValidationError("originCollectionName", "Error en la consulta, verifica si el puerto, la ip y la coleccion son correctos"));
+                    errors.add(new ValidationError("originCollectionName", "Error en la consulta, verifica si los datos de ip, puerto y nombre de la coleccion son correctos"));
                     collectionNameValid = false;
                 }
             }
@@ -131,7 +131,7 @@ public class QueryAndIndexingForm {
                     }
 
                 } else {
-                    errors.add(new ValidationError("destinationCollectionName", "Error en la consulta, verifica si el puerto, la ip y la coleccion son correctos"));
+                    errors.add(new ValidationError("destinationCollectionName", "Error en la consulta, verifica si los datos de ip, puerto y nombre de la coleccion son correctos"));
                 }
             }
         }
@@ -174,7 +174,7 @@ public class QueryAndIndexingForm {
                     }
 
                 } else {
-                    errors.add(new ValidationError("originCollectionName", "Error en la consulta, verifica si el puerto, la ip y la coleccion son correctos"));
+                    errors.add(new ValidationError("originCollectionName", "Error en la consulta, verifica si los datos de ip, puerto y nombre de la coleccion son correctos"));
                     collectionNameValid = false;
                 }
             }
@@ -239,7 +239,7 @@ public class QueryAndIndexingForm {
                     }
 
                 } else {
-                    errors.add(new ValidationError("originCollectionName", "Error en la consulta, verifica si el puerto, la ip y la coleccion son correctos"));
+                    errors.add(new ValidationError("originCollectionName", "Error en la consulta, verifica si los datos de ip, puerto y nombre de la coleccion son correctos"));
                     collectionNameValid = false;
                 }
             }
@@ -296,7 +296,7 @@ public class QueryAndIndexingForm {
                     }
 
                 } else {
-                    errors.add(new ValidationError("destinationCollectionName", "Error consultando esta coleccion, verifica si existe o si esta escrita correctamente"));
+                    errors.add(new ValidationError("destinationCollectionName", "Error en la consulta, verifica si los datos de ip, puerto y nombre de la coleccion son correctos"));
                 }
             }
         }
@@ -339,7 +339,7 @@ public class QueryAndIndexingForm {
                     }
 
                 } else {
-                    errors.add(new ValidationError("destinationCollectionName", "Error consultando esta coleccion, verifica si existe o si esta escrita correctamente"));
+                    errors.add(new ValidationError("destinationCollectionName", "Error en la consulta, verifica si los datos de ip, puerto y nombre de la coleccion son correctos"));
                 }
             }
         }

@@ -25,7 +25,7 @@
             <td>
                 <div style="width: 95%;" class="form-group @if(routeQueryForm("urlApiSolr").hasErrors) {has-error}">
                      <input type="text" class="form-control" name="@routeQueryForm("urlApiSolr").name" id="@routeQueryForm("urlApiSolr").id" value="@routeQueryForm("urlApiSolr").value"/>
-                       <span class="help-block" style="display: red">@{routeQueryForm("urlApiSolr").error.map {error => error.message }}</span>
+                       <span class="help-block">@{routeQueryForm("urlApiSolr").error.map {error => error.message }}</span>
                 </div>
             </td>
         </tr>
