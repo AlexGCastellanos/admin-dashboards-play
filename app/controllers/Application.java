@@ -314,8 +314,15 @@ public class Application extends Controller {
         OperationsModel operations = new OperationsModel();
         arrOperations = operations.fillOperations();
         arrOperationsSort = operations.sortHashMapByValues(arrOperations);
-
-        return ok(admin_colecciones_solr.render("Consultar, guardar e indexar", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm, arrOperationsSort));
+        
+        HashMap<String, String> arrDirectories;
+        HashMap<String, String> arrDirectoriesSort;
+        CopyCollectionsInfo copyCollections = new CopyCollectionsInfo();
+        arrDirectories = copyCollections.fillDirectories();
+        arrDirectoriesSort = copyCollections.sortHashMapByValues(arrOperations);
+        
+        
+        return ok(admin_colecciones_solr.render("Consultar, guardar e indexar", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm, arrOperationsSort, arrDirectoriesSort));
 
     }
 

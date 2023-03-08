@@ -16,6 +16,7 @@ public class QueryAndIndexingForm {
     public String portDestination;
     public String destinationCollectionName;
     public String operationSelector;
+    public String directorySelector;
     public String jsonCargado;
 
     /**
@@ -298,9 +299,13 @@ public class QueryAndIndexingForm {
         if (operationSelector.equals("Indexar Archivo JSON")) {
 
             boolean ipDestinationValid = true, portDestinationValid = true;
-
+            
+            if (directorySelector.isEmpty()) {
+                errors.add(new ValidationError("directorySelector", "Por favor seleccione una coleccion"));
+            }
+            
             if (jsonCargado.isEmpty()) {
-                errors.add(new ValidationError("jsonCargado", "Por favor seleccione un archivo json"));
+                errors.add(new ValidationError("jsonCargado", "Por favor seleccione un archivo json de la lista"));
             }
 
             if (ipDestination.isEmpty()) {

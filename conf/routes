@@ -89,6 +89,7 @@ GET     /loadUrlConfig                  controllers.Application.loadUrlConfig()
 GET     /consultaConfig                 controllers.Application.consultaConfig()
 POST    /postConsultaConfig             controllers.QueryRouteConfig.addConfig()    
 POST    /postConsulta                   controllers.ServiceSolrApi.enviarDatos()
+POST    /loadFileOptions                controllers.CopyCollectionsInfo.fillFiles()  
 
 #BACKUP
 GET     /showDoBackUp                   controllers.Application.showBackup()

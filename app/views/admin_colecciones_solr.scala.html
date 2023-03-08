@@ -1,6 +1,6 @@
 @import helper._
 
-@(title: String, isLoggedIn: Boolean, userInfo: UserInfo, QueryAndIndexingForm : Form[views.formdata.QueryAndIndexingForm], arrOperations : HashMap[String, String])
+@(title: String, isLoggedIn: Boolean, userInfo: UserInfo, QueryAndIndexingForm : Form[views.formdata.QueryAndIndexingForm], arrOperations : HashMap[String, String], arrDirectories: HashMap[String, String])
 
 @main(title, isLoggedIn, userInfo) { 
 @menu_navigate(title,userInfo){
@@ -31,26 +31,26 @@
                 <td>
                     <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("ipOrigin").hasErrors) {has-error}">
                          <input type="text" class="form-control" name="ipOrigin" value="@QueryAndIndexingForm("ipOrigin").value"/>
-                         <span class="help-block">@{QueryAndIndexingForm("ipOrigin").error.map {error => error.message }}</span>
+                           <span class="help-block">@{QueryAndIndexingForm("ipOrigin").error.map {error => error.message }}</span>
                     </div>
                 </td> 
                 <td>
                     <div style="width: 100%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("portOrigin").hasErrors) {has-error}">
                          <input type="text" style="width: 40%;" class="form-control" name="portOrigin" value="@QueryAndIndexingForm("portOrigin").value"/>
-                         <span class="help-block">@{QueryAndIndexingForm("portOrigin").error.map {error => error.message }}</span>
+                           <span class="help-block">@{QueryAndIndexingForm("portOrigin").error.map {error => error.message }}</span>
                     </div>                        
                 </td>
             </tr>
-            
+
             <tr>
                 <td><div class="descrptionMessage">Ingrese el nombre de la coleccion.</div></td>
             </tr>
-            
+
             <tr>
                 <td>
                     <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("originCollectionName").hasErrors) {has-error}">
                          <input type="text" class="form-control" name="originCollectionName" value="@QueryAndIndexingForm("originCollectionName").value"/>
-                        <span class="help-block">@{QueryAndIndexingForm("originCollectionName").error.map {error => error.message }}</span>
+                           <span class="help-block">@{QueryAndIndexingForm("originCollectionName").error.map {error => error.message }}</span>
                     </div>                        
                 </td>
             </tr>
@@ -58,16 +58,16 @@
             <tr>
                 <td><div class="descrptionMessage">Ids a consultar (use || para separarlos)</div></td>
             </tr>
-            
+
             <tr>
                 <td>                    
                     <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("idsQuery").hasErrors) {has-error}">
                          <input type="text" class="form-control" name="idsQuery" placeholder="Si no se ingresan Ids, se consultar&aacute;n todos los existentes" value="@QueryAndIndexingForm("idsQuery").value" />
-                        <span class="help-block">@{QueryAndIndexingForm("idsQuery").error.map {error => error.message }}</span>
+                           <span class="help-block">@{QueryAndIndexingForm("idsQuery").error.map {error => error.message }}</span>
                     </div>                    
                 </td>
             </tr>
-            
+
         </table>
     </div>
 
@@ -81,24 +81,24 @@
                 <td>
                     <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("ipDestination").hasErrors) {has-error}">
                          <input type="text" class="form-control" name="ipDestination" value="@QueryAndIndexingForm("ipDestination").value"/>
-                         <span class="help-block">@{QueryAndIndexingForm("ipDestination").error.map {error => error.message }}</span>
+                           <span class="help-block">@{QueryAndIndexingForm("ipDestination").error.map {error => error.message }}</span>
                     </div>                        
                 </td>
                 <td>
                     <div style="width: 100%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("portDestination").hasErrors) {has-error}">
                          <input type="text" style="width: 40%;" class="form-control" name="portDestination" value="@QueryAndIndexingForm("portDestination").value"/>
-                        <span class="help-block">@{QueryAndIndexingForm("portDestination").error.map {error => error.message }}</span>
+                           <span class="help-block">@{QueryAndIndexingForm("portDestination").error.map {error => error.message }}</span>
                     </div>                        
                 </td>
             </tr>
             <tr>
-                <td><div class="descrptionMessage">Ingrese el nombre de la coleccion destino.</div></td> 
+                <td><div class="descrptionMessage">Ingrese el nombre de la colecci&oacute;n destino.</div></td> 
             </tr>
             <tr>
                 <td>
                     <div style="width: 95%;float: left;margin-right: 10px;" class="form-group @if(QueryAndIndexingForm("destinationCollectionName").hasErrors) {has-error}">
                          <input type="text" class="form-control" name="destinationCollectionName" value="@QueryAndIndexingForm("destinationCollectionName").value"/>
-                        <span class="help-block">@{QueryAndIndexingForm("destinationCollectionName").error.map {error => error.message }}</span>
+                           <span class="help-block">@{QueryAndIndexingForm("destinationCollectionName").error.map {error => error.message }}</span>
                     </div>                        
                 </td>
             </tr>            
@@ -108,16 +108,32 @@
     <div id="jsonFile_data">
         <table style="width: 100%;">
             <tr>
-                <td><div class="descrptionMessage">Seleccione el archivo que desea indexar (.json)</div></td>
+                <td>
+                    <div style="width: 70%;">            
+                        <div style="width: 60%;" class="form-group @if(QueryAndIndexingForm("directorySelector").hasErrors) {has-error}">
+                             <div class="descrptionMessageTable">Colecciones disponibles para la indexaci&oacute;n</div>
+                            @select(
+                            QueryAndIndexingForm("directorySelector"),
+                            options(arrDirectories),
+                            '_default -> "Seleccione una coleccion",
+                            '_label -> null,
+                            'class -> "custom-select-crg"
+                            )
+                        </div>        
+                    </div>                    
+                </td>
             </tr>
             <tr>
                 <td>
-                    <div style="width: 70%;" class="form-group @if(QueryAndIndexingForm("jsonCargado").hasErrors) {has-error}">
-                         <input type="file" accept=".json" class="form-control" name="jsonFileToIndex" />
+                    <div style="width: 95%;">            
+                        <div style="width: 80%;" class="form-group @if(QueryAndIndexingForm("jsonCargado").hasErrors) {has-error}">
+                             <div class="descrptionMessageTable">Seleccione un archivo a indexar</div>
+                            <select id="fileSelector" name="fileSelector" class="custom-select-crg"></select>
+                        </div>
                         <span class="help-block">@{QueryAndIndexingForm("jsonCargado").error.map {error => error.message }}</span>
-                    </div>                        
+                    </div>                       
                 </td>
-            </tr>
+            </tr>            
             <div>
                 <input type="hidden" name="jsonCargado" id="jsonCargado" value="">
             </div>
@@ -133,12 +149,31 @@
 <script>
 
     var select = document.getElementById("operationSelector");
+    var selectCollection = document.getElementById("directorySelector");
+    var selectFile = document.getElementById("fileSelector");
     var originDiv = document.getElementById("origin_data");
     var destinationDiv = document.getElementById("destination_data");
     var fileDiv = document.getElementById("jsonFile_data");
-    
+
+    selectFile.addEventListener('change', function () {
+        var hiddenArchivo = document.getElementById("jsonCargado");
+        hiddenArchivo.value = selectFile.value;
+    });
+
+    selectCollection.addEventListener("change", function () {
+
+        while (selectFile.options.length > 0) {
+            selectFile.remove(0);
+        }
+
+        $(document).ready(function () {
+            fillFileSelector();
+        });
+
+    });
+
     document.addEventListener('DOMContentLoaded', function () {
-        
+
         if (select.value === "Indexar") {
 
             originDiv.style.display = "block";
@@ -167,15 +202,8 @@
 
     });
 
-    document.querySelector('input[type="file"]').addEventListener('change', function () {
-        if (this.files && this.files[0]) {
-            var hiddenArchivo = document.getElementById("jsonCargado");
-            hiddenArchivo.value = this.files[0].name;
-        }
-    });
-
     select.addEventListener("change", function () {
-        
+
         if (select.value === "Indexar") {
 
             originDiv.style.display = "block";

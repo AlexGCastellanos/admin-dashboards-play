@@ -8,10 +8,10 @@ var globalPermissions;
 var globalGroups;
 var globalBuscador;
 
-function fillConfigModule(){
+function fillConfigModule() {
     $.ajax({
         url: "/admin-dashboards/loadConfigModule",
-        success: function (data){
+        success: function (data) {
             var splitData = data.split("<;>");
             $("#pathFileModule").val(splitData[0]);
             $("#passwordCertificate").val(splitData[1]);
@@ -19,26 +19,41 @@ function fillConfigModule(){
     });
 }
 
-function fillConfigUrlApiModule(){
+function fillConfigUrlApiModule() {
     $.ajax({
         url: "/admin-dashboards/loadUrlConfig",
-        success: function (data){
+        success: function (data) {
             $("#urlApiSolr").val(data);
         }
     });
 }
 
-function fillPermissions(){
+function fillFileSelector() {
+    $.ajax({
+        url: "/admin-dashboards/loadFileOptions",
+        method: "POST",
+        contentType: "text/plain",
+        data: $("#directorySelector").val(),
+        success: function (data) {
+            var fileNames = data.split(";");
+            for (var file in fileNames) {
+                $("#fileSelector").append("<option value=\"" + file + "\">" + file + " </option>")
+            }            
+        }
+    });
+}
+
+function fillPermissions() {
     $.ajax({
         url: "/admin-dashboards/loadPermission",
         method: "POST",
-        success: function (data){
+        success: function (data) {
             var json = JSON.parse(data);
             //console.log(json);
             $('#tablePermissions').append('<thead><tr><td><div class=\"dvCheckbox\">Permisos de Usuarios</div></td><td>Permitir</td></tr></thead>');
-            jQuery.each(json, function(i, val) {
-                if(i>0){
-                    $('#tablePermissions').append('<tr><td style=\"display:none;\"><input type=\"hidden\" id=\"hiddenPermission_'+i+'\" value=\"'+val.id_permission+'\"/></td><td><div class=\"dvCheckbox\">'+val.desc_permission+'</div></td><td><input type="checkbox" id=\"chPermission_'+i+'\"/></td></tr>');
+            jQuery.each(json, function (i, val) {
+                if (i > 0) {
+                    $('#tablePermissions').append('<tr><td style=\"display:none;\"><input type=\"hidden\" id=\"hiddenPermission_' + i + '\" value=\"' + val.id_permission + '\"/></td><td><div class=\"dvCheckbox\">' + val.desc_permission + '</div></td><td><input type="checkbox" id=\"chPermission_' + i + '\"/></td></tr>');
                 }
             });
             globalPermissions = $('#tablePermissions tr').length;
@@ -46,17 +61,17 @@ function fillPermissions(){
     });
 }
 
-function fillProfiles(){
+function fillProfiles() {
     $.ajax({
         url: "/admin-dashboards/loadProfiles",
         method: "POST",
-        success: function (data){
+        success: function (data) {
             var json = JSON.parse(data);
             //console.log(json);
             $('#tableProfiles').append('<thead><tr><td><div class=\"dvCheckbox\">Perfiles</div></td><td>Agregar</td></tr></thead>');
-            jQuery.each(json, function(i, val) {
-                if(i>0){
-                    $('#tableProfiles').append('<tr><td style=\"display:none;\"><input type=\"hidden\" id=\"hiddenProfile_'+i+'\" value=\"'+val.id_profile+'\"/></td><td><div class=\"dvCheckbox\">'+val.name_profile+'</div></td><td><input type="checkbox" id=\"chProfile_'+i+'\"/></td></tr>');
+            jQuery.each(json, function (i, val) {
+                if (i > 0) {
+                    $('#tableProfiles').append('<tr><td style=\"display:none;\"><input type=\"hidden\" id=\"hiddenProfile_' + i + '\" value=\"' + val.id_profile + '\"/></td><td><div class=\"dvCheckbox\">' + val.name_profile + '</div></td><td><input type="checkbox" id=\"chProfile_' + i + '\"/></td></tr>');
                 }
             });
             globalProfiles = $('#tableProfiles tr').length;
@@ -64,17 +79,17 @@ function fillProfiles(){
     });
 }
 
-function fillGroups(){
+function fillGroups() {
     $.ajax({
         url: "/admin-dashboards/loadGroups",
         method: "POST",
-        success: function (data){
+        success: function (data) {
             var json = JSON.parse(data);
             //console.log(json);
             $('#tableGroups').append('<thead><tr><td><div class=\"dvCheckbox\">Grupos</div></td><td>Seleccionar</td></tr></thead>');
-            jQuery.each(json, function(i, val) {
-                if(i>0){
-                    $('#tableGroups').append('<tr><td style=\"display:none;\"><input type=\"hidden\" id=\"hiddenGroup_'+i+'\" value=\"'+val.id_group+'\"/></td><td><div class=\"dvCheckbox\">'+val.name_group+'</div></td><td><input type="radio" name="radioGroups" id=\"radGroup_'+i+'\"/></td></tr>');
+            jQuery.each(json, function (i, val) {
+                if (i > 0) {
+                    $('#tableGroups').append('<tr><td style=\"display:none;\"><input type=\"hidden\" id=\"hiddenGroup_' + i + '\" value=\"' + val.id_group + '\"/></td><td><div class=\"dvCheckbox\">' + val.name_group + '</div></td><td><input type="radio" name="radioGroups" id=\"radGroup_' + i + '\"/></td></tr>');
                 }
             });
             globalGroups = $('#tableGroups tr').length;
@@ -82,10 +97,10 @@ function fillGroups(){
     });
 }
 
-function fillOtherConfigCleanData(){
+function fillOtherConfigCleanData() {
     $.ajax({
         url: "/admin-dashboards/loadCleanDataService",
-        success: function (data){
+        success: function (data) {
             var splitData = data.split("<;>");
             $("#ipServiceCleanData").val(splitData[0]);
             $("#portServiceCleanData").val(splitData[1]);
@@ -94,61 +109,64 @@ function fillOtherConfigCleanData(){
     });
 }
 
-function fillIframeCleanDataDB(){
+function fillIframeCleanDataDB() {
     $.ajax({
         url: "/admin-dashboards/loadPathCleanDataService",
-        success: function (data){  
-           var jupyterBD = data+"/tree/work/admin_dashboards/admin_serviceDash/databases/filesViews";
+        success: function (data) {
+            var jupyterBD = data + "/tree/work/admin_dashboards/admin_serviceDash/databases/filesViews";
             $('#iframeCleanDataServiceDB').attr('src', jupyterBD);
         }
     });
 }
 
-function fillIframeCleanDataFS(){
+function fillIframeCleanDataFS() {
     $.ajax({
         url: "/admin-dashboards/loadPathCleanDataService",
-        success: function (data){  
-           var jupyterBD = data+"/tree/work/admin_dashboards/admin_serviceDash/fileServers/filesViews";
+        success: function (data) {
+            var jupyterBD = data + "/tree/work/admin_dashboards/admin_serviceDash/fileServers/filesViews";
             $('#iframeCleanDataServiceFS').attr('src', jupyterBD);
         }
     });
 }
 
-function fillAdminUsers(){
+function fillAdminUsers() {
     $.ajax({
         url: "/admin-dashboards/loadAdminUsers",
-        success: function (data){
+        success: function (data) {
             $.ajax({
                 type: 'GET',
                 url: data,
-                success: function(){
-            $("#iframeAdminUsersDashboards").attr('src',data);
+                success: function () {
+                    $("#iframeAdminUsersDashboards").attr('src', data);
                 },
-                error: function(xhr, error, code){
+                error: function (xhr, error, code) {
                     $("#dvAdminUsers").html('<br><div class="alert alert-warning" role="alert">No existe un administrador de dashboards</div>');
                 }
             });
         }
     });
 }
-function campoFechaADDWord(idtag){
-    var word = $('#campoFecha_'+idtag).val();
-    if(word!=""){
-        $("#search_results_campoFecha_"+idtag).append("<option value=\""+word+"\">"+word+" </option>");
+function campoFechaADDWord(idtag) {
+    var word = $('#campoFecha_' + idtag).val();
+    if (word != "") {
+        $("#search_results_campoFecha_" + idtag).append("<option value=\"" + word + "\">" + word + " </option>");
         savecampoFechaConfig();
     }
 }
-function savecampoFechaConfig(){
+function savecampoFechaConfig() {
     SconcatcampoFecha = "";
     var optionsWords = $('#search_results_campoFecha_0 option');
-    SconcatcampoFecha += $.map(optionsWords ,function(option) {return option.value;});     // disparador(exp regular o palabra)
-    while (SconcatcampoFecha.includes(",")){
-    SconcatcampoFecha=SconcatcampoFecha.replace(",","\|\|");
+    SconcatcampoFecha += $.map(optionsWords, function (option) {
+        return option.value;
+    });     // disparador(exp regular o palabra)
+    while (SconcatcampoFecha.includes(",")) {
+        SconcatcampoFecha = SconcatcampoFecha.replace(",", "\|\|");
     }
-    document.getElementById("fieldDate").value = SconcatcampoFecha ;
+    document.getElementById("fieldDate").value = SconcatcampoFecha;
 }
-function deletecampoFecha(idtag){
-    var selectedOpts = $('#search_results_campoFecha_'+idtag+' option:selected');
+
+function deletecampoFecha(idtag) {
+    var selectedOpts = $('#search_results_campoFecha_' + idtag + ' option:selected');
     $(selectedOpts).remove();
     savecampoFechaConfig();
 }
@@ -191,7 +209,7 @@ function fillBackUpSolrInsts() {
                     $("#backup_solr").append(o);
                 }
             }
-            
+
         },
         error: function () {
             alert("No se encontraron instancias de Solr instaladas");
@@ -205,7 +223,7 @@ function fillRestoreBackUpSolrInsts() {
         method: "POST",
         success: function (data) {
             //console.log(data);
-            
+
             var SplitSchemaSolrInsts = data.split(";");
             for (var j = 0; j < SplitSchemaSolrInsts.length; j++) {
                 if (SplitSchemaSolrInsts[j] !== null && SplitSchemaSolrInsts[j] !== "" && SplitSchemaSolrInsts[j] !== "null") {
@@ -214,7 +232,7 @@ function fillRestoreBackUpSolrInsts() {
                     $("#restore_solr").append(o);
                 }
             }
-           
+
         },
         error: function () {
             alert("No se encontraron instancias de Solr con copia de seguridad");
@@ -230,7 +248,7 @@ function fillRestoreBackupInstCores() {
         data: $("#restore_solr").val(),
         success: function (data) {
             $("#tableColecciones").find('tbody').empty()
-            console.log("1"+data);
+            console.log("1" + data);
             var SplitSchemaCores = data.split(";");
             for (var j = 0; j < SplitSchemaCores.length; j++) {
                 if (SplitSchemaCores[j] !== null && SplitSchemaCores[j] !== "null" && SplitSchemaCores[j] !== "") {
@@ -238,7 +256,7 @@ function fillRestoreBackupInstCores() {
                             .append($('<tr> <td><input name="optnsBackUp" onclick="getCheckedProgBackUp();" type="checkbox" id="' + SplitSchemaCores[j] + 'cbox" value="' + SplitSchemaCores[j] + '"></td>' + '<td>' + SplitSchemaCores[j] + '</td>'
                                     + '<td><select id ="opBack' + SplitSchemaCores[j] + '"></select></td>' + '</tr>'));
                     callBackUps($("#restore_solr").val(), SplitSchemaCores[j]);
-                    
+
                 }
             }
             $("#backupSolrTable").show();
@@ -266,7 +284,7 @@ function fillBackupInstCores() {
                             .append($('<tr> <td><input name="optnsBackUp" onclick="getCheckedProgBackUp();" type="checkbox" id="' + SplitSchemaCores[j] + 'cbox" value="' + SplitSchemaCores[j] + '"></td>' + '<td>' + SplitSchemaCores[j] + '</td>'
                                     + '<td id ="tdLast' + SplitSchemaCores[j] + '"></td' + '</tr>'));
                     callLastBackUp($("#backup_solr").val(), SplitSchemaCores[j]);
-                    
+
                 }
             }
             $("#backupSolrTable").show();

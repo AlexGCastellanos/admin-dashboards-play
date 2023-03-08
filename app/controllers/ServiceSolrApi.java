@@ -57,9 +57,16 @@ public class ServiceSolrApi extends Controller {
         OperationsModel operations = new OperationsModel();
         arrOperations = operations.fillOperations();
         arrOperationsSort = operations.sortHashMapByValues(arrOperations);
+        
+        HashMap<String, String> arrDirectories;
+        HashMap<String, String> arrDirectoriesSort;
+        CopyCollectionsInfo copyCollections = new CopyCollectionsInfo();        
+        arrDirectories = copyCollections.fillDirectories();
+        arrDirectoriesSort = copyCollections.sortHashMapByValues(arrDirectories);
 
         PropertiesFile pf = new PropertiesFile();
         pf.loadProperties();
+        pf.loadConfiguracionPruebaIndexar();
         
         String urlApiSolr = pf.getUrlApiSolr();
         
@@ -68,7 +75,7 @@ public class ServiceSolrApi extends Controller {
         if (filledQueryAndIndexForm.hasErrors()) {
             
             logger.error("Errores encontrados.");
-            return badRequest(admin_colecciones_solr.render("Consultar, guardar e indexar", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledQueryAndIndexForm, arrOperationsSort));
+            return badRequest(admin_colecciones_solr.render("Consultar, guardar e indexar", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledQueryAndIndexForm, arrOperationsSort, arrDirectoriesSort));
             
         } else if(urlApiSolr == null || urlApiSolr.isEmpty()){
             
@@ -81,9 +88,7 @@ public class ServiceSolrApi extends Controller {
             QueryAndIndexingForm created = filledQueryAndIndexForm.get();
             StringBuilder response = new StringBuilder("");
 
-            try {
-
-                pf.loadConfiguracionPruebaIndexar();
+            try {                
 
                 //Obtengo los campos del formulario                
                 String ipOrigin = created.ipOrigin;
@@ -94,17 +99,16 @@ public class ServiceSolrApi extends Controller {
                 String portDestination = created.portDestination;
                 String destinationCollectionName = created.destinationCollectionName;
                 String operationSelector = created.operationSelector;
-                
-                Http.MultipartFormData body = request().body().asMultipartFormData();
-                Http.MultipartFormData.FilePart json = body.getFile("jsonFileToIndex");
+                String directoryName = created.directorySelector;                
+                String jsonName = created.jsonCargado;
                 
                 String jsonToText = " ";
 
                 if (operationSelector.equals("Indexar Archivo JSON")) {                   
 
-                    if (json != null) {
+                    if (!(jsonName.isEmpty())) {
 
-                        File jsonFile = json.getFile();
+                        File jsonFile = CopyCollectionsInfo.getJsonFile(directoryName, jsonName);
                         StringBuilder textoJsonLeido = new StringBuilder();
 
                         try (BufferedReader reader = new BufferedReader(new FileReader(jsonFile))) {
