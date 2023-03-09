@@ -35,10 +35,12 @@ function fillFileSelector() {
         contentType: "text/plain",
         data: $("#directorySelector").val(),
         success: function (data) {
-            var fileNames = data.split(";");
-            for (var file in fileNames) {
-                $("#fileSelector").append("<option value=\"" + file + "\">" + file + " </option>")
-            }            
+            var splitData = data.toString().split("|");
+            for (var j = 0; j < splitData.length; j++) {
+                if (splitData[j] !== null && splitData[j] !== "") {
+                    $("#fileSelector").append("<option value=\"" + splitData[j] + "\">" + splitData[j] + " </option>");
+                }
+            }
         }
     });
 }

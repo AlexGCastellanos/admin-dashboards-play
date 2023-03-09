@@ -17,6 +17,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
+import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 import static play.mvc.Controller.request;
@@ -31,6 +32,8 @@ import play.mvc.Security;
  */
 public class CopyCollectionsInfo {
 
+    static Logger logger = Logger.getLogger(CopyCollectionsInfo.class);
+
     public HashMap<String, String> fillDirectories() {
 
         String absoluteDiskPath = "/opt/data/IFindIt/admin_dashboards/admin_serviceDash/copyCollection";
@@ -42,14 +45,14 @@ public class CopyCollectionsInfo {
         for (String directoryName : directoriesNames) {
             arrDirectories.put(directoryName, directoryName);
         }
-        
+
         return arrDirectories;
     }
 
     public static File getJsonFile(String directory, String fileName) {
 
-        String absoluteFilePath = "/opt/data/IFindIt/admin_dashboards/admin_serviceDash/copyCollection/"+directory+"/"+fileName;
-        File json = new File(absoluteFilePath);        
+        String absoluteFilePath = "/opt/data/IFindIt/admin_dashboards/admin_serviceDash/copyCollection/" + directory + "/" + fileName;
+        File json = new File(absoluteFilePath);
 
         return json;
     }
@@ -59,20 +62,28 @@ public class CopyCollectionsInfo {
 
         //http://192.168.1.36:8783/solr/admin/cores?action=STATUS&indexInfo=false
         String collection = request().body().asText();
+        logger.info("El nombre de la coleccion capturado en la solicitud AJAX es: " + collection);
 
         String absoluteFilesPath = "/opt/data/IFindIt/admin_dashboards/admin_serviceDash/copyCollection/" + collection;
-        File files = new File(absoluteFilesPath);
+        logger.info("La ruta del directorio de la coleccion es: " + absoluteFilesPath);
 
-        String[] filesNames = files.list();
         String concat = "";
 
-        for (int i = 0; i < filesNames.length; i++) {
-            if (i == (filesNames.length - 1)) {
-                concat = concat + filesNames[i];
-            } else {
-                concat = concat + filesNames[i] + ";";
+        if (!(collection.isEmpty() || collection == null)) {
+            File files = new File(absoluteFilesPath);
+
+            String[] filesNames = files.list();
+
+            for (int i = 0; i < filesNames.length; i++) {
+                if (i == (filesNames.length - 1)) {
+                    concat = concat + filesNames[i];
+                } else {
+                    concat = concat + filesNames[i] + "|";
+                }
             }
         }
+
+        logger.info("Los archivos en esta coleccion son: " + concat);
 
         return ok(concat);
     }

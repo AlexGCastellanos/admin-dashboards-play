@@ -319,9 +319,8 @@ public class Application extends Controller {
         HashMap<String, String> arrDirectoriesSort;
         CopyCollectionsInfo copyCollections = new CopyCollectionsInfo();
         arrDirectories = copyCollections.fillDirectories();
-        arrDirectoriesSort = copyCollections.sortHashMapByValues(arrOperations);
-        
-        
+        arrDirectoriesSort = copyCollections.sortHashMapByValues(arrDirectories);
+                
         return ok(admin_colecciones_solr.render("Consultar, guardar e indexar", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm, arrOperationsSort, arrDirectoriesSort));
 
     }

@@ -7,7 +7,7 @@
 
 <div id="6" class="list_item">
     <div class="titleParam" style="margin-bottom: 1em;">@title</div>
-    @helper.form(routes.ServiceSolrApi.enviarDatos(),'enctype -> "multipart/form-data") {    
+    @helper.form(routes.ServiceSolrApi.enviarDatos()) {    
     <div style="width: 70%;">            
         <div style="width: 60%;" class="form-group @if(QueryAndIndexingForm("operationSelector").hasErrors) {has-error}">
              <div class="descrptionMessageTable">Seleccione la operacion a realizar:</div>
@@ -129,8 +129,9 @@
                         <div style="width: 80%;" class="form-group @if(QueryAndIndexingForm("jsonCargado").hasErrors) {has-error}">
                              <div class="descrptionMessageTable">Seleccione un archivo a indexar</div>
                             <select id="fileSelector" name="fileSelector" class="custom-select-crg"></select>
+                            <span class="help-block">@{QueryAndIndexingForm("jsonCargado").error.map {error => error.message }}</span>
                         </div>
-                        <span class="help-block">@{QueryAndIndexingForm("jsonCargado").error.map {error => error.message }}</span>
+                        
                     </div>                       
                 </td>
             </tr>            
@@ -154,7 +155,11 @@
     var originDiv = document.getElementById("origin_data");
     var destinationDiv = document.getElementById("destination_data");
     var fileDiv = document.getElementById("jsonFile_data");
-
+    
+    $(document).ready(function (){
+        current_tab("h3_pruebaJson");
+    })
+    
     selectFile.addEventListener('change', function () {
         var hiddenArchivo = document.getElementById("jsonCargado");
         hiddenArchivo.value = selectFile.value;
