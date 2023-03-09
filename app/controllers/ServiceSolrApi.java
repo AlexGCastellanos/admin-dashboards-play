@@ -100,7 +100,9 @@ public class ServiceSolrApi extends Controller {
                 String destinationCollectionName = created.destinationCollectionName;
                 String operationSelector = created.operationSelector;
                 String directoryName = created.directorySelector;                
-                String jsonName = created.jsonCargado;
+                String jsonName = created.fileSelector;
+                
+                logger.info("El nombre del archivo json seleccionado, es: "  + jsonName);
                 
                 String jsonToText = " ";
 

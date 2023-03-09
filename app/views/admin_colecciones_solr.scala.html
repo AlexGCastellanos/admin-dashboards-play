@@ -126,18 +126,15 @@
             <tr>
                 <td>
                     <div style="width: 95%;">            
-                        <div style="width: 80%;" class="form-group @if(QueryAndIndexingForm("jsonCargado").hasErrors) {has-error}">
+                        <div style="width: 80%;" class="form-group @if(QueryAndIndexingForm("fileSelector").hasErrors) {has-error}">
                              <div class="descrptionMessageTable">Seleccione un archivo a indexar</div>
                             <select id="fileSelector" name="fileSelector" class="custom-select-crg"></select>
-                            <span class="help-block">@{QueryAndIndexingForm("jsonCargado").error.map {error => error.message }}</span>
+                            <span class="help-block">@{QueryAndIndexingForm("fileSelector").error.map {error => error.message }}</span>
                         </div>
                         
                     </div>                       
                 </td>
-            </tr>            
-            <div>
-                <input type="hidden" name="jsonCargado" id="jsonCargado" value="">
-            </div>
+            </tr>
         </table>
     </div>       
 
@@ -158,12 +155,15 @@
     
     $(document).ready(function (){
         current_tab("h3_pruebaJson");
-    })
-    
-    selectFile.addEventListener('change', function () {
-        var hiddenArchivo = document.getElementById("jsonCargado");
-        hiddenArchivo.value = selectFile.value;
     });
+    
+    /*selectFile.addEventListener('change', function () {
+        console.log("El valor del selectFile es: " + selectFile.value);
+        var hiddenArchivo = document.getElementById("jsonCargado");
+        console.log("El valor del hidden antes de la asignacion es: " + hiddenArchivo.value);
+        hiddenArchivo.value = selectFile.value;
+        console.log("El valor del hidden despues de la asignacion es: " + hiddenArchivo.value);
+    });*/
 
     selectCollection.addEventListener("change", function () {
 
