@@ -102,7 +102,7 @@ public class PropertiesFile {
      */
     public boolean loadConfiguracionPruebaIndexar() {
 
-        String absoluteDiskPath = "/opt/data/IFindIt/admin_dashboards/admin_serviceDash/temp/configuration_prueba_indexar.properties";
+        String absoluteDiskPath = "/opt/data/IFindIt/admin_dashboards/admin_serviceDash/temp/configuration_admin_collections.properties";
 
         Properties props = new Properties();
         FileInputStream is;
@@ -114,8 +114,8 @@ public class PropertiesFile {
             logger.error("Error al abrir configfile: " + e1.getMessage());
         }
 
-        urlApiSolr = props.getProperty("urlApiSolr");
-
+        urlApiSolr = props.getProperty("urlApiSolr"); 
+ 
         return true;
     }
 

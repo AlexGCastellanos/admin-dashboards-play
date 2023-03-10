@@ -1,6 +1,5 @@
 package controllers;
 
-import static controllers.QueryRouteConfig.routeQueryForm;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -19,7 +18,6 @@ import static play.mvc.Results.badRequest;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import views.formdata.QueryAndIndexingForm;
-import views.formdata.RouteQueryForm;
 
 import views.html.*;
 
@@ -45,68 +43,57 @@ public class ServiceSolrApi extends Controller {
 
         String lineLog = ipAddress + "<;>" + username + "<;>Haciendo pruebas del metodo de validacion";
         generateLineLog(lineLog);
-        
+
         //Obtengo formulario de consulta e indexacion
         Form<QueryAndIndexingForm> filledQueryAndIndexForm = queryAndIndexingForm.bindFromRequest();
-        
-        //Obtengo formulario de configuracion de url API
-        Form<RouteQueryForm> filledRouteQueryForm = routeQueryForm.bindFromRequest();
-        
+
         HashMap<String, String> arrOperations;
         HashMap<String, String> arrOperationsSort;
         OperationsModel operations = new OperationsModel();
         arrOperations = operations.fillOperations();
         arrOperationsSort = operations.sortHashMapByValues(arrOperations);
-        
+
         HashMap<String, String> arrDirectories;
         HashMap<String, String> arrDirectoriesSort;
-        CopyCollectionsInfo copyCollections = new CopyCollectionsInfo();        
+        CopyCollectionsInfo copyCollections = new CopyCollectionsInfo();
         arrDirectories = copyCollections.fillDirectories();
         arrDirectoriesSort = copyCollections.sortHashMapByValues(arrDirectories);
 
         PropertiesFile pf = new PropertiesFile();
         pf.loadProperties();
         pf.loadConfiguracionPruebaIndexar();
-        
+
         String urlApiSolr = pf.getUrlApiSolr();
-        
+
         logger.info("El valor de la variable urlApiSolr es --> " + urlApiSolr);
-        
+
         if (filledQueryAndIndexForm.hasErrors()) {
-            
             logger.error("Errores encontrados.");
             return badRequest(admin_colecciones_solr.render("Consultar, guardar e indexar", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledQueryAndIndexForm, arrOperationsSort, arrDirectoriesSort));
-            
-        } else if(urlApiSolr == null || urlApiSolr.isEmpty()){
-            
-            logger.error("Errores encontrados en la URL.");
-            logger.error("No existe url de la API en el archivo de configuracion");
-            return badRequest(config_admin_colecciones.render("Configurar URL de la API", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledRouteQueryForm));            
-        
-        }else{
-            
+        } else {
+
             QueryAndIndexingForm created = filledQueryAndIndexForm.get();
             StringBuilder response = new StringBuilder("");
 
-            try {                
+            try {
 
                 //Obtengo los campos del formulario                
                 String ipOrigin = created.ipOrigin;
                 String portOrigin = created.portOrigin;
                 String originCollectionName = created.originCollectionName;
-                String idsQuery = (created.idsQuery == null || created.idsQuery.isEmpty())? " " : created.idsQuery;
+                String idsQuery = (created.idsQuery == null || created.idsQuery.isEmpty()) ? " " : created.idsQuery;
                 String ipDestination = created.ipDestination;
                 String portDestination = created.portDestination;
                 String destinationCollectionName = created.destinationCollectionName;
                 String operationSelector = created.operationSelector;
-                String directoryName = created.directorySelector;                
-                String jsonName = created.fileSelector;
-                
-                logger.info("El nombre del archivo json seleccionado, es: "  + jsonName);
-                
+                String directoryName = created.directorySelector;
+                String jsonName = created.jsonCargado;
+
+                logger.info("El nombre del archivo json seleccionado, es: " + jsonName);
+
                 String jsonToText = " ";
 
-                if (operationSelector.equals("Indexar Archivo JSON")) {                   
+                if (operationSelector.equals("Indexar Archivo JSON")) {
 
                     if (!(jsonName.isEmpty())) {
 
@@ -123,7 +110,7 @@ public class ServiceSolrApi extends Controller {
                             jsonToText = textoJsonLeido.toString();
 
                         }
-                    } 
+                    }
                 }
 
                 JSONObject formData = new JSONObject();
@@ -145,13 +132,13 @@ public class ServiceSolrApi extends Controller {
                 URL url = new URL(urlApiSolr);
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("POST");
-                con.setRequestProperty("Content-type", "application/json");                
+                con.setRequestProperty("Content-type", "application/json");
                 con.setDoOutput(true);
 
                 logger.info("formData --->" + formData);
 
                 OutputStream wr = con.getOutputStream();
-                
+
                 wr.write(formData.toString().getBytes("UTF-8"));
                 wr.flush();
                 wr.close();
@@ -176,7 +163,7 @@ public class ServiceSolrApi extends Controller {
                     }
                     return badRequest(response.toString());
                 }
-                
+
                 con.disconnect();
                 logger.info("El codigo de respuesta es: " + responseCode + "\n" + "El cuerpo de la respuesta es:\n\n" + response.toString());
                 return ok(response_admin_colecciones.render("Consultar, guardar e indexar", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), response.toString()));

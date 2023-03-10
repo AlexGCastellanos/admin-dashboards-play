@@ -52,7 +52,7 @@ public class QueryRouteConfig extends Controller {
             
             try {
                 
-                File f = new File(pf.getPathFileModule() + "/temp/configuration_prueba_indexar.properties");
+                File f = new File(pf.getPathFileModule() + "/temp/configuration_admin_collections.properties");
                 writer = new BufferedWriter(new FileWriter(f));
                 writer.append("urlApiSolr=" + created.urlApiSolr+"\n");
                 writer.flush();

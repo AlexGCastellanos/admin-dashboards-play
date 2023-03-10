@@ -2,7 +2,7 @@ package views.formdata;
 
 import java.util.ArrayList;
 import java.util.List;
-import models.ConsultaSolrService;
+import models.QuerySolrService;
 import org.json.JSONObject;
 import play.data.validation.ValidationError;
 
@@ -17,7 +17,7 @@ public class QueryAndIndexingForm {
     public String destinationCollectionName;
     public String operationSelector;
     public String directorySelector;
-    public String fileSelector;
+    public String jsonCargado;
 
     /**
      * Validates Form<QueryAndIndexingForm>. Called automatically in the
@@ -62,7 +62,7 @@ public class QueryAndIndexingForm {
                 collectionNameValid = false;
             } else if ((ipValid && portValid)) {
 
-                String respuestaConsulta = ConsultaSolrService.consultarSchema(ipOrigin, portOrigin, originCollectionName);
+                String respuestaConsulta = QuerySolrService.schemaQuery(ipOrigin, portOrigin, originCollectionName);
 
                 if (!respuestaConsulta.equals("error")) {
 
@@ -82,7 +82,7 @@ public class QueryAndIndexingForm {
 
             if ((ipValid && portValid && collectionNameValid)) {
 
-                String respuestaConsulta = ConsultaSolrService.consultarColeccion(ipOrigin, portOrigin, originCollectionName, idsQuery);
+                String respuestaConsulta = QuerySolrService.collectionQuery(ipOrigin, portOrigin, originCollectionName, idsQuery);
 
                 if (!respuestaConsulta.equals("error")) {
 
@@ -119,7 +119,7 @@ public class QueryAndIndexingForm {
             if (destinationCollectionName.isEmpty()) {
                 errors.add(new ValidationError("destinationCollectionName", "El nombre de la coleccion no puede ser vacio"));
             } else if ((ipDestinationValid && portDestinationValid)) {
-                String respuestaConsulta = ConsultaSolrService.consultarSchema(ipDestination, portDestination, destinationCollectionName);
+                String respuestaConsulta = QuerySolrService.schemaQuery(ipDestination, portDestination, destinationCollectionName);
 
                 if (!respuestaConsulta.equals("error")) {
 
@@ -160,7 +160,7 @@ public class QueryAndIndexingForm {
                 collectionNameValid = false;
             } else if ((ipValid && portValid)) {
 
-                String respuestaConsulta = ConsultaSolrService.consultarSchema(ipOrigin, portOrigin, originCollectionName);
+                String respuestaConsulta = QuerySolrService.schemaQuery(ipOrigin, portOrigin, originCollectionName);
 
                 if (!respuestaConsulta.equals("error")) {
 
@@ -179,7 +179,7 @@ public class QueryAndIndexingForm {
             }
 
             if ((ipValid && portValid && collectionNameValid)) {
-                String respuestaConsulta = ConsultaSolrService.consultarColeccion(ipOrigin, portOrigin, originCollectionName, idsQuery);
+                String respuestaConsulta = QuerySolrService.collectionQuery(ipOrigin, portOrigin, originCollectionName, idsQuery);
 
                 if (!respuestaConsulta.equals("error")) {
 
@@ -223,7 +223,7 @@ public class QueryAndIndexingForm {
                 collectionNameValid = false;
             } else if ((ipValid && portValid)) {
 
-                String respuestaConsulta = ConsultaSolrService.consultarSchema(ipOrigin, portOrigin, originCollectionName);
+                String respuestaConsulta = QuerySolrService.schemaQuery(ipOrigin, portOrigin, originCollectionName);
 
                 if (!respuestaConsulta.equals("error")) {
 
@@ -243,7 +243,7 @@ public class QueryAndIndexingForm {
 
             if ((ipValid && portValid && collectionNameValid)) {
 
-                String respuestaConsulta = ConsultaSolrService.consultarColeccion(ipOrigin, portOrigin, originCollectionName, idsQuery);
+                String respuestaConsulta = QuerySolrService.collectionQuery(ipOrigin, portOrigin, originCollectionName, idsQuery);
 
                 if (!respuestaConsulta.equals("error")) {
 
@@ -280,7 +280,7 @@ public class QueryAndIndexingForm {
             if (destinationCollectionName.isEmpty()) {
                 errors.add(new ValidationError("destinationCollectionName", "El nombre de la coleccion no puede ser vacio"));
             } else if ((ipDestinationValid && portDestinationValid)) {
-                String respuestaConsulta = ConsultaSolrService.consultarSchema(ipDestination, portDestination, destinationCollectionName);
+                String respuestaConsulta = QuerySolrService.schemaQuery(ipDestination, portDestination, destinationCollectionName);
 
                 if (!respuestaConsulta.equals("error")) {
 
@@ -300,12 +300,12 @@ public class QueryAndIndexingForm {
 
             boolean ipDestinationValid = true, portDestinationValid = true;
             
-            if (directorySelector.isEmpty()) {
+            if (directorySelector.isEmpty() || directorySelector == null) {
                 errors.add(new ValidationError("directorySelector", "Por favor seleccione una coleccion"));
             }
             
-            if (fileSelector.isEmpty()) {
-                errors.add(new ValidationError("fileSelector", "Por favor seleccione un archivo json de la lista"));
+            if (jsonCargado.isEmpty() || jsonCargado == null) {
+                errors.add(new ValidationError("jsonCargado", "Por favor seleccione un archivo json de la lista"));
             }
 
             if (ipDestination.isEmpty()) {
@@ -327,7 +327,7 @@ public class QueryAndIndexingForm {
             if (destinationCollectionName.isEmpty()) {
                 errors.add(new ValidationError("destinationCollectionName", "El nombre de la coleccion no puede ser vacio"));
             } else if ((ipDestinationValid && portDestinationValid)) {
-                String respuestaConsulta = ConsultaSolrService.consultarSchema(ipDestination, portDestination, destinationCollectionName);
+                String respuestaConsulta = QuerySolrService.schemaQuery(ipDestination, portDestination, destinationCollectionName);
 
                 if (!respuestaConsulta.equals("error")) {
 

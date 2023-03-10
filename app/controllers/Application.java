@@ -1,5 +1,6 @@
 package controllers;
 
+import static controllers.QueryRouteConfig.routeQueryForm;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -307,22 +308,33 @@ public class Application extends Controller {
 
     public static Result consulta() {
 
+        PropertiesFile pf = new PropertiesFile();
+        pf.loadProperties();
+        pf.loadConfiguracionPruebaIndexar();
+
         Form<QueryAndIndexingForm> filledForm = Form.form(QueryAndIndexingForm.class);
 
-        HashMap<String, String> arrOperations;
-        HashMap<String, String> arrOperationsSort;
-        OperationsModel operations = new OperationsModel();
-        arrOperations = operations.fillOperations();
-        arrOperationsSort = operations.sortHashMapByValues(arrOperations);
-        
-        HashMap<String, String> arrDirectories;
-        HashMap<String, String> arrDirectoriesSort;
-        CopyCollectionsInfo copyCollections = new CopyCollectionsInfo();
-        arrDirectories = copyCollections.fillDirectories();
-        arrDirectoriesSort = copyCollections.sortHashMapByValues(arrDirectories);
-                
-        return ok(admin_colecciones_solr.render("Consultar, guardar e indexar", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm, arrOperationsSort, arrDirectoriesSort));
+        Form<RouteQueryForm> filledRouteQueryForm = routeQueryForm.bindFromRequest();
 
+        String urlApiSolr = pf.getUrlApiSolr();
+
+        if (urlApiSolr == null || urlApiSolr.isEmpty()) {
+            return badRequest(config_admin_colecciones.render("Configurar URL de la API", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledRouteQueryForm));
+        } else {
+            HashMap<String, String> arrOperations;
+            HashMap<String, String> arrOperationsSort;
+            OperationsModel operations = new OperationsModel();
+            arrOperations = operations.fillOperations();
+            arrOperationsSort = operations.sortHashMapByValues(arrOperations);
+
+            HashMap<String, String> arrDirectories;
+            HashMap<String, String> arrDirectoriesSort;
+            CopyCollectionsInfo copyCollections = new CopyCollectionsInfo();
+            arrDirectories = copyCollections.fillDirectories();
+            arrDirectoriesSort = copyCollections.sortHashMapByValues(arrDirectories);
+
+            return ok(admin_colecciones_solr.render("Consultar, guardar e indexar", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm, arrOperationsSort, arrDirectoriesSort));
+        }
     }
 
     public static Result consultaConfig() {
