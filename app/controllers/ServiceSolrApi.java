@@ -32,7 +32,7 @@ public class ServiceSolrApi extends Controller {
     static Logger logger = Logger.getLogger(ServiceSolrApi.class);
 
     @Security.Authenticated(Secured.class)
-    public static Result enviarDatos() {
+    public static Result sendDataToApi() {
 
         /*Lineas para Guardar en LOG */
         String username = request().username();
@@ -61,7 +61,7 @@ public class ServiceSolrApi extends Controller {
 
         PropertiesFile pf = new PropertiesFile();
         pf.loadProperties();
-        pf.loadConfiguracionPruebaIndexar();
+        pf.loadUrlApiConfig();
 
         String urlApiSolr = pf.getUrlApiSolr();
 
@@ -69,7 +69,7 @@ public class ServiceSolrApi extends Controller {
 
         if (filledQueryAndIndexForm.hasErrors()) {
             logger.error("Errores encontrados.");
-            return badRequest(admin_colecciones_solr.render("Consultar, guardar e indexar", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledQueryAndIndexForm, arrOperationsSort, arrDirectoriesSort));
+            return badRequest(admin_collections_solr.render("Consultar, guardar e indexar", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledQueryAndIndexForm, arrOperationsSort, arrDirectoriesSort));
         } else {
 
             QueryAndIndexingForm created = filledQueryAndIndexForm.get();
@@ -87,7 +87,7 @@ public class ServiceSolrApi extends Controller {
                 String destinationCollectionName = created.destinationCollectionName;
                 String operationSelector = created.operationSelector;
                 String directoryName = created.directorySelector;
-                String jsonName = created.jsonCargado;
+                String jsonName = created.jsonSelected;
 
                 logger.info("El nombre del archivo json seleccionado, es: " + jsonName);
 
@@ -166,7 +166,7 @@ public class ServiceSolrApi extends Controller {
 
                 con.disconnect();
                 logger.info("El codigo de respuesta es: " + responseCode + "\n" + "El cuerpo de la respuesta es:\n\n" + response.toString());
-                return ok(response_admin_colecciones.render("Consultar, guardar e indexar", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), response.toString()));
+                return redirect(routes.Application.profile());
 
             } catch (IOException ex) {
                 logger.error("La URL a la que se intenta enviar el formulario, no existe:\n\n" + ex.getMessage());

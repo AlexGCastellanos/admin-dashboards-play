@@ -100,7 +100,7 @@ public class PropertiesFile {
     /*
      * Funcion que carga los valores iniciales del archivo de configuracion configuration_prueba_indexar.properties
      */
-    public boolean loadConfiguracionPruebaIndexar() {
+    public boolean loadUrlApiConfig() {
 
         String absoluteDiskPath = "/opt/data/IFindIt/admin_dashboards/admin_serviceDash/temp/configuration_admin_collections.properties";
 

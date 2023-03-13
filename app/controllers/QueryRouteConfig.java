@@ -45,7 +45,7 @@ public class QueryRouteConfig extends Controller {
 
         if (filledRouteQueryForm.hasErrors()) {
             logger.error("Errores encontrados.");
-            return badRequest(config_admin_colecciones.render("Configurar URL de la API", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledRouteQueryForm));
+            return badRequest(config_admin_collections.render("Configurar URL de la API", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledRouteQueryForm));
         } else {
             
             RouteQueryForm created = filledRouteQueryForm.get();
@@ -61,7 +61,7 @@ public class QueryRouteConfig extends Controller {
                 String okResponse = "Se ha agregado correctamente a la configuracion, la URL: " + created.urlApiSolr;
                 
                 logger.info("Se ha agregado correctamente a la configuracion, la URL: " + created.urlApiSolr);
-                return ok(response_admin_colecciones.render("Configurar URL de la API", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), okResponse));
+                return redirect(routes.Application.profile());
                 
             } catch (IOException ex) {
                 logger.error(ex);

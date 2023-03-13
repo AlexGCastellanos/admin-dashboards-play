@@ -7,7 +7,7 @@
 
 <div id="6" class="list_item">
     <div class="titleParam" style="margin-bottom: 1em;">@title</div>
-    @helper.form(routes.ServiceSolrApi.enviarDatos()) {    
+    @helper.form(routes.ServiceSolrApi.sendDataToApi()) {    
     <div style="width: 70%;">            
         <div style="width: 60%;" class="form-group @if(QueryAndIndexingForm("operationSelector").hasErrors) {has-error}">
              <div class="descrptionMessageTable">Seleccione la operacion a realizar:</div>
@@ -126,18 +126,18 @@
             <tr>
                 <td>
                     <div style="width: 95%;">            
-                        <div style="width: 80%;" class="form-group @if(QueryAndIndexingForm("jsonCargado").hasErrors) {has-error}">
+                        <div style="width: 80%;" class="form-group @if(QueryAndIndexingForm("jsonSelected").hasErrors) {has-error}">
                              <div class="descrptionMessageTable">Seleccione un archivo a indexar</div>
                             <select id="fileSelector" name="fileSelector" class="custom-select-crg">
                                 <option value="">Seleccione un archivo</option>
                             </select>
-                            <span class="help-block">@{QueryAndIndexingForm("jsonCargado").error.map {error => error.message }}</span>
+                            <span class="help-block">@{QueryAndIndexingForm("jsonSelected").error.map {error => error.message }}</span>
                         </div>
                     </div>                       
                 </td>
             </tr>            
             <div>
-                <input type="hidden" name="jsonCargado" id="jsonCargado" value="">
+                <input type="hidden" name="jsonSelected" id="jsonSelected" value="">
             </div>
         </table>
     </div>       
@@ -149,24 +149,27 @@
 </div>
 
 <script>
-
-    var select = document.getElementById("operationSelector");
+    
+    $(document).ready(function () {
+        fillFileSelector();
+        current_tab("h3_adminCollections");
+        selectedFields();
+    });
+    
+    /*var select = document.getElementById("operationSelector");
     var selectCollection = document.getElementById("directorySelector");
     var selectFile = document.getElementById("fileSelector");
     var originDiv = document.getElementById("origin_data");
     var destinationDiv = document.getElementById("destination_data");
     var fileDiv = document.getElementById("jsonFile_data");
-    var hiddenFileName = document.getElementById("jsonCargado");
+    var hiddenFileName = document.getElementById("jsonSelected");*/
+    
 
-    $(document).ready(function () {
-        current_tab("h3_pruebaJson");
-    });
-
-    selectFile.addEventListener('change', function () {
+    /*selectFile.addEventListener('change', function () {
         hiddenFileName.value = selectFile.value;
-    });
+    });*/
 
-    selectCollection.addEventListener("change", function () {
+    /*selectCollection.addEventListener("change", function () {
 
         while (selectFile.options.length > 1) {
             selectFile.remove(1);
@@ -176,9 +179,9 @@
             fillFileSelector();
         });
 
-    });
+    });*/
 
-    document.addEventListener('DOMContentLoaded', function () {
+    /*document.addEventListener('DOMContentLoaded', function () {
 
         if (select.value === "Indexar") {
 
@@ -214,7 +217,7 @@
         
     });
 
-    select.addEventListener("change", function () {
+    /*select.addEventListener("change", function () {
 
         if (select.value === "Indexar") {
 
@@ -242,7 +245,7 @@
 
         }
 
-    });
+    });*/
 
 </script>
 

@@ -41,7 +41,7 @@ public class QuerySolrService {
 
         PropertiesFile pf = new PropertiesFile();
         pf.loadProperties();
-        pf.loadConfiguracionPruebaIndexar();
+        pf.loadUrlApiConfig();
 
         String urlApiSolr = pf.getUrlApiSolr();
 
@@ -83,7 +83,18 @@ public class QuerySolrService {
                 }
                 conn.disconnect();
                 return response.toString();
-            }
+            }else{
+                try (BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+                    String inputLine;
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    logger.info("El response de la consulta a la coleccion es:" + response.toString());
+                }
+                conn.disconnect();
+                logger.info("El response de la consulta a la coleccion es:" + response.toString());
+                return response.toString();            
+            }    
         } catch (IOException ex) {
             logger.error("Error en consulta de la url de la API:" + ex.getMessage());
         }
@@ -94,7 +105,7 @@ public class QuerySolrService {
 
         PropertiesFile pf = new PropertiesFile();
         pf.loadProperties();
-        pf.loadConfiguracionPruebaIndexar();
+        pf.loadUrlApiConfig();
 
         String urlApiSolr = pf.getUrlApiSolr();
 
@@ -122,7 +133,7 @@ public class QuerySolrService {
             int responseCode = conn.getResponseCode();
             logger.info("Response Code de la validacion del schema con la url del servlet API es: " + responseCode);
 
-            StringBuilder response = new StringBuilder();
+            StringBuilder response = new StringBuilder("");
 
             if (responseCode == 200) {
                 try (BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
@@ -135,6 +146,17 @@ public class QuerySolrService {
                 conn.disconnect();
                 logger.info("El response de la consulta al schema es:" + response.toString());
                 return response.toString();
+            }else{
+                try (BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+                    String inputLine;
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    logger.info("El response de la consulta al schema es:" + response.toString());
+                }
+                conn.disconnect();
+                logger.info("El response de la consulta al schema es:" + response.toString());
+                return response.toString();            
             }            
         } catch (IOException ex) {
             logger.error("Error en consulta del schema:" + ex.getMessage());

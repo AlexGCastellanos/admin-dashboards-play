@@ -306,11 +306,11 @@ public class Application extends Controller {
         return ok(loadCopySolrToSolr.render("Copia de Solr a Solr", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm));
     }
 
-    public static Result consulta() {
+    public static Result showCollectionAdmin() {
 
         PropertiesFile pf = new PropertiesFile();
         pf.loadProperties();
-        pf.loadConfiguracionPruebaIndexar();
+        pf.loadUrlApiConfig();
 
         Form<QueryAndIndexingForm> filledForm = Form.form(QueryAndIndexingForm.class);
 
@@ -319,7 +319,7 @@ public class Application extends Controller {
         String urlApiSolr = pf.getUrlApiSolr();
 
         if (urlApiSolr == null || urlApiSolr.isEmpty()) {
-            return badRequest(config_admin_colecciones.render("Configurar URL de la API", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledRouteQueryForm));
+            return badRequest(config_admin_collections.render("Configurar URL de la API", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledRouteQueryForm));
         } else {
             HashMap<String, String> arrOperations;
             HashMap<String, String> arrOperationsSort;
@@ -333,18 +333,18 @@ public class Application extends Controller {
             arrDirectories = copyCollections.fillDirectories();
             arrDirectoriesSort = copyCollections.sortHashMapByValues(arrDirectories);
 
-            return ok(admin_colecciones_solr.render("Consultar, guardar e indexar", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm, arrOperationsSort, arrDirectoriesSort));
+            return ok(admin_collections_solr.render("Consultar, guardar e indexar", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm, arrOperationsSort, arrDirectoriesSort));
         }
     }
 
-    public static Result consultaConfig() {
+    public static Result showApiConfig() {
         Form<RouteQueryForm> filledForm = Form.form(RouteQueryForm.class);
-        return ok(config_admin_colecciones.render("Configurar url de la API", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm));
+        return ok(config_admin_collections.render("Configurar url de la API", Secured.isLoggedIn(ctx()), Secured.getUserInfo(ctx()), filledForm));
     }
 
     public static Result loadUrlConfig() {
         PropertiesFile pf = new PropertiesFile();
-        pf.loadConfiguracionPruebaIndexar();
+        pf.loadUrlApiConfig();
         String concat = pf.getUrlApiSolr();
         return ok(concat);
     }

@@ -17,7 +17,7 @@ public class QueryAndIndexingForm {
     public String destinationCollectionName;
     public String operationSelector;
     public String directorySelector;
-    public String jsonCargado;
+    public String jsonSelected;
 
     /**
      * Validates Form<QueryAndIndexingForm>. Called automatically in the
@@ -304,8 +304,8 @@ public class QueryAndIndexingForm {
                 errors.add(new ValidationError("directorySelector", "Por favor seleccione una coleccion"));
             }
             
-            if (jsonCargado.isEmpty() || jsonCargado == null) {
-                errors.add(new ValidationError("jsonCargado", "Por favor seleccione un archivo json de la lista"));
+            if (jsonSelected.isEmpty() || jsonSelected == null) {
+                errors.add(new ValidationError("jsonSelected", "Por favor seleccione un archivo json de la lista"));
             }
 
             if (ipDestination.isEmpty()) {

@@ -84,11 +84,11 @@ POST    /getFieldsSolrToSolr            controllers.SolrToSolr.getFields()
 POST    /uploadSolrToSolr               controllers.SolrToSolr.uploadSolrToSolr()
 
 #PRUEBA SOLR ALEX
-GET     /consulta                       controllers.Application.consulta()
+GET     /showCollectionAdmin            controllers.Application.showCollectionAdmin()
 GET     /loadUrlConfig                  controllers.Application.loadUrlConfig()
-GET     /consultaConfig                 controllers.Application.consultaConfig()
-POST    /postConsultaConfig             controllers.QueryRouteConfig.addConfig()    
-POST    /postConsulta                   controllers.ServiceSolrApi.enviarDatos()
+GET     /showApiConfig                  controllers.Application.showApiConfig()
+POST    /postApiConfig                  controllers.QueryRouteConfig.addConfig()    
+POST    /postCollectionAdmin            controllers.ServiceSolrApi.sendDataToApi()
 POST    /loadFileOptions                controllers.CopyCollectionsInfo.fillFiles()  
 
 #BACKUP
