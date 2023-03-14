@@ -75,7 +75,9 @@ public class QueryAndIndexingForm {
                     }
 
                 } else {
-                    errors.add(new ValidationError("originCollectionName", "Error en la consulta, verifica si los datos de ip, puerto y nombre de la coleccion son correctos"));
+                    errors.add(new ValidationError("ipOrigin", "Error en la consulta, verifica si la ip es correcta"));
+                    errors.add(new ValidationError("portOrigin", "Error en la consulta, verifica si el puerto es correcto"));
+                    errors.add(new ValidationError("originCollectionName", "Error en la consulta, verifica si el nombre de la coleccion es correcto"));
                     collectionNameValid = false;
                 }
             }
@@ -130,7 +132,9 @@ public class QueryAndIndexingForm {
                     }
 
                 } else {
-                    errors.add(new ValidationError("destinationCollectionName", "Error en la consulta, verifica si los datos de ip, puerto y nombre de la coleccion son correctos"));
+                    errors.add(new ValidationError("ipDestination", "Error en la consulta, verifica si la ip es correcta"));
+                    errors.add(new ValidationError("portDestination", "Error en la consulta, verifica si el puerto es correcto"));
+                    errors.add(new ValidationError("destinationCollectionName", "Error en la consulta, verifica si el nombre de la coleccion es correcto"));
                 }
             }
         }
@@ -173,7 +177,9 @@ public class QueryAndIndexingForm {
                     }
 
                 } else {
-                    errors.add(new ValidationError("originCollectionName", "Error en la consulta, verifica si los datos de ip, puerto y nombre de la coleccion son correctos"));
+                    errors.add(new ValidationError("ipOrigin", "Error en la consulta, verifica si la ip es correcta"));
+                    errors.add(new ValidationError("portOrigin", "Error en la consulta, verifica si el puerto es correcto"));
+                    errors.add(new ValidationError("originCollectionName", "Error en la consulta, verifica si el nombre de la coleccion es correcto"));
                     collectionNameValid = false;
                 }
             }
@@ -291,7 +297,9 @@ public class QueryAndIndexingForm {
                     }
 
                 } else {
-                    errors.add(new ValidationError("destinationCollectionName", "Error en la consulta, verifica si los datos de ip, puerto y nombre de la coleccion son correctos"));
+                    errors.add(new ValidationError("ipDestination", "Error en la consulta, verifica si la ip es correcta"));
+                    errors.add(new ValidationError("portDestination", "Error en la consulta, verifica si el puerto es correcto"));
+                    errors.add(new ValidationError("destinationCollectionName", "Error en la consulta, verifica si el nombre de la coleccion es correcto"));
                 }
             }
         }
@@ -338,7 +346,9 @@ public class QueryAndIndexingForm {
                     }
 
                 } else {
-                    errors.add(new ValidationError("destinationCollectionName", "Error en la consulta, verifica si los datos de ip, puerto y nombre de la coleccion son correctos"));
+                    errors.add(new ValidationError("ipDestination", "Error en la consulta, verifica si la ip es correcta"));
+                    errors.add(new ValidationError("portDestination", "Error en la consulta, verifica si el puerto es correcto"));
+                    errors.add(new ValidationError("destinationCollectionName", "Error en la consulta, verifica si el nombre de la coleccion es correcto"));
                 }
             }
         }

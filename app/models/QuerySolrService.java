@@ -23,19 +23,6 @@ public class QuerySolrService {
 
     static Logger logger = Logger.getLogger(QuerySolrService.class);
 
-//    private static String[] idsArray(String ids) {
-//
-//        //Genero un arreglo a partir de la cadena limpia
-//        String[] idsArray = ids.split("\\|\\|");
-//
-//        for (int i = 0; i < idsArray.length; i++) {
-//            //Limpio la cadena de texto de los ids
-//            idsArray[i] = idsArray[i].trim();
-//        }
-//
-//        return idsArray;
-//
-//    }
 
     public static String collectionQuery(String ip, String port, String collection, String ids) {
 

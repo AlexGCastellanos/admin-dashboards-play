@@ -1101,7 +1101,94 @@ $('#chHiddenCheckedBatches').on('click', function () {
     }
 });
 
+    var select = document.getElementById("operationSelector");
+    var selectCollection = document.getElementById("directorySelector");
+    var selectFile = document.getElementById("fileSelector");
+    var originDiv = document.getElementById("origin_data");
+    var destinationDiv = document.getElementById("destination_data");
+    var fileDiv = document.getElementById("jsonFile_data");
+    var hiddenFileName = document.getElementById("jsonSelected");
 
+    selectFile.addEventListener('change', function () {
+        hiddenFileName.value = selectFile.value;
+    });
+
+    selectCollection.addEventListener("change", function () {
+
+        while (selectFile.options.length > 1) {
+            selectFile.remove(1);
+        }
+
+        $(document).ready(function () {
+            fillFileSelector();
+        });
+
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        if (select.value === "Indexar") {
+
+            originDiv.style.display = "block";
+            destinationDiv.style.display = "block";
+            fileDiv.style.display = "none";
+
+        } else if (select.value === "Guardar") {
+
+            originDiv.style.display = "block";
+            destinationDiv.style.display = "none";
+            fileDiv.style.display = "none";
+
+        } else if (select.value === "Guardar e Indexar") {
+
+            originDiv.style.display = "block";
+            destinationDiv.style.display = "block";
+            fileDiv.style.display = "none";
+
+        } else if (select.value === "Indexar Archivo JSON") {
+
+            originDiv.style.display = "none";
+            destinationDiv.style.display = "block";
+            fileDiv.style.display = "block";
+
+        }
+
+        $(document).ready(function () {
+            fillFileSelector();
+            hiddenFileName.value = selectFile.value;
+        });
+
+    });
+
+    select.addEventListener("change", function () {
+
+        if (select.value === "Indexar") {
+
+            originDiv.style.display = "block";
+            destinationDiv.style.display = "block";
+            fileDiv.style.display = "none";
+
+        } else if (select.value === "Guardar") {
+
+            originDiv.style.display = "block";
+            destinationDiv.style.display = "none";
+            fileDiv.style.display = "none";
+
+        } else if (select.value === "Guardar e Indexar") {
+
+            originDiv.style.display = "block";
+            destinationDiv.style.display = "block";
+            fileDiv.style.display = "none";
+
+        } else if (select.value === "Indexar Archivo JSON") {
+
+            originDiv.style.display = "none";
+            destinationDiv.style.display = "block";
+            fileDiv.style.display = "block";
+
+        }
+
+    });
 
 
 
