@@ -1101,73 +1101,8 @@ $('#chHiddenCheckedBatches').on('click', function () {
     }
 });
 
-//    selectFile.addEventListener('change', function () {
-//        hiddenFileName.value = selectFile.value;
-//    });
-
-$('#fileSelector').change(function () {
-    $("#jsonSelected").val($(this).val());
-});
 
 
-$('#operationSelector').change(function () {
-
-    if ($(this).val() === "Indexar") {
-        $("#origin_data").show();
-        $("#destination_data").show();
-        $("#jsonFile_data").hide();
-    } else if ($(this).val() === "Guardar") {
-        $("#origin_data").show();
-        $("#destination_data").hide();
-        $("#jsonFile_data").hide();
-    } else if ($(this).val() === "Guardar e Indexar") {
-        $("#origin_data").show();
-        $("#destination_data").show();
-        $("#jsonFile_data").hide();
-    } else if ($(this).val() === "Indexar Archivo JSON") {
-        $("#origin_data").hide();
-        $("#destination_data").show();
-        $("#jsonFile_data").show();
-    }
-
-});
-
-$("#directorySelector").change(function () {
-    
-    $("#fileSelector option:gt(0)").remove();
-
-    $(document).ready(function () {
-        fillFileSelector();
-    });
-
-});
-
-function selectedFields() {
-
-    if ($('#operationSelector').val() === "Indexar") {
-        $("#origin_data").show();
-        $("#destination_data").show();
-        $("#jsonFile_data").hide();
-    } else if ($('#operationSelector').val() === "Guardar") {
-        $("#origin_data").show();
-        $("#destination_data").hide();
-        $("#jsonFile_data").hide();
-    } else if ($('#operationSelector').val() === "Guardar e Indexar") {
-        $("#origin_data").show();
-        $("#destination_data").show();
-        $("#jsonFile_data").hide();
-    } else if ($('#operationSelector').val() === "Indexar Archivo JSON") {
-        $("#origin_data").hide();
-        $("#destination_data").show();
-        $("#jsonFile_data").show();
-    }
-
-    $(document).ready(function () {
-        fillFileSelector();
-        $("#jsonSelected").val($("#fileSelector").val());
-    });
-
-}
 
 
 
